@@ -1,5 +1,33 @@
 <?php
 include('db_connection.php');
+$selectedCourse = 'All';
+$semesterFilter = 'All';
+$hcscFilter = 'All';
+
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Handle form submission
+
+    // Get form data
+    $selectedCourse = isset($_POST['selectedCourse']) ? $_POST['selectedCourse'] : 'All';
+    $selectedStaff = isset($_POST['selectedStaff']) ? $_POST['selectedStaff'] : '';
+    $semesterFilter = isset($_POST['semester_filter']) ? $_POST['semester_filter'] : 'All';
+    $hcscFilter = isset($_POST['hcsc_filter']) ? $_POST['hcsc_filter'] : 'All';
+
+    // Validate form data (you may need to add more validation)
+    if (!empty($selectedCourse) && !empty($selectedStaff)) {
+        // Perform database insertion
+        $sql = "INSERT INTO assignments (subject_code, subject_name, sem_no, staff_code, staff_name, hcsc) 
+                VALUES ('$selectedCourse', '$selectedCourse', 1, '$selectedStaff', '$selectedStaff', '$selectedSubjectType')";
+        if ($conn->query($sql) === TRUE) {
+            // Redirect to avoid form resubmission on page refresh
+            header('Location: index.php');
+            exit;
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+}
 
 // Fetch staff names
 function fetchStaff() {
@@ -36,7 +64,7 @@ function fetchCoursesDynamic($courseFilter, $semesterFilter, $hcscFilter) {
     // Build the SQL query based on course input, semester input, and hcsc filter
     $sql = "SELECT * FROM courses WHERE 1"; // Start with a true condition
 
-    if (!empty($courseFilter)) {
+    if (!empty($courseFilter) && $courseFilter !== 'All') {
         $sql .= " AND course = '$courseFilter'";
     }
 
@@ -63,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle form submission
 
     // Get form data
-    $selectedCourse = isset($_POST['selectedCourse']) ? $_POST['selectedCourse'] : '';
+    $selectedCourse = isset($_POST['selectedCourse']) ? $_POST['selectedCourse'] : 'All';
     $selectedStaff = isset($_POST['selectedStaff']) ? $_POST['selectedStaff'] : '';
     $semesterFilter = isset($_POST['semester_filter']) ? $_POST['semester_filter'] : 'All';
     $hcscFilter = isset($_POST['hcsc_filter']) ? $_POST['hcsc_filter'] : 'All';
@@ -140,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-4 mb-3">
                 <label for="course">Course</label>
                 <select class="form-control" id="course" name="selectedCourse" onchange="this.form.submit()">
-                    <option value="" <?php if (empty($selectedCourse)) echo 'selected'; ?>>All</option>
+                    <option value="All" <?php if ($selectedCourse === 'All') echo 'selected'; ?>>All</option>
                     <?php
                     $courses = fetchDistinctCourses();
                     foreach ($courses as $course) {
@@ -153,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-4 mb-3">
                 <label for="semesterFilter">Semester</label>
                 <select class="form-control" id="semesterFilter" name="semester_filter" onchange="this.form.submit()">
-                    <option value="" <?php if ($semesterFilter === '') echo 'selected'; ?>>All</option>
+                    <option value="All" <?php if ($semesterFilter === 'All') echo 'selected'; ?>>All</option>
                     <option value="1" <?php if ($semesterFilter === '1') echo 'selected'; ?>>1</option>
                     <option value="2" <?php if ($semesterFilter === '2') echo 'selected'; ?>>2</option>
                     <option value="3" <?php if ($semesterFilter === '3') echo 'selected'; ?>>3</option>
