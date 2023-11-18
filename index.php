@@ -17,8 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate form data (you may need to add more validation)
     if (!empty($selectedCourse) && !empty($selectedStaff)) {
         // Perform database insertion
-        $sql = "INSERT INTO assignments (subject_code, subject_name, sem_no, staff_code, staff_name, hcsc) 
-                VALUES ('$selectedCourse', '$selectedCourse', 1, '$selectedStaff', '$selectedStaff', '$selectedSubjectType')";
+        $sql = "INSERT INTO assignments (subject_code, subject_name, subject_type, sem_no, staff_code, staff_name, hcsc) 
+                SELECT subject_code, subject_name, subject_type, $semesterFilter, '$selectedStaff', staff_name, '$hcscFilter'
+                FROM courses
+                JOIN staff ON '$selectedStaff' = staff.staff_code
+                WHERE subject_code = '$selectedCourse'";
+
         if ($conn->query($sql) === TRUE) {
             // Redirect to avoid form resubmission on page refresh
             header('Location: index.php');
@@ -86,30 +90,7 @@ function fetchCoursesDynamic($courseFilter, $semesterFilter, $hcscFilter) {
     return $courses;
 }
 
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle form submission
-
-    // Get form data
-    $selectedCourse = isset($_POST['selectedCourse']) ? $_POST['selectedCourse'] : 'All';
-    $selectedStaff = isset($_POST['selectedStaff']) ? $_POST['selectedStaff'] : '';
-    $semesterFilter = isset($_POST['semester_filter']) ? $_POST['semester_filter'] : 'All';
-    $hcscFilter = isset($_POST['hcsc_filter']) ? $_POST['hcsc_filter'] : 'All';
-
-    // Validate form data (you may need to add more validation)
-    if (!empty($selectedCourse) && !empty($selectedStaff)) {
-        // Perform database insertion
-        $sql = "INSERT INTO assignments (subject_code, subject_name, sem_no, staff_code, staff_name, hcsc) 
-                VALUES ('$selectedCourse', '$selectedCourse', 1, '$selectedStaff', '$selectedStaff', '$selectedSubjectType')";
-        if ($conn->query($sql) === TRUE) {
-            // Redirect to avoid form resubmission on page refresh
-            header('Location: index.php');
-            exit;
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }
-}
+// Rest of the code remains unchanged...
 ?>
 
 <!DOCTYPE html>

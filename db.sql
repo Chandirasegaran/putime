@@ -47,3 +47,5 @@ insert into staff VALUES("201","name1");
 insert into staff VALUES("202","name2");
 
 SELECT *from courses;
+
+SELECT * FROM assignments;
