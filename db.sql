@@ -46,6 +46,16 @@ insert into courses values("107","subjectn","Hardcore","a","Lab",1);
 insert into staff VALUES("201","name1");
 insert into staff VALUES("202","name2");
 
+insert into assignments( 
+    `subject_code`,
+    `subject_name`,
+    `subject_type` ,
+    `sem_no`,
+    `staff_code` ,
+    `staff_name` ,
+    `hcsc` ) values("104","subject3","Lab",3,"201","name1","Softcore");
+
+
 SELECT *from courses;
 
 SELECT * FROM assignments;

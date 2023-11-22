@@ -7,7 +7,6 @@ $hcscFilter = 'All';
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle form submission
-
     // Get form data
     $selectedCourse = isset($_POST['selectedCourse']) ? $_POST['selectedCourse'] : 'All';
     $selectedStaff = isset($_POST['selectedStaff']) ? $_POST['selectedStaff'] : '';
@@ -180,8 +179,9 @@ function fetchCoursesDynamic($courseFilter, $semesterFilter, $hcscFilter) {
         </div>
 
         <!-- Horizontal Line -->
+        
         <hr>
-
+       
         <!-- Boxes -->
         <div class="form-row">
             <!-- Box 1 - List of Courses -->
@@ -238,7 +238,7 @@ function fetchCoursesDynamic($courseFilter, $semesterFilter, $hcscFilter) {
 
             <!-- Assign Button -->
             <div class="col-md-4 mb-3">
-                <button type="submit" class="btn btn-primary btn-block">Assign</button>
+                <button type="submit" class="btn btn-primary btn-block"  >Assign</button>
             </div>
         </div>
     </form>
