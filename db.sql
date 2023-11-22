@@ -49,3 +49,13 @@ insert into staff VALUES("202","name2");
 SELECT *from courses;
 
 SELECT * FROM assignments;
+
+
+insert into assignments( 
+    `subject_code`,
+    `subject_name`,
+    `subject_type` ,
+    `sem_no`,
+    `staff_code` ,
+    `staff_name` ,
+    `hcsc` ) values("103","subject3","Lab",3,"201","name1","Softcore");
