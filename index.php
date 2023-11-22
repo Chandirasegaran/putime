@@ -235,7 +235,6 @@ function fetchCoursesDynamic($courseFilter, $semesterFilter, $hcscFilter) {
                     </div>
                 </div>
             </div>
-
             <!-- Assign Button -->
             <div class="col-md-4 mb-3">
                 <button type="submit" class="btn btn-primary btn-block">Assign</button>
