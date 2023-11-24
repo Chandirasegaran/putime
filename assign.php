@@ -10,7 +10,6 @@
 </head>
 <body>
 
-    
     <!-- Include the navbar -->
     <?php include('navbar.php'); ?>
 
@@ -29,65 +28,72 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <?php
-                // Assuming you have a database connection
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "timetablepro";
+                <tbody>
+                    <?php
+                    // Assuming you have a database connection
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "timetablepro";
 
-                $conn = new mysqli($servername, $username, $password, $dbname);
+                    $conn = new mysqli($servername, $username, $password, $dbname);
 
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // Fetch course details
-                $courseQuery = "SELECT * FROM course";
-                $courseResult = $conn->query($courseQuery);
-
-                echo '<tbody>';
-                while ($courseRow = $courseResult->fetch_assoc()) {
-                    echo '<tr';
-
-                    // Check if staff name is already assigned for the course
-                    $assignedQuery = "SELECT * FROM assign WHERE course_code = '" . $courseRow["course_code"] . "'";
-                    $assignedResult = $conn->query($assignedQuery);
-
-                    if ($assignedResult->num_rows > 0) {
-                        // Staff name is already assigned, highlight the row with light green
-                        echo ' style="background-color: lightgreen;"';
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
                     }
 
-                    echo '>';
+                    // Fetch course details
+                    $courseQuery = "SELECT * FROM course";
+                    $courseResult = $conn->query($courseQuery);
 
-                    // Display course details
-                    echo '<td>' . $courseRow["course_code"] . '</td>';
-                    echo '<td>' . $courseRow["course_name"] . '</td>';
+                    while ($courseRow = $courseResult->fetch_assoc()) {
+                        echo '<tr';
 
-                    echo '<td>';
-                    // Dropdown for staff names
-                    echo '<select class="form-control" name="staffName[' . $courseRow["course_code"] . ']">';
-                    echo '<option value="" selected disabled>Select Staff</option>'; // Empty option
+                        // Check if staff name is already assigned for the course
+                        $assignedQuery = "SELECT * FROM assign WHERE course_code = '" . $courseRow["course_code"] . "'";
+                        $assignedResult = $conn->query($assignedQuery);
 
-                    // Assuming you have a staff table
-                    $staffQuery = "SELECT name FROM staff";
-                    $staffResult = $conn->query($staffQuery);
+                        if ($assignedResult->num_rows > 0) {
+                            // Staff name is already assigned, highlight the row with light green
+                            echo ' style="background-color: lightgreen;"';
+                        }
 
-                    while ($staffRow = $staffResult->fetch_assoc()) {
-                        $selected = ($assignedResult->num_rows > 0 && $staffRow["name"] == $assignedResult->fetch_assoc()["staff_name"]) ? 'selected' : '';
-                        echo '<option value="' . $staffRow["name"] . '" ' . $selected . '>' . $staffRow["name"] . '</option>';
+                        echo '>';
+
+                        // Display course details
+                        echo '<td>' . $courseRow["course_code"] . '</td>';
+                        echo '<td>' . $courseRow["course_name"] . '</td>';
+
+                        echo '<td>';
+                        // Dropdown for staff names
+                        echo '<select class="form-control" name="staffName[' . $courseRow["course_code"] . ']">';
+                        echo '<option value="" selected disabled>Select Staff</option>'; // Empty option
+
+                        // Fetch assigned staff name outside the loop
+                        $assignedStaffName = '';
+                        if ($assignedResult->num_rows > 0) {
+                            $assignedRow = $assignedResult->fetch_assoc();
+                            $assignedStaffName = $assignedRow["staff_name"];
+                        }
+
+                        // Assuming you have a staff table
+                        $staffQuery = "SELECT name FROM staff";
+                        $staffResult = $conn->query($staffQuery);
+
+                        while ($staffRow = $staffResult->fetch_assoc()) {
+                            $selected = ($staffRow["name"] == $assignedStaffName) ? 'selected' : '';
+                            echo '<option value="' . $staffRow["name"] . '" ' . $selected . '>' . $staffRow["name"] . '</option>';
+                        }
+
+                        echo '</select>';
+                        echo '</td>';
+                        echo '<td><button type="submit" class="btn btn-primary" name="submit" value="' . $courseRow["course_code"] . '">Assign</button></td>';
+                        echo '</tr>';
                     }
 
-                    echo '</select>';
-                    echo '</td>';
-                    echo '<td><button type="submit" class="btn btn-primary" name="submit" value="' . $courseRow["course_code"] . '">Assign</button></td>';
-                    echo '</tr>';
-                }
-                echo '</tbody>';
-
-                $conn->close();
-                ?>
+                    $conn->close();
+                    ?>
+                </tbody>
             </table>
         </form>
     </div>
