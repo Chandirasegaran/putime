@@ -17,6 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['regno'])) {
     // Collect registration number from the query parameters
     $regno = $_GET['regno'];
 
+    // Check if the staff is assigned to any course in the assign table
+    $assignedQuery = "SELECT * FROM assign WHERE staff_name IN (SELECT name FROM staff WHERE regno = $regno)";
+    $assignedResult = $conn->query($assignedQuery);
+
+    if ($assignedResult->num_rows > 0) {
+        // Delete corresponding records from the assign table
+        $deleteAssignQuery = "DELETE FROM assign WHERE staff_name IN (SELECT name FROM staff WHERE regno = $regno)";
+        if (!$conn->query($deleteAssignQuery)) {
+            echo "Error deleting records from assign table: " . $conn->error;
+            $conn->close();
+            exit();
+        }
+    }
+
     // Delete the staff record from the staff table
     $deleteQuery = "DELETE FROM staff WHERE regno = $regno";
 
@@ -37,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['regno'])) {
         header("Location: staff.php"); // Redirect back to the staff.php page
         exit();
     } else {
-        echo "Error: " . $deleteQuery . "<br>" . $conn->error;
+        echo "Error deleting staff record: " . $conn->error;
     }
 
     $conn->close();
