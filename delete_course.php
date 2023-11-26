@@ -4,7 +4,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['course_id'])) {
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $password = "2503";
     $dbname = "timetablepro";
 
     // Create connection

@@ -46,7 +46,7 @@
         // Assuming you have a database connection
         $servername = "localhost";
         $username = "root";
-        $password = "";
+        $password = "2503";
         $dbname = "timetablepro";
 
         $conn = new mysqli($servername, $username, $password, $dbname);
