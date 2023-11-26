@@ -17,50 +17,9 @@
         <!-- Assign Staff Content -->
         <h2>Assign Staff</h2>
 
-        <!-- Display Department Dropdown and Filter Button -->
-        <form method="post" action="assign.php">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="departmentFilter">Select Department:</label>
-                    <?php
-                    // Assuming you have a database connection
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "timetablepro";
-
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-
-                    // Fetch department names from the assign table
-                    $departmentQuery = "SELECT DISTINCT department FROM assign";
-                    $departmentResult = $conn->query($departmentQuery);
-
-                    echo '<select class="form-control" id="departmentFilter" name="departmentFilter">';
-                    echo '<option value="" selected>All Departments</option>'; // Default option
-
-                    while ($deptRow = $departmentResult->fetch_assoc()) {
-                        $selected = isset($_POST['departmentFilter']) && $_POST['departmentFilter'] == $deptRow['department'] ? 'selected' : '';
-                        echo '<option value="' . $deptRow["department"] . '" ' . $selected . '>' . $deptRow["department"] . '</option>';
-                    }
-
-                    echo '</select>';
-
-                    $conn->close();
-                    ?>
-                </div>
-                <div class="form-group col-md-6">
-                    <button type="submit" class="btn btn-primary mt-4">Filter</button>
-                </div>
-            </div>
-        </form>
-
-        <!-- Display Assign Table -->
+        <!-- Display Assign Form -->
         <form method="post" action="process_assign.php">
-            <table class="table" id="assignTable">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Course Code</th>
@@ -83,14 +42,8 @@
                         die("Connection failed: " . $conn->connect_error);
                     }
 
-                    // Fetch course details based on the selected department
-                    $selectedDepartment = isset($_POST['departmentFilter']) ? $_POST['departmentFilter'] : '';
-                    $courseQuery = "SELECT * FROM assign";
-
-                    if (!empty($selectedDepartment)) {
-                        $courseQuery .= " WHERE department = '$selectedDepartment'";
-                    }
-
+                    // Fetch course details
+                    $courseQuery = "SELECT * FROM course";
                     $courseResult = $conn->query($courseQuery);
 
                     while ($courseRow = $courseResult->fetch_assoc()) {
@@ -110,7 +63,30 @@
                         // Display course details
                         echo '<td>' . $courseRow["course_code"] . '</td>';
                         echo '<td>' . $courseRow["course_name"] . '</td>';
-                        echo '<td>' . $courseRow["staff_name"] . '</td>';
+
+                        echo '<td>';
+                        // Dropdown for staff names
+                        echo '<select class="form-control" name="staffName[' . $courseRow["course_code"] . ']">';
+                        echo '<option value="" selected disabled>Select Staff</option>'; // Empty option
+
+                        // Fetch assigned staff name outside the loop
+                        $assignedStaffName = '';
+                        if ($assignedResult->num_rows > 0) {
+                            $assignedRow = $assignedResult->fetch_assoc();
+                            $assignedStaffName = $assignedRow["staff_name"];
+                        }
+
+                        // Assuming you have a staff table
+                        $staffQuery = "SELECT name FROM staff";
+                        $staffResult = $conn->query($staffQuery);
+
+                        while ($staffRow = $staffResult->fetch_assoc()) {
+                            $selected = ($staffRow["name"] == $assignedStaffName) ? 'selected' : '';
+                            echo '<option value="' . $staffRow["name"] . '" ' . $selected . '>' . $staffRow["name"] . '</option>';
+                        }
+
+                        echo '</select>';
+                        echo '</td>';
                         echo '<td><button type="submit" class="btn btn-primary" name="submit" value="' . $courseRow["course_code"] . '">Assign</button></td>';
                         echo '</tr>';
                     }
