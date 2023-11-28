@@ -18,7 +18,7 @@
                 <div class="form-group col-md-3">
                     <label for="departmentFilter">Department</label>
                     <select class="form-control" id="departmentFilter" name="departmentFilter">
-                        <option value="all" selected>All Departments</option>
+                        <option value="all" <?php echo (isset($departmentFilter) && $departmentFilter === 'all') ? 'selected' : ''; ?>>All Departments</option>
                         <?php
                         $servername = "localhost";
                         $username = "root";
@@ -35,7 +35,7 @@
                         $departmentResult = $conn->query($departmentQuery);
 
                         while ($departmentRow = $departmentResult->fetch_assoc()) {
-                            echo '<option value="' . $departmentRow["dept"] . '">' . $departmentRow["dept"] . '</option>';
+                            echo '<option value="' . $departmentRow["dept"] . '" ' . (isset($departmentFilter) && $departmentFilter === $departmentRow["dept"] ? 'selected' : '') . '>' . $departmentRow["dept"] . '</option>';
                         }
                         ?>
                     </select>
@@ -43,9 +43,9 @@
                 <div class="form-group col-md-3">
                     <label for="semesterFilter">Semester</label>
                     <select class="form-control" id="semesterFilter" name="semesterFilter">
-                        <option value="all" selected>All Semesters</option>
-                        <option value="odd">Odd</option>
-                        <option value="even">Even</option>
+                        <option value="all" <?php echo (isset($semesterFilter) && $semesterFilter === 'all') ? 'selected' : ''; ?>>All Semesters</option>
+                        <option value="odd" <?php echo (isset($semesterFilter) && $semesterFilter === 'odd') ? 'selected' : ''; ?>>Odd</option>
+                        <option value="even" <?php echo (isset($semesterFilter) && $semesterFilter === 'even') ? 'selected' : ''; ?>>Even</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">
