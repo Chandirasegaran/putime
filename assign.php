@@ -10,14 +10,52 @@
 </head>
 <body>
 
-    <!-- Include the navbar -->
     <?php include('navbar.php'); ?>
 
     <div class="container mt-4">
-        <!-- Assign Staff Content -->
+        <form method="post" action="assign.php">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="departmentFilter">Department</label>
+                    <select class="form-control" id="departmentFilter" name="departmentFilter">
+                        <option value="all" selected>All Departments</option>
+                        <?php
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "2503";
+                        $dbname = "timetablepro";
+
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        $departmentQuery = "SELECT * FROM department";
+                        $departmentResult = $conn->query($departmentQuery);
+
+                        while ($departmentRow = $departmentResult->fetch_assoc()) {
+                            echo '<option value="' . $departmentRow["dept"] . '">' . $departmentRow["dept"] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="semesterFilter">Semester</label>
+                    <select class="form-control" id="semesterFilter" name="semesterFilter">
+                        <option value="all" selected>All Semesters</option>
+                        <option value="odd">Odd</option>
+                        <option value="even">Even</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="submit" class="btn btn-primary mt-4">Apply Filter</button>
+                </div>
+            </div>
+        </form>
+
         <h2>Assign Staff</h2>
 
-        <!-- Display Assign Form -->
         <form method="post" action="process_assign.php">
             <table class="table">
                 <thead>
@@ -30,53 +68,46 @@
                 </thead>
                 <tbody>
                     <?php
-                    // Assuming you have a database connection
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "2503";
-                    $dbname = "timetablepro";
+                    $departmentFilter = isset($_POST['departmentFilter']) ? $_POST['departmentFilter'] : 'all';
+                    $semesterFilter = isset($_POST['semesterFilter']) ? $_POST['semesterFilter'] : 'all';
 
-                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    $filterQuery = "SELECT * FROM course WHERE 1";
 
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
+                    if ($departmentFilter !== 'all') {
+                        $filterQuery .= " AND department = '$departmentFilter'";
                     }
 
-                    // Fetch course details
-                    $courseQuery = "SELECT * FROM course";
-                    $courseResult = $conn->query($courseQuery);
+                    if ($semesterFilter !== 'all') {
+                        $filterQuery .= " AND sem_type = '$semesterFilter'";
+                    }
+
+                    $courseResult = $conn->query($filterQuery);
 
                     while ($courseRow = $courseResult->fetch_assoc()) {
                         echo '<tr';
 
-                        // Check if staff name is already assigned for the course
                         $assignedQuery = "SELECT * FROM assign WHERE course_code = '" . $courseRow["course_code"] . "'";
                         $assignedResult = $conn->query($assignedQuery);
 
                         if ($assignedResult->num_rows > 0) {
-                            // Staff name is already assigned, highlight the row with light green
                             echo ' style="background-color: lightgreen;"';
                         }
 
                         echo '>';
 
-                        // Display course details
                         echo '<td>' . $courseRow["course_code"] . '</td>';
                         echo '<td>' . $courseRow["course_name"] . '</td>';
 
                         echo '<td>';
-                        // Dropdown for staff names
                         echo '<select class="form-control" name="staffName[' . $courseRow["course_code"] . ']">';
-                        echo '<option value="" selected disabled>Select Staff</option>'; // Empty option
+                        echo '<option value="" selected disabled>Select Staff</option>';
 
-                        // Fetch assigned staff name outside the loop
                         $assignedStaffName = '';
                         if ($assignedResult->num_rows > 0) {
                             $assignedRow = $assignedResult->fetch_assoc();
                             $assignedStaffName = $assignedRow["staff_name"];
                         }
 
-                        // Assuming you have a staff table
                         $staffQuery = "SELECT name FROM staff";
                         $staffResult = $conn->query($staffQuery);
 
@@ -90,15 +121,12 @@
                         echo '<td><button type="submit" class="btn btn-primary" name="submit" value="' . $courseRow["course_code"] . '">Assign</button></td>';
                         echo '</tr>';
                     }
-
-                    $conn->close();
                     ?>
                 </tbody>
             </table>
         </form>
     </div>
 
-    <!-- Bootstrap JS and Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
