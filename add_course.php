@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $courseCode = $_POST["courseCode"];
     $courseName = $_POST["courseName"];
     $semType = $_POST["semType"];
-    $courseCore = $_POST["courseCore"];
+    $courseCore = $_POST["courseCore"]; // Added line
     $department = $_POST["department"];
     $lab = $_POST["lab"];
     $credit = $_POST["credit"];

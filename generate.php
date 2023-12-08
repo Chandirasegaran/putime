@@ -51,6 +51,8 @@
         if ($departmentNamesResult->num_rows > 0) {
             $departmentNames = array();
             $lab = array(); // Initialize the lab array
+            $hardcore = array(); // Initialize the hardcore array
+            $softcore = array(); // Initialize the softcore array
 
             // Fetch department names and store in the array
             while ($deptRow = $departmentNamesResult->fetch_assoc()) {
@@ -67,13 +69,37 @@
                     // If no labs are found, set the count to 0
                     $lab[$deptRow["dept"]] = 0;
                 }
+
+                // Query to get the number of hardcore courses for each department
+                $hardcoreCountQuery = "SELECT COUNT(*) AS hardcore_count FROM course WHERE department = '" . $deptRow["dept"] . "' AND course_core = 'hardcore'";
+                $hardcoreCountResult = $conn->query($hardcoreCountQuery);
+
+                if ($hardcoreCountResult->num_rows > 0) {
+                    $hardcoreRow = $hardcoreCountResult->fetch_assoc();
+                    $hardcore[$deptRow["dept"]] = $hardcoreRow["hardcore_count"];
+                } else {
+                    // If no hardcore courses are found, set the count to 0
+                    $hardcore[$deptRow["dept"]] = 0;
+                }
+
+                // Query to get the number of softcore courses for each department
+                $softcoreCountQuery = "SELECT COUNT(*) AS softcore_count FROM course WHERE department = '" . $deptRow["dept"] . "' AND course_core = 'softcore'";
+                $softcoreCountResult = $conn->query($softcoreCountQuery);
+
+                if ($softcoreCountResult->num_rows > 0) {
+                    $softcoreRow = $softcoreCountResult->fetch_assoc();
+                    $softcore[$deptRow["dept"]] = $softcoreRow["softcore_count"];
+                } else {
+                    // If no softcore courses are found, set the count to 0
+                    $softcore[$deptRow["dept"]] = 0;
+                }
             }
 
             // Output department names and lab counts
-            echo '<h2>Department Names and Lab Counts</h2>';
+            echo '<h2>Department Names and Lab, Hardcore, Softcore Counts</h2>';
             echo '<ul>';
             foreach ($departmentNames as $dept) {
-                echo '<li>' . $dept . ': ' . $lab[$dept] . ' Labs</li>';
+                echo '<li>' . $dept . ': ' . $lab[$dept] . ' Labs, ' . $hardcore[$dept] . ' Hardcore, ' . $softcore[$dept] . ' Softcore</li>';
             }
             echo '</ul>';
         } else {

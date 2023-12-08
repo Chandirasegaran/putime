@@ -103,6 +103,14 @@
                                     ?>
                                 </select>
                             </div>
+                            <!-- Added dropdown for subject type -->
+                            <div class="form-group">
+                                <label for="courseCore">Subject Type:</label>
+                                <select class="form-control" id="courseCore" name="courseCore" required>
+                                    <option value="hardcore">Hardcore</option>
+                                    <option value="softcore">Softcore</option>
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -176,7 +184,7 @@
         if ($result->num_rows > 0) {
             echo '<h2>Filtered Courses</h2>';
             echo '<table class="table">';
-            echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Semester Type</th><th>Department</th><th>Lab</th><th>Credit</th><th>Priority</th><th>Action</th></tr></thead>';
+            echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Semester Type</th><th>Department</th><th>Lab</th><th>Credit</th><th>Priority</th><th>Subject Type</th><th>Action</th></tr></thead>';
             echo '<tbody>';
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
@@ -187,6 +195,7 @@
                 echo '<td>' . $row["lab"] . '</td>';
                 echo '<td>' . $row["credit"] . '</td>';
                 echo '<td>' . $row["priority"] . '</td>';
+                echo '<td>' . $row["course_core"] . '</td>'; // Added column
                 echo '<td><button class="btn btn-danger" onclick="deleteCourse(' . $row["course_id"] . ')">Delete</button></td>';
                 echo '</tr>';
             }
