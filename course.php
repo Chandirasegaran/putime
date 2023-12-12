@@ -73,16 +73,16 @@
                                 ?>
                             </div>
                             <div class="form-group">
-                                <label>Lab:</label><br>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="lab" id="labYes" value="yes" checked>
-                                    <label class="form-check-label" for="labYes">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="lab" id="labNo" value="no">
-                                    <label class="form-check-label" for="labNo">No</label>
-                                </div>
-                            </div>
+                            <label for="lab">Lab:</label>
+                            <select class="form-control" id="lab" name="lab" required>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
                             <div class="form-group">
                                 <label for="credit">Credit:</label>
                                 <select class="form-control" id="credit" name="credit" required>
