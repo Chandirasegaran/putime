@@ -51,7 +51,7 @@
                                 <?php
                                 $servername = "localhost";
                                 $username = "root";
-                                $password = "2503";
+                                $password = "";
                                 $dbname = "timetablepro";
 
                                 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -73,16 +73,16 @@
                                 ?>
                             </div>
                             <div class="form-group">
-                                <label>Lab:</label><br>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="lab" id="labYes" value="yes" checked>
-                                    <label class="form-check-label" for="labYes">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="lab" id="labNo" value="no">
-                                    <label class="form-check-label" for="labNo">No</label>
-                                </div>
-                            </div>
+                            <label for="lab">Lab:</label>
+                            <select class="form-control" id="lab" name="lab" required>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
                             <div class="form-group">
                                 <label for="credit">Credit:</label>
                                 <select class="form-control" id="credit" name="credit" required>
@@ -101,6 +101,14 @@
                                         echo '<option value="' . $i . '">' . $i . '</option>';
                                     }
                                     ?>
+                                </select>
+                            </div>
+                            <!-- Added dropdown for subject type -->
+                            <div class="form-group">
+                                <label for="courseCore">Subject Type:</label>
+                                <select class="form-control" id="courseCore" name="courseCore" required>
+                                    <option value="hardcore">Hardcore</option>
+                                    <option value="softcore">Softcore</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -176,7 +184,7 @@
         if ($result->num_rows > 0) {
             echo '<h2>Filtered Courses</h2>';
             echo '<table class="table">';
-            echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Semester Type</th><th>Department</th><th>Lab</th><th>Credit</th><th>Priority</th><th>Action</th></tr></thead>';
+            echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Semester Type</th><th>Department</th><th>Lab</th><th>Credit</th><th>Priority</th><th>Subject Type</th><th>Action</th></tr></thead>';
             echo '<tbody>';
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
@@ -187,6 +195,7 @@
                 echo '<td>' . $row["lab"] . '</td>';
                 echo '<td>' . $row["credit"] . '</td>';
                 echo '<td>' . $row["priority"] . '</td>';
+                echo '<td>' . $row["course_core"] . '</td>'; // Added column
                 echo '<td><button class="btn btn-danger" onclick="deleteCourse(' . $row["course_id"] . ')">Delete</button></td>';
                 echo '</tr>';
             }

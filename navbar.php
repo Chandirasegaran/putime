@@ -22,6 +22,9 @@
                 <li class="nav-item">
                 <a class="nav-link" href="export.php">Export</a>
                 </li>
+                <li class="nav-item">
+                <a class="nav-link" href="generate.php">Generate</a>
+                </li>
                 <!-- Add other navbar links as needed -->
             </ul>
         </div>

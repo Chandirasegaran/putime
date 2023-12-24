@@ -48,7 +48,7 @@ if (isset($_POST['export'])) {
     // Fetch data from the assign table based on semester type
     $servername = "localhost";
     $username = "root";
-    $password = "2503";
+    $password = "";
     $dbname = "timetablepro";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
