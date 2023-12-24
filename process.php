@@ -4,7 +4,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $password = "2503";
     $dbname = "timetablepro";
 
     // Create connection
