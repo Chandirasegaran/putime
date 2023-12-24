@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2023 at 04:45 PM
+-- Generation Time: Dec 24, 2023 at 03:39 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,21 +40,6 @@ CREATE TABLE `assign` (
   `staff_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `assign`
---
-
-INSERT INTO `assign` (`assign_id`, `course_code`, `course_name`, `sem_type`, `course_core`, `department`, `lab`, `credit`, `priority`, `staff_name`) VALUES
-(6, 'com-201', 'c++', 'odd', '', 'msc', 'yes', 1, 3, 'uma'),
-(7, 'coms-231', 'java', 'odd', '', 'mca', 'yes', 1, 0, 'uma'),
-(8, 'coms-101', 'fundamentals of pc', 'odd', '', 'mca', 'yes', 1, 0, 'kuppusamy'),
-(9, '611', 'maths for network engineering', 'odd', '', 'M.TECH [NIS]', 'no', 3, 1, 'subramaniyan'),
-(10, 'IV', 'elective', 'odd', '', 'M.TECH [CSE]', 'yes', 3, 1, 'subramaniyan'),
-(11, '612', 'modern cryptography', 'odd', '', 'M.TECH [NIS]', 'no', 1, 3, 'chitralekha'),
-(12, 'dum-01', 'dum', 'even', '', 'M.TECH [CSE]', 'yes', 1, 3, 'subramaniyan'),
-(13, 'coms-110', 'jdbc', 'odd', 'hardcore', 'M.TECH [CSE]', 'yes', 1, 0, 'subramaniyan'),
-(14, 'coims-204', 'elective-2', 'odd', 'softcore', 'M.SC.', 'no', 1, 0, 'subramaniyan');
-
 -- --------------------------------------------------------
 
 --
@@ -78,14 +63,21 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`course_id`, `course_code`, `course_name`, `sem_type`, `course_core`, `department`, `lab`, `credit`, `priority`) VALUES
-(6, '611', 'maths for network engineering', 'odd', '', 'M.TECH [NIS]', 2, 3, 1),
-(7, 'IV', 'elective', 'odd', '', 'M.TECH [CSE]', 1, 3, 1),
-(8, '612', 'modern cryptography', 'odd', '', 'M.TECH [NIS]', 2, 1, 3),
-(9, 'dum-01', 'dum', 'even', '', 'M.TECH [CSE]', 1, 1, 3),
-(10, 'coms-110', 'jdbc', 'odd', 'hardcore', 'M.TECH [CSE]', 1, 1, 0),
-(11, 'coims-204', 'elective-2', 'odd', 'softcore', 'M.SC.', 2, 1, 0),
-(14, 'coms-101', 'fundamentals of pc', 'odd', 'hardcore', 'M.TECH [CSE]', 0, 1, 0),
-(15, 'fdgdf', 'sdfasd', 'odd', 'hardcore', 'M.TECH [CSE]', 0, 1, 0);
+(16, 'CSSC 411', 'Design and Analysis of Algorithms ', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(17, 'CSSC 412', 'Advanced Computer Architecture', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(18, 'CSSC 413', 'Automata Theory and Formal Languages', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(20, 'CSSC 414', 'Practical I – Algorithms Lab', 'odd', 'hardcore', 'msc first year batch 1', 2, 2, 0),
+(21, 'CSSC 414', ' Probability and Statistics', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(22, 'CSSC 415', 'Practical II – Computer Architecture Lab', 'odd', 'hardcore', 'msc first year batch 1', 2, 2, 0),
+(23, 'CSSC 421', 'Modern Operating Systems', 'even', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(24, 'CSSC 422', 'Advanced Database Systems', 'even', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(25, 'CSSC 433', 'Optimization Techniques', 'even', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(27, 'CSSC 424', 'Practical IV – Database System Lab', 'even', 'hardcore', 'msc first year batch 1', 2, 2, 0),
+(28, 'CSSC 423', 'Practical III – Operating System Lab ', 'even', 'hardcore', 'msc first year batch 1', 2, 2, 0),
+(29, 'CSSC 511', 'Advanced Computer Networks', 'odd', 'hardcore', 'msc second year batch 1', 0, 3, 0),
+(30, 'CSSC 512', 'Web Technology', 'odd', 'hardcore', 'msc second year batch 1', 0, 3, 0),
+(31, 'CSSC 434', 'Linear Programming', 'odd', 'hardcore', 'msc second year batch 1', 0, 3, 0),
+(34, 'CSSC 513', 'Practical V – Web Technology and Computer Networks Lab', 'odd', 'hardcore', 'msc second year batch 1', 2, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -103,9 +95,18 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`sno`, `dept`) VALUES
-(7, 'M.TECH [CSE]'),
-(8, 'M.TECH [NIS]'),
-(9, 'M.SC.');
+(16, 'msc first year batch 1'),
+(17, 'msc first year batch 2'),
+(18, 'mca first year batch 1'),
+(19, 'mca first year batch 2'),
+(20, 'mtech first year batch 1'),
+(21, 'mtech first year batch 2'),
+(22, 'msc second year batch 1'),
+(23, 'msc second year batch 2'),
+(24, 'mca second year batch 1'),
+(25, 'mca second year batch 2'),
+(26, 'mtech second year batch 1'),
+(27, 'mtech second year batch 2');
 
 -- --------------------------------------------------------
 
@@ -123,8 +124,24 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`regno`, `name`) VALUES
-(1, 'subramaniyan'),
-(2, 'chitralekha');
+(1, 'Dr. R. SUBRAMANIAN'),
+(2, 'Dr. T. CHITHRALEKHA'),
+(3, 'Dr. S. SIVA SATHYA'),
+(4, 'Dr. S.K.V. JAYAKUMAR'),
+(5, 'Dr. K. SURESH JOSEPH'),
+(6, 'Dr. S. RAVI'),
+(7, 'Dr. M. NANDHINI'),
+(8, 'Dr. T. VENGATTARAMAN'),
+(9, 'Dr. POTHULA SUJATHA'),
+(10, 'Dr. P. SHANTHI BALA'),
+(11, 'Dr. V. UMA'),
+(12, 'Dr. K.S. KUPPUSAMY'),
+(13, 'Dr. T. SIVAKUMAR'),
+(14, 'Dr. R. SUNITHA'),
+(15, 'Dr. M. SATHYA'),
+(16, 'Dr. S.L. JAYALAKSHMI'),
+(17, 'DR.G.KRISHNAPRIYA'),
+(18, 'DR. SUKHVINDER SINGH');
 
 --
 -- Indexes for dumped tables
@@ -168,19 +185,19 @@ ALTER TABLE `assign`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `regno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `regno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
