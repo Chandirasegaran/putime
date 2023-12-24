@@ -26,12 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $priority = $_POST["priority"];
 
     // Insert data into the "course" table
-    $sql = "INSERT INTO course (course_code, course_name, sem_type, course_core, department, lab, credit, priority) 
+    $sql = "INSERT INTO subjects (course_code, course_name, sem_type, course_core, department, lab, credit, priority) 
             VALUES ('$courseCode', '$courseName', '$semType', '$courseCore', '$department', $lab, $credit, $priority)";
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to course.php after successful submission
-        header("Location: course.php");
+        header("Location: subject.php");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

@@ -43,7 +43,7 @@
                     }
 
                     // Fetch course details
-                    $courseQuery = "SELECT * FROM course";
+                    $courseQuery = "SELECT * FROM subjects";
                     $courseResult = $conn->query($courseQuery);
 
                     while ($courseRow = $courseResult->fetch_assoc()) {

@@ -19,11 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['course_id'])) {
     $courseId = $_GET['course_id'];
 
     // SQL to delete the course with the specified course_id
-    $sql = "DELETE FROM course WHERE course_id = $courseId";
+    $sql = "DELETE FROM subjects WHERE course_id = $courseId";
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to course.php
-        header("Location: course.php");
+        header("Location: subject.php");
         exit();
     } else {
         echo "Error deleting course: " . $conn->error;

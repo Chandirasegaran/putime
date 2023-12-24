@@ -11,7 +11,7 @@
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'course.php') ? 'active' : ''; ?>">
-                    <a class="nav-link" href="course.php">Course Details</a>
+                    <a class="nav-link" href="subject.php">Subject Details</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="staff.php">Staff Details</a>

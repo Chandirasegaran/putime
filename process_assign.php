@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         }
     } else {
         // Course code doesn't exist, insert a new record
-        $courseQuery = "SELECT * FROM course WHERE course_code = '$courseCode'";
+        $courseQuery = "SELECT * FROM subjects WHERE course_code = '$courseCode'";
         $courseResult = $conn->query($courseQuery);
 
         if ($courseResult->num_rows > 0) {

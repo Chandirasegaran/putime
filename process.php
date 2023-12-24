@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $deptName = $_POST["deptName"];
 
     // Insert the new department into the database
-    $sql = "INSERT INTO department (dept) VALUES ('$deptName')";
+    $sql = "INSERT INTO courses (dept) VALUES ('$deptName')";
     if ($conn->query($sql) === TRUE) {
         // Redirect back to the home page after adding the department
         header("Location: index.php");

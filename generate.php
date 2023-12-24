@@ -30,7 +30,7 @@
         }
 
         // Query to get the number of departments
-        $departmentCountQuery = "SELECT COUNT(*) AS count FROM department";
+        $departmentCountQuery = "SELECT COUNT(*) AS count FROM courses";
         $departmentCountResult = $conn->query($departmentCountQuery);
 
         if ($departmentCountResult->num_rows > 0) {
@@ -45,7 +45,7 @@
         }
 
         // Query to get department names
-        $departmentNamesQuery = "SELECT dept FROM department";
+        $departmentNamesQuery = "SELECT dept FROM courses";
         $departmentNamesResult = $conn->query($departmentNamesQuery);
 
         if ($departmentNamesResult->num_rows > 0) {
@@ -59,7 +59,7 @@
                 $departmentNames[] = $deptRow["dept"];
 
                 // Query to get the number of labs for each department
-                $labCountQuery = "SELECT COUNT(*) AS lab_count FROM course WHERE department = '" . $deptRow["dept"] . "' AND lab = 'yes'";
+                $labCountQuery = "SELECT COUNT(*) AS lab_count FROM subjects WHERE department = '" . $deptRow["dept"] . "' AND lab = 'yes'";
                 $labCountResult = $conn->query($labCountQuery);
 
                 if ($labCountResult->num_rows > 0) {
@@ -71,7 +71,7 @@
                 }
 
                 // Query to get the number of hardcore courses for each department
-                $hardcoreCountQuery = "SELECT COUNT(*) AS hardcore_count FROM course WHERE department = '" . $deptRow["dept"] . "' AND course_core = 'hardcore'";
+                $hardcoreCountQuery = "SELECT COUNT(*) AS hardcore_count FROM subjects WHERE department = '" . $deptRow["dept"] . "' AND course_core = 'hardcore'";
                 $hardcoreCountResult = $conn->query($hardcoreCountQuery);
 
                 if ($hardcoreCountResult->num_rows > 0) {
@@ -83,7 +83,7 @@
                 }
 
                 // Query to get the number of softcore courses for each department
-                $softcoreCountQuery = "SELECT COUNT(*) AS softcore_count FROM course WHERE department = '" . $deptRow["dept"] . "' AND course_core = 'softcore'";
+                $softcoreCountQuery = "SELECT COUNT(*) AS softcore_count FROM subjects WHERE department = '" . $deptRow["dept"] . "' AND course_core = 'softcore'";
                 $softcoreCountResult = $conn->query($softcoreCountQuery);
 
                 if ($softcoreCountResult->num_rows > 0) {

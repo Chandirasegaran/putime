@@ -19,18 +19,18 @@
     <!-- Home Page Section -->
 <section id="home">
     <div class="container">
-        <h2>Add Department</h2>
+        <h2>Add Course</h2>
         <form method="post" action="process.php">
             <div class="form-group">
-                <label for="deptName">Department Name:</label>
+                <label for="deptName">Course Name:</label>
                 <input type="text" class="form-control" id="deptName" name="deptName" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add Department</button>
+            <button type="submit" class="btn btn-primary">Add Course</button>
         </form>
 
         <hr>
 
-        <h2>Department List</h2>
+        <h2>Course List</h2>
         <?php
         // PHP code to fetch and display departments in a table with delete buttons
         $servername = "localhost";
@@ -47,12 +47,12 @@
         }
 
         // Fetch and display departments in a table with delete buttons
-        $sql = "SELECT * FROM department";
+        $sql = "SELECT * FROM courses";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             echo '<table class="table">';
-            echo '<thead><tr><th>Serial Number</th><th>Department Name</th><th>Action</th></tr></thead>';
+            echo '<thead><tr><th>Serial Number</th><th>Course Name</th><th>Action</th></tr></thead>';
             echo '<tbody>';
             $serialNumber = 1;
             while ($row = $result->fetch_assoc()) {
@@ -65,7 +65,7 @@
             }
             echo '</tbody></table>';
         } else {
-            echo "No departments found.";
+            echo "No Courses found.";
         }
 
         $conn->close();

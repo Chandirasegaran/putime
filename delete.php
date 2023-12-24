@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $deptId = $_POST["deptId"];
 
     // Delete the department from the database
-    $sql = "DELETE FROM department WHERE sno = $deptId";
+    $sql = "DELETE FROM courses WHERE sno = $deptId";
     if ($conn->query($sql) === TRUE) {
         // Redirect back to the home page after deleting the department
         header("Location: index.php");

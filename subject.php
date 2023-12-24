@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Course Details - Timetable Pro</title>
+    <title>Subject Details - Timetable Pro</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -15,27 +15,27 @@
 
     <div class="container mt-4">
         <!-- Add Course Button -->
-        <button class="btn btn-primary" data-toggle="modal" data-target="#addCourseModal">Add Course</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addCourseModal">Add Subject</button>
 
         <!-- Add Course Modal -->
         <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="addCourseModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addCourseModalLabel">Add Course</h5>
+                        <h5 class="modal-title" id="addCourseModalLabel">Add Subject</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <!-- Add Course Form -->
-                        <form method="post" action="add_course.php">
+                        <form method="post" action="add_subject.php">
                             <div class="form-group">
-                                <label for="courseCode">Course Code:</label>
+                                <label for="courseCode">Subject Code:</label>
                                 <input type="text" class="form-control" id="courseCode" name="courseCode" required>
                             </div>
                             <div class="form-group">
-                                <label for="courseName">Course Name:</label>
+                                <label for="courseName">Subject Name:</label>
                                 <input type="text" class="form-control" id="courseName" name="courseName" required>
                             </div>
                             <div class="form-group">
@@ -46,7 +46,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="department">Department:</label>
+                                <label for="department">Course:</label>
                                 <!-- Assuming you have a departments table -->
                                 <?php
                                 $servername = "localhost";
@@ -60,7 +60,7 @@
                                     die("Connection failed: " . $conn->connect_error);
                                 }
 
-                                $departmentQuery = "SELECT * FROM department";
+                                $departmentQuery = "SELECT * FROM courses";
                                 $departmentResult = $conn->query($departmentQuery);
 
                                 echo '<select class="form-control" id="department" name="department" required>';
@@ -138,7 +138,7 @@
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                $departmentQuery = "SELECT * FROM department";
+                $departmentQuery = "SELECT * FROM courses";
                 $departmentResult = $conn->query($departmentQuery);
 
                 echo '<select class="form-control" id="departmentFilter" name="departmentFilter">';
@@ -167,7 +167,7 @@
         $departmentFilter = isset($_POST['departmentFilter']) ? $_POST['departmentFilter'] : 'all';
 
         // Build the SQL query based on filters
-        $sql = "SELECT * FROM course";
+        $sql = "SELECT * FROM subjects";
         if ($semesterTypeFilter != 'all') {
             $sql .= " WHERE sem_type = '$semesterTypeFilter'";
             if ($departmentFilter != 'all') {
@@ -182,9 +182,9 @@
 
         // Display filtered courses with delete buttons
         if ($result->num_rows > 0) {
-            echo '<h2>Filtered Courses</h2>';
+            echo '<h2>Filtered Subjects</h2>';
             echo '<table class="table">';
-            echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Semester Type</th><th>Department</th><th>Lab</th><th>Credit</th><th>Priority</th><th>Subject Type</th><th>Action</th></tr></thead>';
+            echo '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Semester Type</th><th>Course</th><th>Lab</th><th>Credit</th><th>Priority</th><th>Subject Type</th><th>Action</th></tr></thead>';
             echo '<tbody>';
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
