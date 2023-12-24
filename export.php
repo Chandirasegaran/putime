@@ -72,6 +72,9 @@ if (isset($_POST['export'])) {
     // Output the PDF
     $pdf->Output('timetable.pdf', 'D');
     exit();
+
+
+    
 }
 ?>
 
@@ -102,6 +105,54 @@ if (isset($_POST['export'])) {
             </div>
             <button type="submit" class="btn btn-primary" name="export">Export</button>
         </form>
+        <br>
+        <br>
+        <h2>Course List | Priority Chooser</h2>
+        <?php
+        // PHP code to fetch and display departments in a table with delete buttons
+        $servername = "localhost";
+        $username = "root";
+        $password = "2503";
+        $dbname = "timetablepro";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Fetch and display departments in a table with delete buttons
+        $sql = "SELECT * FROM courses";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            echo '<table class="table">';
+            echo '<thead><tr><th>Serial Number</th><th>Course Name</th><th>Priority</th></tr></thead>';
+            echo '<tbody>';
+            $serialNumber = 1;
+            while ($row = $result->fetch_assoc()) {
+                echo '<tr>';
+                echo '<td>' . $serialNumber . '</td>';
+                echo '<td>' . $row["dept"] . '</td>';
+                echo '<td><select name="priority" class="form-control">';
+                // Add options for numbers (1, 2, 3, ..., n)
+                for ($i = 1; $i <= $result->num_rows; $i++) {
+                    echo '<option value="' . $i . '">' . $i . '</option>';
+                }
+                echo '</select></td>';
+                // echo '<td><form method="post" action="delete.php"><input type="hidden" name="deptId" value="' . $row["sno"] . '"><button type="submit" class="btn btn-danger">Delete</button></form></td>';
+                echo '</tr>';
+                $serialNumber++;
+            }
+            echo '</tbody></table>';
+        } else {
+            echo "No Courses found.";
+        }
+
+        $conn->close();
+        ?>
     </div>
 
     <!-- Bootstrap JS and Popper.js -->
