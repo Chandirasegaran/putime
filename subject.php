@@ -117,42 +117,47 @@
                 </div>
             </div>
         </div>
+        <?php
+// Initialize $semesterTypeFilter and $departmentFilter variables
+$semesterTypeFilter = isset($_POST['semesterTypeFilter']) ? $_POST['semesterTypeFilter'] : 'all';
+$departmentFilter = isset($_POST['departmentFilter']) ? $_POST['departmentFilter'] : 'all';
+?>
 
         <!-- Filter Form -->
-        <form method="post" action="">
-            <div class="form-group">
-                <label for="semesterTypeFilter">Filter by Semester Type:</label>
-                <select class="form-control" id="semesterTypeFilter" name="semesterTypeFilter">
-                    <option value="all">All</option>
-                    <option value="odd">Odd</option>
-                    <option value="even">Even</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="departmentFilter">Filter by Department:</label>
-                <!-- Assuming you have a departments table -->
-                <?php
-                $conn = new mysqli($servername, $username, $password, $dbname);
+<form method="post" action="">
+    <div class="form-group">
+        <label for="semesterTypeFilter">Filter by Semester Type:</label>
+        <select class="form-control" id="semesterTypeFilter" name="semesterTypeFilter">
+            <option value="all" <?php if ($semesterTypeFilter == 'all') echo 'selected'; ?>>All</option>
+            <option value="odd" <?php if ($semesterTypeFilter == 'odd') echo 'selected'; ?>>Odd</option>
+            <option value="even" <?php if ($semesterTypeFilter == 'even') echo 'selected'; ?>>Even</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="departmentFilter">Filter by Department:</label>
+        <?php
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-                $departmentQuery = "SELECT * FROM courses";
-                $departmentResult = $conn->query($departmentQuery);
+        $departmentQuery = "SELECT * FROM courses";
+        $departmentResult = $conn->query($departmentQuery);
 
-                echo '<select class="form-control" id="departmentFilter" name="departmentFilter">';
-                echo '<option value="all">All</option>';
-                while ($deptRow = $departmentResult->fetch_assoc()) {
-                    echo '<option value="' . $deptRow["dept"] . '">' . $deptRow["dept"] . '</option>';
-                }
-                echo '</select>';
+        echo '<select class="form-control" id="departmentFilter" name="departmentFilter">';
+        echo '<option value="all" ' . ($departmentFilter == 'all' ? 'selected' : '') . '>All</option>';
+        while ($deptRow = $departmentResult->fetch_assoc()) {
+            echo '<option value="' . $deptRow["dept"] . '" ' . ($departmentFilter == $deptRow["dept"] ? 'selected' : '') . '>' . $deptRow["dept"] . '</option>';
+        }
+        echo '</select>';
 
-                $conn->close();
-                ?>
-            </div>
-            <button type="submit" class="btn btn-primary">Filter</button>
-        </form>
+        $conn->close();
+        ?>
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
 
         <!-- Display Filtered Courses -->
         <?php
