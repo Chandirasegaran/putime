@@ -112,7 +112,7 @@ if (isset($_POST['export'])) {
         // PHP code to fetch and display departments in a table with delete buttons
         $servername = "localhost";
         $username = "root";
-        $password = "2503";
+        $password = "";
         $dbname = "timetablepro";
 
         // Create connection
