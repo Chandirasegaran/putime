@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2023 at 03:39 PM
+-- Generation Time: Dec 30, 2023 at 07:32 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,11 +34,28 @@ CREATE TABLE `assign` (
   `sem_type` varchar(10) NOT NULL,
   `course_core` varchar(255) NOT NULL,
   `department` varchar(255) NOT NULL,
-  `lab` enum('yes','no') NOT NULL,
+  `lab` int(11) NOT NULL,
   `credit` int(11) NOT NULL,
   `priority` int(11) NOT NULL,
   `staff_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assign`
+--
+
+INSERT INTO `assign` (`assign_id`, `course_code`, `course_name`, `sem_type`, `course_core`, `department`, `lab`, `credit`, `priority`, `staff_name`) VALUES
+(15, 'CSSC 411', 'Design and Analysis of Algorithms ', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0, 'Dr. S. RAVI'),
+(16, 'CSSC 412', 'Advanced Computer Architecture', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0, 'Dr. POTHULA SUJATHA'),
+(17, 'CSSC 413', 'Automata Theory and Formal Languages', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0, 'Dr. R. SUNITHA'),
+(18, 'CSSC 414', 'Practical I – Algorithms Lab', 'odd', 'hardcore', 'msc first year batch 1', 2, 2, 0, 'Dr. S. RAVI'),
+(19, 'CSSC 432', ' Probability and Statistics', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0, 'Dr. S. SIVA SATHYA'),
+(20, 'CSSC 415', 'Practical II – Computer Architecture Lab', 'odd', 'hardcore', 'msc first year batch 1', 2, 2, 0, 'Dr. POTHULA SUJATHA'),
+(21, 'CSSC 421', 'Modern Operating Systems', 'even', 'hardcore', 'msc first year batch 1', 0, 3, 0, 'SRINIVAS'),
+(22, 'CSSC 511', 'Advanced Computer Networks', 'odd', 'hardcore', 'msc second year batch 1', 0, 3, 0, 'Dr. P. SHANTHI BALA'),
+(23, 'CSSC 512', 'Web Technology', 'odd', 'hardcore', 'msc second year batch 1', 0, 3, 0, 'DR. SUKHVINDER SINGH'),
+(24, 'CSSC 434', 'Linear Programming', 'odd', 'hardcore', 'msc second year batch 1', 0, 3, 0, 'Dr. M. NANDHINI'),
+(25, 'CSSC 513', 'Practical V – Web Technology and Computer Networks Lab', 'odd', 'hardcore', 'msc second year batch 1', 2, 2, 0, 'Dr. P. SHANTHI BALA');
 
 -- --------------------------------------------------------
 
@@ -67,7 +84,7 @@ INSERT INTO `course` (`course_id`, `course_code`, `course_name`, `sem_type`, `co
 (17, 'CSSC 412', 'Advanced Computer Architecture', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
 (18, 'CSSC 413', 'Automata Theory and Formal Languages', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
 (20, 'CSSC 414', 'Practical I – Algorithms Lab', 'odd', 'hardcore', 'msc first year batch 1', 2, 2, 0),
-(21, 'CSSC 414', ' Probability and Statistics', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
+(21, 'CSSC 432', ' Probability and Statistics', 'odd', 'hardcore', 'msc first year batch 1', 0, 3, 0),
 (22, 'CSSC 415', 'Practical II – Computer Architecture Lab', 'odd', 'hardcore', 'msc first year batch 1', 2, 2, 0),
 (23, 'CSSC 421', 'Modern Operating Systems', 'even', 'hardcore', 'msc first year batch 1', 0, 3, 0),
 (24, 'CSSC 422', 'Advanced Database Systems', 'even', 'hardcore', 'msc first year batch 1', 0, 3, 0),
@@ -141,7 +158,8 @@ INSERT INTO `staff` (`regno`, `name`) VALUES
 (15, 'Dr. M. SATHYA'),
 (16, 'Dr. S.L. JAYALAKSHMI'),
 (17, 'DR.G.KRISHNAPRIYA'),
-(18, 'DR. SUKHVINDER SINGH');
+(18, 'DR. SUKHVINDER SINGH'),
+(19, 'SRINIVAS');
 
 --
 -- Indexes for dumped tables
@@ -179,7 +197,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `assign`
 --
 ALTER TABLE `assign`
-  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `assign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `course`
@@ -197,7 +215,7 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `regno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `regno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
