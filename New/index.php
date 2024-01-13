@@ -1,3 +1,10 @@
+<?php
+    $sql = "CREATE DATABASE IF NOT EXISTS PUTIMETBDB";
+    if ($conn->query($sql) !== TRUE) {
+        echo 'Error Inserting into Admin table: ' . $conn->error;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
