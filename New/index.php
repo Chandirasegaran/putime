@@ -1,3 +1,8 @@
+<?php
+    include("db_connection.php");
+    include("db_connection_close.php");
+?> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
