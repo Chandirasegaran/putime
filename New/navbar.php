@@ -8,10 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['className']) && !empty
     $labs = $_POST['lab'];
 
     // Database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "test1";
+    include 'db_connection.php';
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 

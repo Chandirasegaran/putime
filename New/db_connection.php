@@ -4,4 +4,4 @@
     $username = "root";
     $password = "";
     $dbname = "putimetbdb";
-?>
+?>  
