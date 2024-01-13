@@ -1,0 +1,9 @@
+#c_add_row_btn{
+    width:100px;
+    /* margin-right: 28px; */
+    margin-right: 2.5% ;
+}
+
+#c_delete_row_btn{
+    width: 100px;
+}
