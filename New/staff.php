@@ -64,7 +64,7 @@ include 'db_connection.php';
             }
             echo '</tbody></table>';
         } else {
-            echo 'No staff records found.';
+            echo '<br>No staff records found.';
         }
 
         $conn->close();
