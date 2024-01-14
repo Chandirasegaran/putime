@@ -102,7 +102,7 @@ include("db_connection_close.php");
         <div>
             <?php
             include 'db_connection.php';
-            // Fetch and display staff details
+            // Fetch and display class details
             $classResult = $conn->query("SELECT * FROM admin");
 
             if ($classResult->num_rows > 0) {
@@ -113,7 +113,7 @@ include("db_connection_close.php");
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $classRow["COURSE"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteCourse('.$classRow["COURSE"].')">Delete</button></td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteCourse('."'".$classRow["COURSE"]."'".')">Delete class</button></td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -182,14 +182,15 @@ include("db_connection_close.php");
         }
 
         function deleteCourse(courseName) {
-            var confirmation = confirm("Are you sure you want to delete this Course record?");
-            if (confirmation) {
-                // Redirect to the PHP file that handles the deletion
-                window.location.href = 'delete_course.php?coursename=' + courseName;
-            }
-        }
+    console.log('Delete Course called with courseName:', courseName);
+    var confirmation = confirm("Are you sure you want to delete this Course record?");
+    if (confirmation) {
+        // Redirect to the PHP file that handles the deletion
+        window.location.href = 'delete_course.php?coursename=' + courseName;
+    }
+}
     </script>
-
+    
 </body>
 
 </html>
