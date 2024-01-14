@@ -6,9 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['coursename'])) {
     include 'db_connection.php';
     // Collect registration number from the query parameters
     $coursename = $_GET['coursename'];
+    echo ''.$coursename.''; 
 
     // Delete the staff record from the staff table
-    $deleteQuery = "DELETE FROM admin WHERE COURSE = $coursename";
+    $deleteQuery = "DELETE FROM admin WHERE COURSE = '$coursename'";
 
     if ($conn->query($deleteQuery) === TRUE) {
         $conn->close();

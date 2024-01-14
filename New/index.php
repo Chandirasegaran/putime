@@ -113,7 +113,8 @@ include("db_connection_close.php");
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $classRow["COURSE"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteCourse('.$classRow["COURSE"].')">Delete</button></td>';
+                    echo '<button class="btn btn-success" onclick="deleteCourse()">Edit</button>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteCourse(\''.$classRow["COURSE"].'\')">Delete</button></td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -139,6 +140,9 @@ include("db_connection_close.php");
         crossorigin="anonymous"></script>
 
     <script>
+        function myfunc(){
+            alert('hj');
+        }
         let lab_count = 2;
         let subname_count = 2;
         let subcode_count = 2;
