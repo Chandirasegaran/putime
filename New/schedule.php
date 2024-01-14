@@ -108,29 +108,31 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
 
-    // Add an event listener to the select element
-    document.getElementById('listcourse').addEventListener('change', function () {
-        var selectedCourse = this.value;
-        // alert(selectedCourse);
+        // Add an event listener to the select element
+        document.getElementById('listcourse').addEventListener('change', function () {
+            var selectedCourse = this.value;
+            // alert(selectedCourse);
 
-        // Make an AJAX request to fetch the table structure for the selected course
-        $.ajax({
-            type: "POST",
-            url: "fetch_table_data.php", // Adjust the path to match your file structure
-            data: { course: selectedCourse },
-            success: function (response) {
-                // Update the assigningtable div with the received table data
-                document.getElementById('assigningtable').innerHTML = response;
-            },
-            error: function (error) {
-                console.log("Error: " + error.responseText);
-            }
+            // Make an AJAX request to fetch the table structure for the selected course
+            $.ajax({
+                type: "POST",
+                url: "fetch_table_data.php", // Adjust the path to match your file structure
+                data: { course: selectedCourse },
+                success: function (response) {
+                    // Update the assigningtable div with the received table data
+                    document.getElementById('assigningtable').innerHTML = response;
+                },
+                error: function (error) {
+                    console.log("Error: " + error.responseText);
+                }
+            });
         });
-    });
-</script>
+
+   
+    </script>
 </body>
 
 </html>
