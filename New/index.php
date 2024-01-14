@@ -64,9 +64,9 @@ include("db_connection_close.php");
                                     <tr>
                                         <td><input type="text" class="form-control" name="subjectCode1" maxlength="8"
                                                 Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="20"
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50"
                                                 Required></td>
-                                        <td><input type="text" class="form-control" name="hoursRequired1" Required></td>
+                                        <td><input type="number" class="form-control" name="hoursRequired1" Required></td>
                                         <td>
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="no"
@@ -142,12 +142,13 @@ include("db_connection_close.php");
         let lab_count = 2;
         let subname_count = 2;
         let subcode_count = 2;
+        let hoursRequiredcount=2;
         // Function to add a new row to the table
         function addRow() {
             var newRow = '<tr>' +
                 '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="8" Required></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="20" Required></td>' +
-                '<td><input type="text" class="form-control" name="hoursRequired" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="50" Required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired'+hoursRequiredcount+'" Required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="no" checked> No' +
@@ -165,6 +166,7 @@ include("db_connection_close.php");
             lab_count++;
             subname_count++;
             subcode_count++;
+            hoursRequiredcount++;
         }
 
         // Function to delete a row
@@ -172,6 +174,7 @@ include("db_connection_close.php");
             lab_count--;
             subname_count--;
             subcode_count--;
+            hoursRequiredcount--;
             var row = button.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
