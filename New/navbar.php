@@ -10,16 +10,21 @@
                 <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
-                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'staff.php') ? 'active' : ''; ?>">
+                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'course.php') ? 'active' : ''; ?>">
+                    <a class="nav-link" href="subject.php">Subject Details</a>
+                </li>
+                <li class="nav-item">
                 <a class="nav-link" href="staff.php">Staff Details</a>
                 </li>
-                <li class="nav-item  <?php echo (basename($_SERVER['PHP_SELF']) == 'schedule.php') ? 'active' : ''; ?>" >
-                <a class="nav-link" href="schedule.php">Schedule</a>
+                <li class="nav-item">
+                <a class="nav-link" href="assign.php">Assign Staff</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="export.php">Export</a>
                 </li>
-
+                <li class="nav-item">
+                <a class="nav-link" href="generate.php">Generate</a>
+                </li>
                 <!-- Add other navbar links as needed -->
             </ul>
         </div>
