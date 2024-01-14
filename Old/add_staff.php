@@ -5,8 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Assuming you have a database connection
     $servername = "localhost";
     $username = "root";
-    $password = "semEIGHT*8";
-    $dbname = "staff";
+    $password = "";
+    $dbname = "timetablepro";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 

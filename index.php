@@ -1,86 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Timetable Pro</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS Timetable App</title>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+     <script>
+        $(function(){
+          $('#navHeader').load('navbar.php');
+        });
+     </script>
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f5f5f5;
+    }
+
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 2em;
+    }
+
+    .feature {
+      text-align: center;
+      max-width: 300px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .cta {
+      text-align: center;
+      background-color: #2ecc71;
+      color: #fff;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #e74c3c;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #c0392b;
+    }
+
+    footer {
+      background-color: #34495e;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+      margin-bottom:0px;
+      left: 0;
+      bottom:0;
+      position: fixed;
+      width: 100%;
+    }
+  </style>
 </head>
-<body>
 
 <body>
+<div id="navHeader"></div>
 
-    <!-- Navbar -->
-    <?php include('navbar.php'); ?>
 
-<!-- Content -->
-<div class="container mt-4">
-    <!-- Home Page Section -->
-<section id="home">
-    <div class="container">
-        <h2>Add Department</h2>
-        <form method="post" action="process.php">
-            <div class="form-group">
-                <label for="deptName">Department Name:</label>
-                <input type="text" class="form-control" id="deptName" name="deptName" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Department</button>
-        </form>
-
-        <hr>
-
-        <h2>Department List</h2>
-        <?php
-        // PHP code to fetch and display departments in a table with delete buttons
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "timetablepro";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // Fetch and display departments in a table with delete buttons
-        $sql = "SELECT * FROM department";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            echo '<table class="table">';
-            echo '<thead><tr><th>Serial Number</th><th>Department Name</th><th>Action</th></tr></thead>';
-            echo '<tbody>';
-            $serialNumber = 1;
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td>' . $serialNumber . '</td>';
-                echo '<td>' . $row["dept"] . '</td>';
-                echo '<td><form method="post" action="delete.php"><input type="hidden" name="deptId" value="' . $row["sno"] . '"><button type="submit" class="btn btn-danger">Delete</button></form></td>';
-                echo '</tr>';
-                $serialNumber++;
-            }
-            echo '</tbody></table>';
-        } else {
-            echo "No departments found.";
-        }
-
-        $conn->close();
-        ?>
+  <section>
+    <div class="feature">
+      <h2>Easy Scheduling</h2>
+      <p>Create and manage schedules effortlessly.</p>
     </div>
-</section>
 
+    <div class="feature">
+      <h2>Real-time Updates</h2>
+      <p>Instant notifications for timetable changes.</p>
+    </div>
 
-   
-</div>
+    <div class="feature">
+      <h2>Quick Search</h2>
+      <p>Powerful search functionality for classes and events.</p>
+    </div>
+  </section>
 
-<!-- Bootstrap JS and Popper.js -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <section class="cta">
+    <h2>Get Started Today</h2>
+  </section>
 
+  <footer>
+    <p>&copy; 2024 CS Timetable App. All rights reserved.</p>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(function (section) {
+      section.style.opacity = 0;
+
+      setTimeout(function () {
+        section.style.opacity = 1;
+        section.style.transition = 'opacity 1s';
+      }, 500);
+    });
+  });
+</script>
+
 </html>
