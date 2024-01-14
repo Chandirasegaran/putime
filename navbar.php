@@ -1,52 +1,41 @@
-<?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['className']) && !empty($_POST['className'])) {
-    // Retrieve form data
-    $className = $_POST['className'];
-    $subjectCodes = $_POST['subjectCode'];
-    $subjectNames = $_POST['subjectName'];
-    $hoursRequired = $_POST['hoursRequired'];
-    $labs = $_POST['lab'];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary ">
+      <div class="container">
+      <a href="/" class="navbar-brand">TimeTable</a>
 
-    // Database connection
-    include 'db_connection.php';
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#myNavBar"
+      aria-controls="myNavBar" aria-expanded="false" aria-lable="toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+      </button>
+ 
+  
+      <div class="collapse navbar-collapse" id="myNavBar">
+       <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a href="index.php" class="nav-link">home</a>
+        </li>
+        <li class="nav-item">
+          <a href="staff.php" class="nav-link">Add staff</a>
+        </li>
+        <li class="nav-item">
+          <a href="add_class.php" class="nav-link">Add course</a>
+        </li>
+       </ul>
+      </div>
+      </div>
+    </nav>
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+  </header>
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Create new timetable table
-    $table_name = $className . "_" . time(); // Use a unique table name
-    $create_table_query = "CREATE TABLE $table_name (
-        subjectCode VARCHAR(8),
-        subjectName VARCHAR(20),
-        hoursRequired INT,
-        lab VARCHAR(2)
-    )";
-
-    if ($conn->query($create_table_query) === TRUE) {
-        // Insert data into the new table
-        $insert_data_query = "INSERT INTO $table_name (subjectCode, subjectName, hoursRequired, lab) VALUES ";
-
-        for ($i = 0; $i < count($subjectCodes); $i++) {
-            if (!empty($subjectCodes[$i]) && !empty($subjectNames[$i]) && !empty($hoursRequired[$i]) && isset($labs[$i])) {
-                $insert_data_query .= "('" . $subjectCodes[$i] . "', '" . $subjectNames[$i] . "', " . $hoursRequired[$i] . ", '" . $labs[$i] . "')";
-                if ($i < count($subjectCodes) - 1) {
-                    $insert_data_query .= ",";
-                }
-            }
-        }
-
-        if (!empty($insert_data_query)) {
-            if ($conn->query($insert_data_query) === TRUE) {
-                // Insert table name into the admin table if classname is not empty
-                $insert_admin_table_query = "INSERT INTO admin_table (classname) VALUES ('$className') ON DUPLICATE KEY UPDATE classname=VALUES(classname)";
-                $conn->query($insert_admin_table_query);
-            }
-        }
-    }
-
-    $conn->close();
-}
-?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
