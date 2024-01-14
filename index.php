@@ -74,6 +74,11 @@
       color: #fff;
       text-align: center;
       padding: 1em;
+      margin-bottom:0px;
+      left: 0;
+      bottom:0;
+      position: fixed;
+      width: 100%;
     }
   </style>
 </head>
@@ -84,19 +89,16 @@
 
   <section>
     <div class="feature">
-      <img src="schedule-icon.png" alt="Schedule Icon">
       <h2>Easy Scheduling</h2>
       <p>Create and manage schedules effortlessly.</p>
     </div>
 
     <div class="feature">
-      <img src="notification-icon.png" alt="Notification Icon">
       <h2>Real-time Updates</h2>
       <p>Instant notifications for timetable changes.</p>
     </div>
 
     <div class="feature">
-      <img src="search-icon.png" alt="Search Icon">
       <h2>Quick Search</h2>
       <p>Powerful search functionality for classes and events.</p>
     </div>
@@ -104,8 +106,6 @@
 
   <section class="cta">
     <h2>Get Started Today</h2>
-    <p>Join thousands of students benefiting from our app.</p>
-    <a href="#signup" class="btn">Sign Up Now</a>
   </section>
 
   <footer>
