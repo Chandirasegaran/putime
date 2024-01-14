@@ -35,4 +35,14 @@ if ($conn->query($sql) !== TRUE) {
     echo 'Error creating Subject table: ' . $conn->error;
 }
 
+$sql = 'CREATE TABLE IF NOT EXISTS STAFF (
+    REGNO INT PRIMARY KEY AUTO_INCREMENT,
+    NAME VARCHAR(50)
+)';
+
+
+if ($conn->query($sql) !== TRUE) {
+    echo 'Error creating Staff table: ' . $conn->error;
+}
+
 ?>

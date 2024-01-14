@@ -87,6 +87,6 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
         break;
     }
 }
-include 'db_connection_close.php'
-
+include 'db_connection_close.php';
+header("Location: index.php");
 ?>
