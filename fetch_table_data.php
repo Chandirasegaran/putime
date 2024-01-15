@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     include 'db_connection.php';
 
     $course = $_POST['course'];
-    // echo '<script>alert("' . $_POST['course'] . '");</script>';
+    echo '<script>alert("' . $_POST['course'] . '");</script>';
 
     // Fetch the data for the selected course
     $sql = "SELECT * FROM `$course`";
@@ -33,10 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             // Loop through the time slots and generate dropdowns
             for ($i = 1; $i <= 8; $i++) {
                 echo '<td>';
-                echo '<select class="form-control" id="' . $course . $row["ORDER"] . $i . '">';
+                echo '<select class="form-control" id="' . $course . $row["DAY"] . $i . '">';
                 
-                // Add a default option "Unknown"
-                echo '<option value="Unknown">Unknown</option>';
+                // Add an initial option with value "Select"
+                echo '<option value="">Select</option>';
 
                 // Fetch and populate dropdown options with subjects for the selected course
                 $subjectResult = $conn->query("SELECT * FROM {$course}_Subjects");
