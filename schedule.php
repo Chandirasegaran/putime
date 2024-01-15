@@ -55,9 +55,13 @@
             <br>
             <hr>
             <br>
+            <form action="update_course_table.php" method="post">
             <div id="assigningtable">
-
+                <!-- Displaying Table -->
             </div>
+            
+           
+            </form>
         </div>
 
         <H1>Final Schedule</H1>
