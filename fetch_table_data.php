@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     $course = $_POST['course'];
     echo '<script>alert("' . $_POST['course'] . '");</script>';
-
+    
     // Fetch the data for the selected course
     $sql = "SELECT * FROM `$course`";
     $result = $conn->query($sql);
