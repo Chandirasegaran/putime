@@ -9,8 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Start of Creating table
 
-
-
     // Your SQL query to create the table
     $sql = 'CREATE TABLE IF NOT EXISTS ' . $staffName . ' (
     `ORDER` INT PRIMARY KEY,
@@ -49,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // End of creating Table
 
+
     // Insert data into the staff table
     $insertQuery = "INSERT INTO staff (name) VALUES ('$staffName')";
 
@@ -63,4 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 }
+
 ?>
+

@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     $course = $_POST['course'];
     echo '<script>alert("' . $_POST['course'] . '");</script>';
-    
+  
     // Fetch the data for the selected course
     $sql = "SELECT * FROM `$course`";
     $result = $conn->query($sql);
@@ -33,7 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             // Loop through the time slots and generate dropdowns
             for ($i = 1; $i <= 8; $i++) {
                 echo '<td>';
+
                 echo '<select class="form-control" id="' . $course . $row["ORDER"] . $i . '">';
+
                 
                 // Add an initial option with value "Select"
                 echo '<option value="">Select</option>';

@@ -32,6 +32,7 @@
                         <form method="post" action="add_staff.php">
                             <div class="form-group">
                                 <label for="staffName">Staff Name:</label>
+
                                 <input type="text" class="form-control" id="staffName" name="staffName" required oninput="replacespace(this)">
                             </div>
                             <script>
@@ -39,6 +40,7 @@
                                     inputValue.value=inputValue.value.replace(/ /g, "_");
                                 }
                             </script>
+
                             <button type="submit" class="btn btn-primary">Add Record</button>
                         </form>
                     </div>
