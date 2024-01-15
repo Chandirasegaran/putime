@@ -78,7 +78,7 @@ if ($conn->query($sql) !== TRUE) {
 // Example: Insert data into a table
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     if (${"subjectCode{$i}"} !== null) {
-        $sql = "INSERT INTO {$courseName}Subjects (subjectCode, subjectName, hoursRequired, lab)
+        $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName, hoursRequired, lab)
                 VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
         if ($conn->query($sql) !== TRUE) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
@@ -87,6 +87,6 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
         break;
     }
 }
-include 'db_connection_close.php'
-
+include 'db_connection_close.php';
+header("Location: index.php");
 ?>

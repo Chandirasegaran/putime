@@ -3,17 +3,7 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Assuming you have a database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "semEIGHT*8";
-    $dbname = "staff";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
+    include 'db_connection.php';
     // Collect data from the form
     $staffName = $_POST['staffName'];
 

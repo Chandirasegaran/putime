@@ -44,16 +44,7 @@
         <!-- Display Staff Details -->
         <?php
         // Assuming you have a database connection
-        $servername = "localhost";
-        $username = "root";
-        $password = "semEIGHT*8";
-        $dbname = "staff";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+include 'db_connection.php';
 
         // Fetch and display staff details
         $staffQuery = "SELECT * FROM staff";
@@ -66,9 +57,9 @@
             echo '<tbody>';
             while ($staffRow = $staffResult->fetch_assoc()) {
                 echo '<tr>';
-                echo '<td>' . $staffRow["regno"] . '</td>';
-                echo '<td>' . $staffRow["name"] . '</td>';
-                echo '<td><button class="btn btn-danger" onclick="deleteStaff(' . $staffRow["regno"] . ')">Delete</button></td>';
+                echo '<td>' . $staffRow["REGNO"] . '</td>';
+                echo '<td>' . $staffRow["NAME"] . '</td>';
+                echo '<td><button class="btn btn-danger" onclick="deleteStaff(' . $staffRow["REGNO"] . ')">Delete</button></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
