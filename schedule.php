@@ -20,31 +20,38 @@
 
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
+
+            <label for="listcourse">Select Your Course for Scheduling </label>
+            <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()">
+            <option value="select" selected id="SelectCourseDrop">Select</option>
+            <script>function hideselect(){
+                document.getElementById("SelectCourseDrop").remove();
+                document.getElementById("listcourse").removeAttribute("onclick");
+            }
             
-        <label for="listcourse">Select Your Course for Scheduling </label>
-<select class="custom-select" name="listcourse" id="listcourse">
-    <option value="select" selected>Select</option>
-    <?php
-    include 'db_connection.php';
-    // Fetch and display the class schedule
-    $scheduleResult = $conn->query("SELECT * FROM admin");
+            </script>
+                <?php
+                include 'db_connection.php';
+                // Fetch and display the class schedule
+                $scheduleResult = $conn->query("SELECT * FROM admin");
 
-    if ($scheduleResult->num_rows > 0) {
+                if ($scheduleResult->num_rows > 0) {
 
-        while ($classRow = $scheduleResult->fetch_assoc()) {
-            echo '<option value="' . $classRow["COURSE"] . '">' . $classRow["COURSE"] . '</option>';
-        }
-    } else {
-        echo 'No class records found.';
-    }
+                    while ($classRow = $scheduleResult->fetch_assoc()) {
+                        echo '<option value="' . $classRow["COURSE"] . '">' . $classRow["COURSE"] . '</option>';
+                    }
+                } else {
+                    echo 'No class records found.';
+                }
 
-    $conn->close();
-    ?>
-</select>
+                $conn->close();
+                ?>
+            </select>
 
             <div id="subjectStaffTable" class="mt-5">
-        <!-- Table for subject names and staff names will be displayed here -->
-        </div>
+                <!-- Table for subject names and staff names will be displayed here -->
+            </div>
+
             <br>
             <hr>
             <br>
@@ -103,38 +110,39 @@
         ?>
     </div>
     <script>
-    document.getElementById('listcourse').addEventListener('change', function () {
-        var selectedCourse = this.value;
+        document.getElementById('listcourse').addEventListener('change', function () {
+            var selectedCourse = this.value;
 
-        // Make an AJAX request to fetch the table structure for the selected course
-        $.ajax({
-            type: "POST",
-            url: "fetch_table_data.php",
-            data: { course: selectedCourse },
-            success: function (response) {
-                // Update the assigningtable div with the received table data
-                document.getElementById('assigningtable').innerHTML = response;
+            // Make an AJAX request to fetch the table structure for the selected course
+            $.ajax({
+                type: "POST",
+                url: "fetch_table_data.php",
+                data: { course: selectedCourse },
+                success: function (response) {
+                    // Update the assigningtable div with the received table data
+                    document.getElementById('assigningtable').innerHTML = response;
 
-                // Make another AJAX request to fetch subject names and staff names
-                $.ajax({
-                    type: "POST",
-                    url: "fetch_subject_staff.php",
-                    data: { course: selectedCourse },
-                    success: function (subjectStaffTable) {
-                        // Update the subjectStaffTable div with the received table data
-                        document.getElementById('subjectStaffTable').innerHTML = subjectStaffTable;
-                    },
-                    error: function (error) {
-                        console.log("Error: " + error.responseText);
-                    }
-                });
-            },
-            error: function (error) {
-                console.log("Error: " + error.responseText);
-            }
+                    // Make another AJAX request to fetch subject names and staff names
+                    $.ajax({
+                        type: "POST",
+                        url: "fetch_subject_staff.php",
+                        data: { course: selectedCourse },
+                        success: function (subjectStaffTable) {
+                            // Update the subjectStaffTable div with the received table data
+                            document.getElementById('subjectStaffTable').innerHTML = subjectStaffTable;
+                        },
+                        error: function (error) {
+                            console.log("Error: " + error.responseText);
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.log("Error: " + error.responseText);
+                }
+            });
         });
-    });
-</script>
+    </script>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -146,29 +154,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
 
-    // Add an event listener to the select element
-    document.getElementById('listcourse').addEventListener('change', function () {
-        var selectedCourse = this.value;
-        // alert(selectedCourse);
+        // Add an event listener to the select element
+        document.getElementById('listcourse').addEventListener('change', function () {
+            var selectedCourse = this.value;
+            // alert(selectedCourse);
 
-        // Make an AJAX request to fetch the table structure for the selected course
-        $.ajax({
-            type: "POST",
-            url: "fetch_table_data.php", // Adjust the path to match your file structure
-            data: { course: selectedCourse },
-            success: function (response) {
-                // Update the assigningtable div with the received table data
-                document.getElementById('assigningtable').innerHTML = response;
-            },
-            error: function (error) {
-                console.log("Error: " + error.responseText);
-            }
+            // Make an AJAX request to fetch the table structure for the selected course
+            $.ajax({
+                type: "POST",
+                url: "fetch_table_data.php", // Adjust the path to match your file structure
+                data: { course: selectedCourse },
+                success: function (response) {
+                    // Update the assigningtable div with the received table data
+                    document.getElementById('assigningtable').innerHTML = response;
+                },
+                error: function (error) {
+                    console.log("Error: " + error.responseText);
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+
 </body>
 
 </html>
