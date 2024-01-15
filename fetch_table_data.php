@@ -5,6 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     $course = $_POST['course'];
     echo '<script>alert("' . $_POST['course'] . '");</script>';
+
   
     // Fetch the data for the selected course
     $sql = "SELECT * FROM `$course`";
@@ -14,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     if ($result->num_rows > 0) {
         // Display the fetched data in a table format with dropdowns
         echo '<h1 id="currentcourse">'.$course.'</h1>';
+
         echo '<table class="table table-bordered">';
         $timeSlots = ["SL.NO.","DAYS","9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
         echo '<thead>';
@@ -35,10 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             // Loop through the time slots and generate dropdowns
             for ($i = 1; $i <= 8; $i++) {
                 echo '<td>';
-
                 echo '<select class="form-control" id="' . $course . $row["ORDER"] . $i . '" name="' . $course . $row["ORDER"] . $i . '">';
-
-                
+               
                 // Add an initial option with value "Select"
                 echo '<option value="">Select</option>';
 
@@ -57,7 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
         echo '</tbody>';
         echo '</table>';
+
         echo ' <input class="btn btn-primary mt-5" type="submit" value="Store it to Database">';
+
     } else {
         echo 'No data found for the selected course.';
     }

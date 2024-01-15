@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect data from the form
     $staffName = $_POST['staffName'];
 
+
     // Start of Creating table
 
     // Your SQL query to create the table
@@ -48,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // End of creating Table
 
 
+
     // Insert data into the staff table
     $insertQuery = "INSERT INTO staff (name) VALUES ('$staffName')";
 
@@ -62,6 +64,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 }
-
 ?>
-
