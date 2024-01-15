@@ -35,6 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                 echo '<td>';
                 echo '<select class="form-control" id="' . $course . $row["DAY"] . $i . '">';
                 
+                // Add an initial option with value "Select"
+                echo '<option value="">Select</option>';
+
                 // Fetch and populate dropdown options with subjects for the selected course
                 $subjectResult = $conn->query("SELECT * FROM {$course}_Subjects");
                 while ($subjectRow = $subjectResult->fetch_assoc()) {
