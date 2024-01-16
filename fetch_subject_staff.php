@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         $tableHtml .= '<tr>';
         $tableHtml .= '<td>' . $subjectRow['subjectCode'] . '</td>';
         $tableHtml .= '<td>' . $subjectRow['subjectName'] . '</td>';
-        $tableHtml .= '<td><select class="custom-select" name="staffName[<?php echo $subjectRow['.'"subjectCode"'.']; ?>]">';
-        
+        $tableHtml .= '<td><select class="custom-select" name="staffName[' . $subjectRow['subjectCode'] . ']">';
+
         // Add an initial option with value "Select"
         $tableHtml .= '<option value="">Select</option>';
 

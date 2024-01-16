@@ -13,7 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
             // Update the staffName column in the $course table for the specific subjectCode
             $updateQuery = "UPDATE " . $course . "_subjects SET staffName = '$selectedStaffName' WHERE subjectCode = '$subjectCode'";
-            echo $updateQuery;
+            
+            // Execute the update query
             $conn->query($updateQuery);
 
             // You may want to add error handling here
@@ -21,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     }
 
     // Redirect to the page where the form was submitted
-    //header("Location:schedule.php");
+    header("Location:schedule.php");
     exit();
 }
 
