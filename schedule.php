@@ -24,9 +24,16 @@
             <label for="listcourse">Select Your Course for Scheduling </label>
             <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()">
             <option value="select" selected id="SelectCourseDrop">Select</option>
-            <script>function hideselect(){
+            <script>
+            let count=1
+            function hideselect(){
+                count++;
+                console.log(count);
+                if(count==3)
+                {
                 document.getElementById("SelectCourseDrop").remove();
                 document.getElementById("listcourse").removeAttribute("onclick");
+                }
             }
             
             </script>
