@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                 // Fetch and populate dropdown options with subjects for the selected course
                 $subjectResult = $conn->query("SELECT * FROM {$course}_Subjects");
                 while ($subjectRow = $subjectResult->fetch_assoc()) {
-                    echo '<option value="' . $subjectRow["subjectCode"] . '">' . $subjectRow["subjectName"] . '</option>';
+                    echo '<option value="' . $subjectRow["subjectCode"] . '">' . $subjectRow["subjectCode"] . '</option>';
                 }
 
                 echo '</select>';
