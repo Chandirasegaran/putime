@@ -216,6 +216,15 @@ $conn->close();
                 }
             });
         });
+
+        let checktemp=1;
+        let staffmatrix=[[],[]];
+        function generatematrix(){
+            if(checktemp==1){
+                checktemp++;
+                
+            }
+        }
     </script>
 
 

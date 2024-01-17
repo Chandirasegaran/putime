@@ -61,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
             echo '</tr>';
         }
-
         echo '</tbody>';
         echo '</table>';
 

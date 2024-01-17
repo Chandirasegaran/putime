@@ -48,11 +48,11 @@ if ($conn->query($sql) !== TRUE) {
 $sqlInsertData = "
     INSERT INTO `{$courseName}` (`ORDER`, DAY, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
     VALUES 
-    (1,'MONDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (2,'TUESDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (3,'WEDNESDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (4,'THURSDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (5,'FRIDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown');
+    (1,'MONDAY', '', '', '', '', '', '', '', ''),
+    (2,'TUESDAY', '', '', '', '', '', '', '', ''),
+    (3,'WEDNESDAY', '', '', '', '', '', '', '', ''),
+    (4,'THURSDAY', '', '', '', '', '', '', '', ''),
+    (5,'FRIDAY', '', '', '', '', '', '', '', '');
 ";
 
 
