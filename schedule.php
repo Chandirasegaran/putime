@@ -72,54 +72,68 @@
 
         </div>
 
-        <H1>Final Schedule</H1>
+        <H1 class="mt-5">Final Schedule</H1>
         <h2>Class Schedule</h2>
 
         <?php
-        include 'db_connection.php';
-        // Fetch and display the class schedule
-        $scheduleResult = $conn->query("SELECT * FROM admin");
+include 'db_connection.php';
 
-        if ($scheduleResult->num_rows > 0) {
-            while ($classRow = $scheduleResult->fetch_assoc()) {
-                echo '<h3>' . $classRow["COURSE"] . '</h3>';
+// Fetch and display the class schedule
+$scheduleResult = $conn->query("SELECT * FROM admin");
 
-                // Display the 5x8 matrix table
-                echo '<table class="table table-bordered">';
-                echo '<thead>';
+if ($scheduleResult->num_rows > 0) {
+    while ($classRow = $scheduleResult->fetch_assoc()) {
+
+
+        $course = $classRow["COURSE"];
+
+        // Fetch the data for the selected course
+        $sql = "SELECT * FROM `$course`";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Display the fetched data in a table format without dropdowns
+            echo '<h1 id="currentcourse" class="mt-5">' . $course . '</h1>';
+
+            echo '<table class="table table-bordered">';
+            $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
+            echo '<thead>';
+            echo '<tr>';
+            foreach ($timeSlots as $timeSlot) {
+                echo '<th>' . $timeSlot . '</th>';
+            }
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            $rowNumber = 1; // Counter for row numbers
+            while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
-                echo '<th>Days/Time</th>';
+                echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
+                echo '<td>' . $row["DAY"] . '</td>'; // DAYS
 
-                // Display column names
-                $timeSlots = ["9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
-                foreach ($timeSlots as $timeSlot) {
-                    echo '<th>' . $timeSlot . '</th>';
+                // Loop through the time slots and display values
+                foreach ($row as $columnName => $columnValue) {
+                    if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
+                        echo '<td>' . $columnValue . '</td>';
+                    }
                 }
 
                 echo '</tr>';
-                echo '</thead>';
-                echo '<tbody>';
-
-                // Display row names and generate empty cells
-                $days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"];
-                foreach ($days as $day) {
-                    echo '<tr>';
-                    echo '<td>' . $day . '</td>';
-                    foreach ($timeSlots as $timeSlot) {
-                        echo '<td></td>';
-                    }
-                    echo '</tr>';
-                }
-
-                echo '</tbody>';
-                echo '</table>';
             }
-        } else {
-            echo 'No class records found.';
-        }
 
-        $conn->close();
-        ?>
+            echo '</tbody>';
+            echo '</table>';
+
+
+        } else {
+            echo 'No data found for the selected course.';
+        }
+    }
+    $conn->close();
+}
+?>
+
     </div>
     <script>
         document.getElementById('listcourse').addEventListener('change', function () {
