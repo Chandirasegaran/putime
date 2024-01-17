@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         }
         echo '</tr>';
         echo '</thead>';
-        echo '<tbody>';
+        echo '<tbody onmouseover="generatematrix()" >';
 
         $rowNumber = 1; // Counter for row numbers
         while ($row = $result->fetch_assoc()) {

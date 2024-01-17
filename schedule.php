@@ -138,6 +138,7 @@ if ($scheduleResult->num_rows > 0) {
             echo '</tbody>';
             echo '</table>';
             $i=0;
+            
         } else {
             echo 'No data found for the selected course.';
         }
@@ -216,16 +217,51 @@ $conn->close();
                 }
             });
         });
-
-        let checktemp=1;
-        let staffmatrix=[[],[]];
-        function generatematrix(){
-            if(checktemp==1){
-                checktemp++;
-                
-            }
-        }
     </script>
+<script>
+    var hasFunctionExecuted = false;
+
+    // Your onmouseover function
+    function generatematrix() {
+        if (!hasFunctionExecuted) {
+            // Your code to execute on mouseover goes here
+            var matrix = [];
+
+        // Assuming you have a variable for the total number of subjects ($si in this case)
+        for (var i = 1; i <= document.getElementById('hidval').innerText; i++) {
+            var row = [];
+        row.push(document.getElementById('s' + i + '1').innerText);
+        row.push(document.getElementById('s' + i + '2').innerText);
+        row.push(document.getElementById('s' + i + '3').value);
+        row.push(document.getElementById('s' + i + '4').innerText);
+        row.push(document.getElementById('s' + i + '5').innerText);
+
+    matrix.push(row);
+}
+
+console.log(matrix);
+
+        // console.log(matrix);
+
+            // Set the flag to true to indicate that the function has been executed
+            hasFunctionExecuted = true;
+        }
+    }
+
+    // Function to reset hasFunctionExecuted to false when the content of "assign-schedule" is modified
+    function resetFunctionExecutionFlag() {
+        hasFunctionExecuted = false;
+    }
+
+    // Create a MutationObserver to observe changes in the content of "assign-schedule"
+    var observer = new MutationObserver(resetFunctionExecutionFlag);
+
+    // Define the configuration for the observer
+    var config = { childList: true, subtree: true };
+
+    // Start observing the "assign-schedule" element
+    observer.observe(document.getElementById("assign-schedule"), config);
+</script>
 
 
 
