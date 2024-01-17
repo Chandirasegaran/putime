@@ -34,12 +34,14 @@
                                 <label for="staffName">Staff Name:</label>
 
                                 <input type="text" class="form-control" id="staffName" name="staffName" required oninput="replacespace(this)">
+                                <!-- <input type="text" class="form-control" id="staffName" name="staffName" required oninput="replacespace(this)"> -->
                             </div>
                             <script>
                                 function replacespace(inputValue){
-                                    inputValue.value=inputValue.value.replace(/ /g, "_");
+                                    // inputValue.value=inputValue.value.replace(/ /g, "_");
                                 }
                             </script>
+
 
                             <button type="submit" class="btn btn-primary">Add Record</button>
                         </form>

@@ -75,7 +75,7 @@
         <H1 class="mt-5">Final Schedule</H1>
         <h2>Class Schedule</h2>
 
-        <?php
+<?php
 include 'db_connection.php';
 
 // Fetch and display the class schedule
@@ -105,28 +105,25 @@ if ($scheduleResult->num_rows > 0) {
             echo '<tbody>';
 
             $rowNumber = 1; // Counter for row numbers
-            $i=0;
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
-                $i++;
                 echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
                 echo '<td>' . $row["DAY"] . '</td>'; // DAYS
 
                 // Loop through the time slots and display values
-                $j=1;
                 foreach ($row as $columnName => $columnValue) {
                     if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
                         // Fetch staff name from $course."_subjects" table using $columnValue
                         $staffQuery = "SELECT staffName FROM {$course}_subjects WHERE subjectCode = '$columnValue'";
                         $staffResult = $conn->query($staffQuery);
 
-                        echo '<td class="'.$i.$j++.'">';
+                        echo '<td>';
                         if ($staffResult->num_rows > 0) {
                             while ($staffRow = $staffResult->fetch_assoc()) {
                                 echo $staffRow['staffName'];
                             }
                         } else {
-                            echo '';
+                            echo 'No staff found';
                         }
                         echo '</td>';
                     }
@@ -137,7 +134,6 @@ if ($scheduleResult->num_rows > 0) {
 
             echo '</tbody>';
             echo '</table>';
-            $i=0;
         } else {
             echo 'No data found for the selected course.';
         }

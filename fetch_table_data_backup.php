@@ -28,35 +28,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         echo '<tbody>';
 
         $rowNumber = 1; // Counter for row numbers
+
         while ($row = $result->fetch_assoc()) {
             echo '<tr>';
             echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
             echo '<td>' . $row["DAY"] . '</td>'; // DAYS
-            $i=1;
-            
+
             // Loop through the time slots and generate dropdowns
-            foreach ($row as $columnName => $columnValue) {
-                if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
-                    echo '<td>';
-                    echo '<select class="form-control '. $row["ORDER"] . $i .'" name="' . $course . $row["ORDER"] . $i . '">';
-                    
-                    // Add an initial option with value "Select"
-                    echo '<option value="">Select</option>';
-                    
-                    // Fetch and populate dropdown options with values from $course."_subjects" table
-                    $subjectResult = $conn->query("SELECT * FROM {$course}_subjects");
-                    while ($subjectRow = $subjectResult->fetch_assoc()) {
-                        $selected = ($subjectRow["subjectCode"] == $columnValue) ? 'selected' : '';
-                        echo '<option value="' . $subjectRow["subjectCode"] . '" ' . $selected . '>' . $subjectRow["subjectCode"] . '</option>';
-                    }
-                    
-                    echo '</select>';
-                    echo '</td>';
-                    $i++;
+            for ($i = 1; $i <= 8; $i++) {
+                echo '<td>';
+                echo '<select class="form-control" id="' . $course . $row["ORDER"] . $i . '" name="' . $course . $row["ORDER"] . $i . '">';
+               
+                // Add an initial option with value "Select"
+                echo '<option value="">Select</option>';
+
+                // Fetch and populate dropdown options with subjects for the selected course
+                $subjectResult = $conn->query("SELECT * FROM {$course}_Subjects");
+                while ($subjectRow = $subjectResult->fetch_assoc()) {
+                    echo '<option value="' . $subjectRow["subjectCode"] . '">' . $subjectRow["subjectCode"] . '</option>';
                 }
-            }
-            if($i==9){
-                $i=1;
+
+                echo '</select>';
+                echo '</td>';
             }
 
             echo '</tr>';
