@@ -28,7 +28,7 @@
             let count=1
             function hideselect(){
                 count++;
-                console.log(count);
+                // console.log(count);
                 if(count==3)
                 {
                 document.getElementById("SelectCourseDrop").remove();
@@ -232,7 +232,7 @@ $conn->close();
         // Assuming you have a variable for the total number of subjects ($si in this case)
         for (var i = 1; i <= document.getElementById('hidval').innerText; i++) {
             let rowName = document.getElementById('s' + i + '1').innerText;
-            console.log(rowName);
+            // console.log(rowName);
             // Create a class variable dynamically using the name
             window[rowName] = {
                 name: document.getElementById('s' + i + '2').innerText,
