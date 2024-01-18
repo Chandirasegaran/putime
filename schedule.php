@@ -219,27 +219,43 @@ $conn->close();
         });
     </script>
 <script>
+    function removesel(){
+        console.log("hello");
+    };
     var hasFunctionExecuted = false;
 
     // Your onmouseover function
     function generatematrix() {
         if (!hasFunctionExecuted) {
             // Your code to execute on mouseover goes here
-            var matrix = [];
 
         // Assuming you have a variable for the total number of subjects ($si in this case)
         for (var i = 1; i <= document.getElementById('hidval').innerText; i++) {
-            var row = [];
-        row.push(document.getElementById('s' + i + '1').innerText);
-        row.push(document.getElementById('s' + i + '2').innerText);
-        row.push(document.getElementById('s' + i + '3').value);
-        row.push(document.getElementById('s' + i + '4').innerText);
-        row.push(document.getElementById('s' + i + '5').innerText);
+            let rowName = document.getElementById('s' + i + '1').innerText;
+            console.log(rowName);
+            // Create a class variable dynamically using the name
+            window[rowName] = {
+                name: document.getElementById('s' + i + '2').innerText,
+                staff: document.getElementById('s' + i + '3').value,
+                hours: document.getElementById('s' + i + '4').innerText,
+                lab: document.getElementById('s' + i + '5').innerText
+            };
 
-    matrix.push(row);
+            // Accessing class variables
+            // console.log(window[rowName].name);  // s11 name
+            // console.log(window[rowName].staff); // s11 staff
+            // console.log(window[rowName].hours); // s11 hours
+            // console.log(window[rowName].lab);   // s11 lab
+    //     row.push(document.getElementById('s' + i + '1').innerText);
+    //     row.push(document.getElementById('s' + i + '2').innerText);
+    //     row.push(document.getElementById('s' + i + '3').value);
+    //     row.push(document.getElementById('s' + i + '4').innerText);
+    //     row.push(document.getElementById('s' + i + '5').innerText);
+
+    // matrix.push(row);
 }
 
-console.log(matrix);
+console.log("class created");
 
         // console.log(matrix);
 

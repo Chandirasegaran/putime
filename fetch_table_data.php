@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             foreach ($row as $columnName => $columnValue) {
                 if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
                     echo '<td>';
-                    echo '<select class="form-control '. $row["ORDER"] . $i .'" name="' . $course . $row["ORDER"] . $i . '">';
+                    echo '<select class="form-control '. $row["ORDER"] . $i .'" name="' . $course . $row["ORDER"] . $i . '" onclick="removesel()">';
                     
                     // Add an initial option with value "Select"
                     echo '<option value="">Select</option>';
