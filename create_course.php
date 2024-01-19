@@ -63,7 +63,6 @@ if ($conn->query($sqlInsertData) !== TRUE) {
 
 
 // Subject Table
-
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
     subjectCode VARCHAR(8),
     subjectName VARCHAR(255),

@@ -80,7 +80,7 @@ include("db_connection_close.php");
                                             </div>
                                         </td>
                                         <td><button id="c_delete_row_btn" class="btn btn-danger"
-                                                onclick="deleteRow(this)">Delete</button></td>
+                                                onclick="deleteRow(this)">Delete</button></td>                                
                                     </tr>
                                 </tbody>
                             </table>
@@ -88,11 +88,11 @@ include("db_connection_close.php");
                             <!-- Add Row Button -->
                             <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRow()">Add
                                 Row</button>
-
                     </div>
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create Class</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create Class</button>
                     </div>
                     </form>
                 </div>
@@ -112,8 +112,12 @@ include("db_connection_close.php");
                 echo '<tbody>';
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
-                    echo '<td>' . $classRow["COURSE"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteCourse('."'".$classRow["COURSE"]."'".')">Delete class</button></td>';
+                    echo '<td>' . $classRow["COURSE"] . '</td>';                    echo '<td><button class="btn btn-danger" onclick="deleteCourse('."'".$classRow["COURSE"]."'".')">Delete class</button></td>';
+                    echo '<td>
+        <form action="edit_course.php" method="post">
+            <button class="btn btn-success" name="coursename" value="' . $classRow["COURSE"] . '"  onclick="editCourse()">Edit class</button>
+        </form>
+      </td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -122,6 +126,7 @@ include("db_connection_close.php");
             }
             $conn->close();
             ?>
+      
         </div>
 
     </div>
@@ -190,7 +195,11 @@ include("db_connection_close.php");
     if (confirmation) {
         // Redirect to the PHP file that handles the deletion
         window.location.href = 'delete_course.php?coursename=' + courseName;
-    }
+    }   
+}
+ 
+function editCourse(){
+consol.log("Edit Implementation");
 }
     </script>
     
