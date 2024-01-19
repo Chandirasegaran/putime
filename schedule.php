@@ -21,6 +21,7 @@
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
 
+        
             <label for="listcourse">Select Your Course for Scheduling </label>
             <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()">
             <option value="select" selected id="SelectCourseDrop">Select</option>
