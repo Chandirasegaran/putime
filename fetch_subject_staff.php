@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $tableHtml .= '<input class="btn btn-success" type="submit" value="Update Staff">';
     $tableHtml .= '</form>';
     echo $tableHtml;
+    
     echo '<div id="hidval" style="display: none;">'.$si.'</div>';
     
 }

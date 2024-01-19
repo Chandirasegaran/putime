@@ -83,6 +83,7 @@ $scheduleResult = $conn->query("SELECT * FROM admin");
 
 if ($scheduleResult->num_rows > 0) {
     while ($classRow = $scheduleResult->fetch_assoc()) {
+
         $course = $classRow["COURSE"];
 
         // Fetch the data for the selected course
@@ -181,6 +182,13 @@ $conn->close();
                 }
             });
         });
+
+
+        function check()
+        {
+            console.log("H");
+            return false;
+        }
     </script>
 
     <!-- Optional JavaScript -->
@@ -219,8 +227,8 @@ $conn->close();
         });
     </script>
 <script>
-    function removesel(){
-        console.log("hello");
+    function removesel(clsname){
+        console.log(document.getElementsByClassName(clsname));
     };
     var hasFunctionExecuted = false;
 
@@ -246,17 +254,29 @@ $conn->close();
             // console.log(window[rowName].staff); // s11 staff
             // console.log(window[rowName].hours); // s11 hours
             // console.log(window[rowName].lab);   // s11 lab
-    //     row.push(document.getElementById('s' + i + '1').innerText);
-    //     row.push(document.getElementById('s' + i + '2').innerText);
-    //     row.push(document.getElementById('s' + i + '3').value);
-    //     row.push(document.getElementById('s' + i + '4').innerText);
-    //     row.push(document.getElementById('s' + i + '5').innerText);
+            //     row.push(document.getElementById('s' + i + '1').innerText);
+            //     row.push(document.getElementById('s' + i + '2').innerText);
+            //     row.push(document.getElementById('s' + i + '3').value);
+            //     row.push(document.getElementById('s' + i + '4').innerText);
+            //     row.push(document.getElementById('s' + i + '5').innerText);
 
-    // matrix.push(row);
+            // matrix.push(row);
 }
 
 console.log("class created");
-
+for(let i=1;i<=5;i++)
+{
+    for(let j=1;j<=8;j++)
+    {
+        for(let k=0;k<=(document.getElementById("hidval").innerText-1);k++)
+        {
+            let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
+            
+            // if()
+            // console.log(eval(clsvar));
+        }
+    }
+}
         // console.log(matrix);
 
             // Set the flag to true to indicate that the function has been executed
@@ -278,9 +298,5 @@ console.log("class created");
     // Start observing the "assign-schedule" element
     observer.observe(document.getElementById("assign-schedule"), config);
 </script>
-
-
-
 </body>
-
 </html>

@@ -38,16 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             foreach ($row as $columnName => $columnValue) {
                 if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
                     echo '<td>';
-                    echo '<select class="form-control '. $row["ORDER"] . $i .'" name="' . $course . $row["ORDER"] . $i . '" onclick="removesel()">';
+                    echo '<select class="form-control '. "sel".$row["ORDER"] . $i .'" name="' . $course . $row["ORDER"] . $i . '" onclick="removesel('.$row["ORDER"] . $i.')">';
                     
                     // Add an initial option with value "Select"
                     echo '<option value="">Select</option>';
                     
                     // Fetch and populate dropdown options with values from $course."_subjects" table
                     $subjectResult = $conn->query("SELECT * FROM {$course}_subjects");
+                    $ai=0;
                     while ($subjectRow = $subjectResult->fetch_assoc()) {
                         $selected = ($subjectRow["subjectCode"] == $columnValue) ? 'selected' : '';
-                        echo '<option value="' . $subjectRow["subjectCode"] . '" ' . $selected . '>' . $subjectRow["subjectCode"] . '</option>';
+                        echo '<option value="' . $subjectRow["subjectCode"] . '" ' . $selected . ' id="'.$row["ORDER"].$i.$ai++.'">' . $subjectRow["subjectCode"] . '</option>';
                     }
                     
                     echo '</select>';
