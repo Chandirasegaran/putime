@@ -38,7 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             foreach ($row as $columnName => $columnValue) {
                 if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
                     echo '<td>';
-                    echo '<select class="form-control '. "sel".$row["ORDER"] . $i .'" name="' . $course . $row["ORDER"] . $i . '" onclick="removesel('.$row["ORDER"] . $i.')">';
+                    echo '<select class="form-control '. "sel".$row["ORDER"] . $i .'" name="' . $course . $row["ORDER"] . $i . '">';
+                    //onclick="removesel('.$row["ORDER"] . $i.')"
                     
                     // Add an initial option with value "Select"
                     echo '<option value="">Select</option>';
@@ -116,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                             $staffQuery = "SELECT staffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
                             $staffResult = $conn->query($staffQuery);
     
-                            echo '<td class="'.$i.$j++.'">';
+                            echo '<td class="table'.$i.$j++.'">';
                             if ($staffResult->num_rows > 0) {
                                 while ($staffRow = $staffResult->fetch_assoc()) {
                                     echo $staffRow['staffName'];

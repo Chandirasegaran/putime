@@ -155,9 +155,9 @@
         });
     </script>
 <script>
-    function removesel(clsname){
-        console.log(document.getElementsByClassName(clsname));
-    };
+    // function removesel(clsname){
+    //     console.log(document.getElementsByClassName(clsname));
+    // };
     var hasFunctionExecuted = false;
 
     // Your onmouseover function
@@ -200,8 +200,21 @@ for(let i=1;i<=5;i++)
         {
             let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
             
-            // if()
-            // console.log(eval(clsvar));
+            
+            let elements1 = document.querySelectorAll('.table'+i.toString()+j.toString());
+            // Create an array to store the values
+            let valuesArray = [];
+            // Iterate over the NodeList and push values into the array
+            elements1.forEach(function (elementpara) {
+                valuesArray.push(elementpara.innerText);
+            });
+
+            if(valuesArray.includes(eval(clsvar)))
+            {
+                console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
+                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                // console.log(eval(clsvar),valuesArray);
+            }
         }
     }
 }
