@@ -72,81 +72,9 @@
 
         </div>
 
-        <H1 class="mt-5">Final Schedule</H1>
-        <h2>Class Schedule</h2>
 
-        <?php
-include 'db_connection.php';
 
-// Fetch and display the class schedule
-$scheduleResult = $conn->query("SELECT * FROM admin");
 
-if ($scheduleResult->num_rows > 0) {
-    while ($classRow = $scheduleResult->fetch_assoc()) {
-
-        $course = $classRow["COURSE"];
-
-        // Fetch the data for the selected course
-        $sql = "SELECT * FROM `$course`";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            // Display the fetched data in a table format without dropdowns
-            echo '<h1 id="currentcourse" class="mt-5">' . $course . '</h1>';
-
-            echo '<table class="table table-bordered">';
-            $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
-            echo '<thead>';
-            echo '<tr>';
-            foreach ($timeSlots as $timeSlot) {
-                echo '<th>' . $timeSlot . '</th>';
-            }
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
-
-            $rowNumber = 1; // Counter for row numbers
-            $i=0;
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                $i++;
-                echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
-                echo '<td>' . $row["DAY"] . '</td>'; // DAYS
-
-                // Loop through the time slots and display values
-                $j=1;
-                foreach ($row as $columnName => $columnValue) {
-                    if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
-                        // Fetch staff name from $course."_subjects" table using $columnValue
-                        $staffQuery = "SELECT staffName FROM {$course}_subjects WHERE subjectCode = '$columnValue'";
-                        $staffResult = $conn->query($staffQuery);
-
-                        echo '<td class="'.$i.$j++.'">';
-                        if ($staffResult->num_rows > 0) {
-                            while ($staffRow = $staffResult->fetch_assoc()) {
-                                echo $staffRow['staffName'];
-                            }
-                        } else {
-                            echo '';
-                        }
-                        echo '</td>';
-                    }
-                }
-
-                echo '</tr>';
-            }
-
-            echo '</tbody>';
-            echo '</table>';
-            $i=0;
-            
-        } else {
-            echo 'No data found for the selected course.';
-        }
-    }
-}
-$conn->close();
-?>
 
 
     </div>
