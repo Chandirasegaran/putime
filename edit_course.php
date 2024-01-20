@@ -13,7 +13,8 @@ if (!empty($courseName)) {
     if ($result === FALSE) {
         echo 'Error accessing table: ' . $conn->error;
     }
-} else {
+} 
+else {
     echo 'Course name not provided.';
 }
 
@@ -39,8 +40,8 @@ include 'db_connection_close.php';
 <body>
     <header><h1 id="coursename" ><?php echo $courseName;?></h1></header>
 
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    Edit Modal
+    <!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -49,9 +50,8 @@ include 'db_connection_close.php';
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form for editing subject details -->
+                </div> -->
+                <!-- <div class="modal-body">
                     <form id="editForm" action="update_subject.php" method="post">
                         <div class="form-group">
                             <label for="editSubjectCode">Subject Code:</label>
@@ -82,7 +82,7 @@ include 'db_connection_close.php';
 
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Table -->
     <table class="table">
@@ -92,25 +92,43 @@ include 'db_connection_close.php';
                 <th>Subject Name</th>
                 <th>Hours Required</th>
                 <th>Lab</th>
-                <th>Action</th>
+                
             </tr>
         </thead>
         <tbody>
             <?php
             // Display fetched rows in the table
             if ($result && $result->num_rows > 0) {
+                echo '<form action="update_subject.php">';
+
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
-                    echo '<td>' . $row['subjectCode'] . '</td>';
-                    echo '<td>' . $row['subjectName'] . '</td>';
-                    echo '<td>' . $row['hoursRequired'] . '</td>';
-                    echo '<td>' . $row['lab'] . '</td>';
-                    echo '<td><button type="button" class="btn btn-warning" onclick="editRow(\'' . $row['subjectCode'] . '\', \'' . $row['subjectName'] . '\', \'' . $row['hoursRequired'] . '\', \'' . $row['lab'] . '\')" data-toggle="modal" data-target="#editModal">Edit</button></td>';
+                    echo '<td> <input type="text" value="' .  $row['subjectCode'] . '"></td>';
+                    echo '<td> <input type="text" value="' . $row['subjectName'] . '"</td>';
+                    echo '<td> <input type="number" value="' . $row['hoursRequired'] . '"</td>';
+                    echo '<td> <input type="text" value="' . $row['lab'] . '"</td>';
                     echo '</tr>';
                 }
+                echo '<td><button type="button" class="btn btn-warning">Edit</button></td>';
+                echo '</form>';
+
+
             } else {
                 echo '<tr><td colspan="5">No subjects available</td></tr>';
             }
+            // if ($result && $result->num_rows > 0) {
+            //     while ($row = $result->fetch_assoc()) {
+            //         echo '<tr>';
+            //         echo '<td>' . $row['subjectCode'] . '</td>';
+            //         echo '<td>' . $row['subjectName'] . '</td>';
+            //         echo '<td>' . $row['hoursRequired'] . '</td>';
+            //         echo '<td>' . $row['lab'] . '</td>';
+            //         echo '<td><button type="button" class="btn btn-warning" onclick="editRow(\'' . $row['subjectCode'] . '\', \'' . $row['subjectName'] . '\', \'' . $row['hoursRequired'] . '\', \'' . $row['lab'] . '\')" data-toggle="modal" data-target="#editModal">Edit</button></td>';
+            //         echo '</tr>';
+            //     }
+            // } else {
+            //     echo '<tr><td colspan="5">No subjects available</td></tr>';
+            // }
             ?>
         </tbody>
     </table>
@@ -118,17 +136,17 @@ include 'db_connection_close.php';
     <!-- JavaScript for editing -->
 
     <script>
-        function editRow(subjectCode, subjectName, hoursRequired, lab) {
-            // Set values in the modal form
-            document.getElementById('editSubjectCode').value = subjectCode;
-            document.getElementById('editSubjectCode').value = subjectCode;
-            document.getElementById('editSubjectName').value = subjectName;
-            document.getElementById('editHoursRequired').value = hoursRequired;
-            document.getElementById('editLab').value = lab;
-            console.log(subjectCode, subjectName, hoursRequired, lab);
-            // Show the modal
-            $('#editModal').modal('show');
-        }
+        // function editRow(subjectCode, subjectName, hoursRequired, lab) {
+        //     // Set values in the modal form
+        //     document.getElementById('editSubjectCode').value = subjectCode;
+        //     document.getElementById('editSubjectCode').value = subjectCode;
+        //     document.getElementById('editSubjectName').value = subjectName;
+        //     document.getElementById('editHoursRequired').value = hoursRequired;
+        //     document.getElementById('editLab').value = lab;
+        //     console.log(subjectCode, subjectName, hoursRequired, lab);
+        //     // Show the modal
+        //     $('#editModal').modal('show');
+        // }
     </script>
 
 </body>
