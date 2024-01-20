@@ -116,8 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                             // Fetch staff name from $discourse."_subjects" table using $columnValue
                             $staffQuery = "SELECT staffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
                             $staffResult = $conn->query($staffQuery);
-    
-                            echo '<td class="table'.$i.$j++.'">';
+                            echo '<td ><div class="table'.$i.$j++.'">';
                             if ($staffResult->num_rows > 0) {
                                 while ($staffRow = $staffResult->fetch_assoc()) {
                                     echo $staffRow['staffName'];
@@ -125,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                             } else {
                                 echo '';
                             }
-                            echo '</td>';
+                            echo '</div></td>';
                         }
                     }
     
