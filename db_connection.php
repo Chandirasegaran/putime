@@ -2,7 +2,7 @@
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "semEIGHT*8";
+$password = "";
 $conn = new mysqli($servername, $username, $password);
 
 $dbname = "putimetbdb";
