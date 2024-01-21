@@ -18,7 +18,6 @@ include("db_connection_close.php");
 </head>
 
 <body>
-
     <?php include 'navbar.php' ?>
 
     <!-- Button trigger modal -->
@@ -79,8 +78,10 @@ include("db_connection_close.php");
                                                 <input type="radio" class="form-check-input" name="lab1" value="2"> 2
                                             </div>
                                         </td>
-                                        <td><button id="c_delete_row_btn" class="btn btn-danger"
-                                                onclick="deleteRow(this)">Delete</button></td>                                
+                                        <td>
+                                            <button id="c_delete_row_btn" class="btn btn-danger"
+                                                onclick="deleteRow(this)">Delete</button>
+                                        </td>                                
                                     </tr>
                                 </tbody>
                             </table>

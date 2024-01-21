@@ -61,7 +61,6 @@ if ($conn->query($sqlInsertData) !== TRUE) {
     echo 'Error Inserting Data to Timetable table: ' . $conn->error;
 }
 
-
 // Subject Table
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
     subjectCode VARCHAR(8),
