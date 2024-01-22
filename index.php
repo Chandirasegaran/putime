@@ -25,8 +25,8 @@ include("db_connection_close.php");
 
     <!-- Select Sem -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
+    <!-- Modal  without bootstrap--> 
+    <!-- <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -38,7 +38,7 @@ include("db_connection_close.php");
                 </div>
                 <div class="modal-body">
                     <form action="set_semester.php" method="post">
-                        <label>
+                        <label> 
                             <input type="radio" name="semester" value="odd" checked>
                             Odd Semester
                         </label>
@@ -55,8 +55,40 @@ include("db_connection_close.php");
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="semesterModalLabel">Choose your semester</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                </div>
+                <div class="modal-body">
+                    <form action="set_semester.php" method="post">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="semester" value="odd" id="oddRadio"
+                                checked>
+                            <label class="form-check-label" for="oddRadio">Odd Semester</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="semester" value="even" id="evenRadio">
+                            <label class="form-check-label" for="evenRadio">Even Semester</label>
+                        </div>
+
+                        <br>
+
+                        <button type="submit" class="btn btn-primary">Choose!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <?php
@@ -147,10 +179,10 @@ include("db_connection_close.php");
             include 'db_connection.php';
             // Fetch and display class details
             // $classResult =$conn->query("SELECT * FROM adminodd"); // Initialize $classResult
-            $sql=("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven")) ;
+            $sql = ("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
             // echo $sql;
             $classResult = $conn->query($sql);
-            
+
             // if ($_COOKIE['whichsem'] == "Odd") {
             //     $classResult = $conn->query("SELECT * FROM adminodd");
             // } elseif ($_COOKIE['whichsem'] == "Even") {
@@ -250,16 +282,16 @@ include("db_connection_close.php");
         // Select Sem
 
         function showSemesterModal() {
-        var hasCookie = <?php echo isset($_COOKIE['whichsem']) ? 'true' : 'false'; ?>;
-        if (!hasCookie) {
-            $('#semesterModal').modal('show');
+            var hasCookie = <?php echo isset($_COOKIE['whichsem']) ? 'true' : 'false'; ?>;
+            if (!hasCookie) {
+                $('#semesterModal').modal('show');
+            }
         }
-    }
 
-    // Call the function when the page is loaded
-    $(document).ready(function () {
-        showSemesterModal();
-    });
+        // Call the function when the page is loaded
+        $(document).ready(function () {
+            showSemesterModal();
+        });
     </script>
 
 </body>
