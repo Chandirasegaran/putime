@@ -8,8 +8,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['coursename'])) {
     $coursename = $_GET['coursename'];
     echo $coursename;
     // Delete the staff record from the staff table
-    $deleteQuery = "DELETE FROM admin WHERE `admin`.`COURSE` = '".$coursename."'";
-    $deletetable = "DROP TABLE " . $coursename;
+
+    // if($currsem=="Odd"){
+    //     $deleteQuery = "DELETE FROM adminodd WHERE `adminodd`.`COURSE` = '".$coursename."'";
+    // }
+    // else if($currsem=="Even"){
+    //     $deleteQuery = "DELETE FROM admineven WHERE `admineven`.`COURSE` = '".$coursename."'";
+    // }
+
+    $deleteQuery = "DELETE FROM " . ($currsem == "odd" ? "adminodd" : "admineven") . " WHERE `" . ($currsem == "odd" ? "adminodd" : "admineven") ."`.`COURSE` = '".$coursename."'";
+
+    $deletetable = "DROP TABLE ". $coursename;
     $deleteclasssubject = "DROP TABLE " . $coursename . "_subjects";
     echo $deletetable;
     echo $deleteclasssubject;

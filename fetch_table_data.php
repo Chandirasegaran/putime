@@ -71,7 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     } else {
         echo 'No data found for the selected course.';
     }
-    $scheduleResult = $conn->query("SELECT * FROM admin");
+
+    // if($currsem=="Odd"){
+        // $scheduleResult = $conn->query("SELECT * FROM adminodd");    }
+    // else if($currsem=="Even"){
+        // $scheduleResult = $conn->query("SELECT * FROM admineven");    }
+    $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
     echo'<H1 class="mt-5">Final Schedule</H1>
     <h2>Class Schedule</h2>';
     if ($scheduleResult->num_rows > 0) {

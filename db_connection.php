@@ -1,4 +1,10 @@
 <?php
+$currsem=null;
+if(isset($_COOKIE['whichsem'])){
+    $currsem=$_COOKIE['whichsem'];
+}
+
+
 // Database connection
 $servername = "localhost";
 $username = "root";
@@ -26,14 +32,22 @@ if ($conn->error) {
     echo 'Error selecting database: ' . $conn->error;
 }
 
-$sql = 'CREATE TABLE IF NOT EXISTS ADMIN (
+$sql = 'CREATE TABLE IF NOT EXISTS ' . ($currsem == "odd" ? "adminodd" : "admineven") . '(
     COURSE VARCHAR(50) PRIMARY KEY
 )';
 
-
 if ($conn->query($sql) !== TRUE) {
-    echo 'Error creating Subject table: ' . $conn->error;
+    echo 'Error creating  Subject table: ' . $conn->error;
 }
+
+// $sql = 'CREATE TABLE IF NOT EXISTS ADMINEVEN (
+//     COURSE VARCHAR(50) PRIMARY KEY
+// )';
+
+
+// if ($conn->query($sql) !== TRUE) {
+//     echo 'Error creating EVEN Subject table: ' . $conn->error;
+// }
 
 $sql = 'CREATE TABLE IF NOT EXISTS STAFF (
     REGNO INT PRIMARY KEY AUTO_INCREMENT,

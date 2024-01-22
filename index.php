@@ -1,6 +1,8 @@
 <?php
 include("db_connection.php");
 include("db_connection_close.php");
+
+
 ?>
 
 <!DOCTYPE html>
@@ -21,10 +23,50 @@ include("db_connection_close.php");
 
     <?php include 'navbar.php' ?>
 
+    <!-- Select Sem -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="semesterModalLabel">Choose your semester</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="set_semester.php" method="post">
+                        <label>
+                            <input type="radio" name="semester" value="odd" checked>
+                            Odd Semester
+                        </label>
+
+                        <label>
+                            <input type="radio" name="semester" value="even">
+                            Even Semester
+                        </label>
+
+                        <br>
+
+                        <input type="submit" value="Choose!">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <?php
+    if (isset($_COOKIE['whichsem'])) {
+        echo '<div class="container mt-3"><h1>' . ucfirst($_COOKIE['whichsem']) . ' Semester</h1></div>';
+    }
+    ?>
     <!-- Button trigger modal -->
     <div class="container">
-
-        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
             ADD CLASS
         </button>
 
@@ -66,7 +108,8 @@ include("db_connection_close.php");
                                                 Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50"
                                                 Required></td>
-                                        <td><input type="number" class="form-control" name="hoursRequired1" Required></td>
+                                        <td><input type="number" class="form-control" name="hoursRequired1" Required>
+                                        </td>
                                         <td>
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="no"
@@ -98,13 +141,24 @@ include("db_connection_close.php");
                 </div>
             </div>
         </div>
-<br>
+        <br>
         <div>
             <?php
             include 'db_connection.php';
             // Fetch and display class details
-            $classResult = $conn->query("SELECT * FROM admin");
-
+            // $classResult =$conn->query("SELECT * FROM adminodd"); // Initialize $classResult
+            $sql=("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven")) ;
+            // echo $sql;
+            $classResult = $conn->query($sql);
+            
+            // if ($_COOKIE['whichsem'] == "Odd") {
+            //     $classResult = $conn->query("SELECT * FROM adminodd");
+            // } elseif ($_COOKIE['whichsem'] == "Even") {
+            //     $classResult = $conn->query("SELECT * FROM admineven");
+            // }
+            if ($classResult === false) {
+                die("Error executing the query: " . $conn->error);
+            }
             if ($classResult->num_rows > 0) {
                 echo '<h2>Course Details</h2>';
                 echo '<table class="table">';
@@ -113,7 +167,7 @@ include("db_connection_close.php");
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $classRow["COURSE"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteCourse('."'".$classRow["COURSE"]."'".')">Delete class</button></td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteCourse(' . "'" . $classRow["COURSE"] . "'" . ')">Delete class</button></td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -142,13 +196,13 @@ include("db_connection_close.php");
         let lab_count = 2;
         let subname_count = 2;
         let subcode_count = 2;
-        let hoursRequiredcount=2;
+        let hoursRequiredcount = 2;
         // Function to add a new row to the table
         function addRow() {
             var newRow = '<tr>' +
                 '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="8" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="50" Required></td>' +
-                '<td><input type="number" class="form-control" name="hoursRequired'+hoursRequiredcount+'" Required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired' + hoursRequiredcount + '" Required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="no" checked> No' +
@@ -185,15 +239,29 @@ include("db_connection_close.php");
         }
 
         function deleteCourse(courseName) {
-    console.log('Delete Course called with courseName:', courseName);
-    var confirmation = confirm("Are you sure you want to delete this Course record?");
-    if (confirmation) {
-        // Redirect to the PHP file that handles the deletion
-        window.location.href = 'delete_course.php?coursename=' + courseName;
+            console.log('Delete Course called with courseName:', courseName);
+            var confirmation = confirm("Are you sure you want to delete this Course record?");
+            if (confirmation) {
+                // Redirect to the PHP file that handles the deletion
+                window.location.href = 'delete_course.php?coursename=' + courseName;
+            }
+        }
+
+        // Select Sem
+
+        function showSemesterModal() {
+        var hasCookie = <?php echo isset($_COOKIE['whichsem']) ? 'true' : 'false'; ?>;
+        if (!hasCookie) {
+            $('#semesterModal').modal('show');
+        }
     }
-}
+
+    // Call the function when the page is loaded
+    $(document).ready(function () {
+        showSemesterModal();
+    });
     </script>
-    
+
 </body>
 
 </html>
