@@ -40,7 +40,11 @@
                 <?php
                 include 'db_connection.php';
                 // Fetch and display the class schedule
-                $scheduleResult = $conn->query("SELECT * FROM admin");
+                // if($currsem=="Odd"){
+                //     $scheduleResult = $conn->query("SELECT * FROM adminodd");    }
+                // else if($currsem=="Even"){
+                //     $scheduleResult = $conn->query("SELECT * FROM admineven");    }
+                $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven") );
 
                 if ($scheduleResult->num_rows > 0) {
 
@@ -79,7 +83,11 @@
 include 'db_connection.php';
 
 // Fetch and display the class schedule
-$scheduleResult = $conn->query("SELECT * FROM admin");
+$scheduleResult = $conn->query("SELECT * FROM "  . ($currsem == "odd" ? "adminodd" : "admineven") );
+// if($currsem=="Odd"){
+//     $scheduleResult = $conn->query("SELECT * FROM adminodd");    }
+// else if($currsem=="Even"){
+//     $scheduleResult = $conn->query("SELECT * FROM admineven");    }
 
 if ($scheduleResult->num_rows > 0) {
     while ($classRow = $scheduleResult->fetch_assoc()) {
@@ -138,6 +146,7 @@ if ($scheduleResult->num_rows > 0) {
             echo '</tbody>';
             echo '</table>';
             $i=0;
+            
         } else {
             echo 'No data found for the selected course.';
         }
@@ -217,6 +226,66 @@ $conn->close();
             });
         });
     </script>
+<script>
+    function removesel(){
+        console.log("hello");
+    };
+    var hasFunctionExecuted = false;
+
+    // Your onmouseover function
+    function generatematrix() {
+        if (!hasFunctionExecuted) {
+            // Your code to execute on mouseover goes here
+
+        // Assuming you have a variable for the total number of subjects ($si in this case)
+        for (var i = 1; i <= document.getElementById('hidval').innerText; i++) {
+            let rowName = document.getElementById('s' + i + '1').innerText;
+            console.log(rowName);
+            // Create a class variable dynamically using the name
+            window[rowName] = {
+                name: document.getElementById('s' + i + '2').innerText,
+                staff: document.getElementById('s' + i + '3').value,
+                hours: document.getElementById('s' + i + '4').innerText,
+                lab: document.getElementById('s' + i + '5').innerText
+            };
+
+            // Accessing class variables
+            // console.log(window[rowName].name);  // s11 name
+            // console.log(window[rowName].staff); // s11 staff
+            // console.log(window[rowName].hours); // s11 hours
+            // console.log(window[rowName].lab);   // s11 lab
+    //     row.push(document.getElementById('s' + i + '1').innerText);
+    //     row.push(document.getElementById('s' + i + '2').innerText);
+    //     row.push(document.getElementById('s' + i + '3').value);
+    //     row.push(document.getElementById('s' + i + '4').innerText);
+    //     row.push(document.getElementById('s' + i + '5').innerText);
+
+    // matrix.push(row);
+}
+
+console.log("class created");
+
+        // console.log(matrix);
+
+            // Set the flag to true to indicate that the function has been executed
+            hasFunctionExecuted = true;
+        }
+    }
+
+    // Function to reset hasFunctionExecuted to false when the content of "assign-schedule" is modified
+    function resetFunctionExecutionFlag() {
+        hasFunctionExecuted = false;
+    }
+
+    // Create a MutationObserver to observe changes in the content of "assign-schedule"
+    var observer = new MutationObserver(resetFunctionExecutionFlag);
+
+    // Define the configuration for the observer
+    var config = { childList: true, subtree: true };
+
+    // Start observing the "assign-schedule" element
+    observer.observe(document.getElementById("assign-schedule"), config);
+</script>
 
 
 

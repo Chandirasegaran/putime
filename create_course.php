@@ -1,4 +1,6 @@
 <?php
+$currsem=$_COOKIE['whichsem'];
+
 include("db_connection.php");
 $courseName = $_POST["coursename"];
 $numberOfSubjects = 25;
@@ -19,15 +21,21 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
 // }
 
 include 'db_connection.php';
+// if($currsem=="Odd"){
+//     $sql = "INSERT INTO adminodd (COURSE) VALUES ('$courseName')";
+// }
+// else if($currsem=="Even"){
+//     $sql = "INSERT INTO admineven (COURSE) VALUES ('$courseName')";
+// }
+$sql = "INSERT INTO " . ($currsem == "odd" ? "adminodd" : "admineven") . " (COURSE) VALUES ('$currsem$courseName')";
 
-$sql = "INSERT INTO ADMIN (COURSE) VALUES ('$courseName')";
 if ($conn->query($sql) !== TRUE) {
     echo 'Error Inserting into Admin table: ' . $conn->error;
 }
 
 // Time table Creation
 
-$sql = 'CREATE TABLE IF NOT EXISTS ' . $courseName . ' (
+$sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . ' (
     `ORDER` INT PRIMARY KEY,
     DAY varchar(10),
     `9_30` VARCHAR(30),
@@ -46,13 +54,13 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 $sqlInsertData = "
-    INSERT INTO `{$courseName}` (`ORDER`, DAY, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
+    INSERT INTO `{$currsem }{$courseName}` (`ORDER`, DAY, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
     VALUES 
-    (1,'MONDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (2,'TUESDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (3,'WEDNESDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (4,'THURSDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'),
-    (5,'FRIDAY', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown');
+    (1,'MONDAY', '', '', '', '', '', '', '', ''),
+    (2,'TUESDAY', '', '', '', '', '', '', '', ''),
+    (3,'WEDNESDAY', '', '', '', '', '', '', '', ''),
+    (4,'THURSDAY', '', '', '', '', '', '', '', ''),
+    (5,'FRIDAY', '', '', '', '', '', '', '', '');
 ";
 
 
@@ -64,7 +72,7 @@ if ($conn->query($sqlInsertData) !== TRUE) {
 
 // Subject Table
 
-$sql = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
+$sql = 'CREATE TABLE IF NOT EXISTS ' .$currsem . $courseName . '_Subjects (
     subjectCode VARCHAR(8) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
@@ -81,7 +89,7 @@ if ($conn->query($sql) !== TRUE) {
 // Example: Insert data into a table
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     if (${"subjectCode{$i}"} !== null) {
-        $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName, hoursRequired, lab)
+        $sql = "INSERT INTO {$currsem }{$courseName}_Subjects (subjectCode, subjectName, hoursRequired, lab)
                 VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
         if ($conn->query($sql) !== TRUE) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
