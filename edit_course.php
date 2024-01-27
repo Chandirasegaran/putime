@@ -51,32 +51,36 @@ include 'db_connection_close.php';
             </tr>
         </thead>
         <tbody>
-        <?php
-// Display fetched rows in the table
-if ($result && $result->num_rows > 0) {
-    echo '<form action="update_subject.php" method="post">';
-    echo '<input type="hidden" name="courseName" value="' . $courseName . '">';
+            <?php
+            $iter=1;
+            // Display fetched rows in the table
+            if ($result && $result->num_rows > 0) {
+                echo '<form action="update_subject.php" method="post">';
+                echo '<input type="hidden" name="courseName" value="' . $courseName . '">';
 
-    while ($row = $result->fetch_assoc()) {
-        echo '<tr>';
-        echo '<td> <input  type="text" placeholder="' . $row['subjectCode'] . '"></td>';
-        echo '<td> <input name="subjectName" type="text"  placeholder="' . $row['subjectName'] . '"></td>';
-        echo '<td> <input name="hoursRequired" type="number"  placeholder="' . $row['hoursRequired'] . '"></td>';
-        echo '<td> <input name="lab" type="text"  placeholder="' . $row['lab'] . '"></td>';
-        echo '</tr>';
-    }
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td> <input  type="text" name="subjectCode'.$iter.'" placeholder="' . $row['subjectCode'] . '"></td>';
+                    echo '"subjectCode'.$iter.'"';
+                    echo '<td> <input name="subjectName'.$iter.'" type="text"  placeholder="' . $row['subjectName'] . '"></td>';
+                    echo '<td> <input name="hoursRequired'.$iter.'" type="number"  placeholder="' . $row['hoursRequired'] . '"></td>';
+                    echo '<td> <input name="lab'.$iter.'" type="text"  placeholder="' . $row['lab'] . '"></td>';
+                    echo '</tr>';
+                    $iter++;
+                }
 
-    echo '<td><button type="submit" class="btn btn-primary">Save Changes</button></td>';
-    echo '</form>';
-} 
-else {
-    echo '<tr><td colspan="5">No subjects available</td></tr>';
-}
-?>
+                echo '<input type="hidden" name="numberOfSubjects" value="' . $iter . '">';
+                echo '<td><button type="submit" class="btn btn-primary">Save Changes</button></td>';
+                echo '</form>';
+            } else {
+                echo '<tr><td colspan="5">No subjects available</td></tr>';
+            }
+            ?>
         </tbody>
     </table>
     <!-- JavaScript for editing -->
     <script>
     </script>
 </body>
+
 </html>

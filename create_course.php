@@ -17,7 +17,7 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
 //         break;
 //     }
 // }
-
+-
 include 'db_connection.php';
 
 $sql = "INSERT INTO ADMIN (COURSE) VALUES ('$courseName')";
