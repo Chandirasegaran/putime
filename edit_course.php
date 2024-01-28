@@ -49,38 +49,41 @@ include 'db_connection_close.php';
                 <th>Lab</th>
             </tr>
         </thead>
+        <form id="subjectForm" action="update_subject.php" method="post">
         <tbody>
+        <input type="hidden" name="courseName" value="' . $courseName . '">
             <?php
          $iter=1;
          // Display fetched rows in the table
-         if ($result && $result->num_rows > 0) {
-             echo '<form action="update_subject.php" method="post">';
-             echo '<input type="hidden" name="courseName" value="' . $courseName . '">';
-         
+         if ($result && $result->num_rows > 0) {     
              while ($row = $result->fetch_assoc()) {
-                 echo '<tr id=tbody>';
+                 echo '<tr>';
                  echo '<td> <input type="text" name="subjectCode'.$iter.'" value="' . (isset($_POST['subjectCode'.$iter]) ? $_POST['subjectCode'.$iter] : $row['subjectCode']) . '" placeholder="' . $row['subjectCode'] . '"></td>';
                  echo '<td> <input name="subjectName'.$iter.'" value="' . (isset($_POST['subjectName'.$iter]) ? $_POST['subjectName'.$iter] : $row['subjectName']) . '" type="text" placeholder="' . $row['subjectName'] . '"></td>';
                  echo '<td> <input name="hoursRequired'.$iter.'" value="' . (isset($_POST['hoursRequired'.$iter]) ? $_POST['hoursRequired'.$iter] : $row['hoursRequired']) . '" type="number" placeholder="' . $row['hoursRequired'] . '"></td>';
                  echo '<td> <input name="lab'.$iter.'" value="' . (isset($_POST['lab'.$iter]) ? $_POST['lab'.$iter] : $row['lab']) . '" type="text" placeholder="' . $row['lab'] . '"></td>';
                  echo '</tr>';
+                //  echo '<div id="tbody">';
+                //  echo '</div>';
                  $iter++;
              }
 
-             echo '<input type="hidden" name="numberOfSubjects" value="' . $iter . '">';
-
-             echo '<td><button  class="btn btn-success float-right " onclick="addRow()">AddRow</button></td>';
-
-             echo '<td><button type="submit" class="btn btn-primary">Save Changes</button></td>';
-             echo '</form>';
          }  
           else {
              echo '<tr><td colspan="5">No subjects available</td></tr>';
             }
             ?>
         </tbody>
+
+
+
+
+ <input type="hidden" name="numberOfSubjects" value="' . $iter . '">';
+<td><button  type="button" class="btn btn-success float-right " onclick="addRow()">AddRow</button></td>';
+
+<td><button type="submit" class="btn btn-primary">Save Changes</button></td>';
     </table>
-   
+    </form>
 </body>
 
     <script>
@@ -107,7 +110,7 @@ include 'db_connection_close.php';
                 '</td>' +
                 '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
-            document.querySelector('#tbody').insertAdjacentHTML('beforeend', newRow);
+            document.querySelector('tbody').insertAdjacentHTML('beforeend', newRow);
             lab_count++;
             subname_count++;
             subcode_count++;
