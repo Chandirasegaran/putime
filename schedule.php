@@ -193,11 +193,11 @@ for(let i=1;i<=5;i++)
                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                 // console.log(eval(clsvar),valuesArray);
             }
-            if(eval(labvar)!='no' && labArray.includes(eval(labvar)))
+            else if(eval(labvar)!='no' && labArray.includes(eval(labvar)))
             {
                 console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                // console.log(eval(clsvar),valuesArray);
+                console.log(eval(labvar),valuesArray);
             }
         }
     }
