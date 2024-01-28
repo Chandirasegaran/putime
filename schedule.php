@@ -163,8 +163,8 @@
                     //     row.push(document.getElementById('s' + i + '5').innerText);
                     // matrix.push(row);
                 }
-                
-                
+
+
                 console.log("class created");
                 for (let i = 1; i <= 5; i++) {
                     for (let j = 1; j <= 8; j++) {
@@ -187,6 +187,28 @@
                         }
                     }
                 }
+                // Iterate through the first digit (1 to 5)
+                for (let i = 1; i <= 5; i++) {
+                    // Iterate through the second digit (1 to 8)
+                    for (let j = 1; j <= 8; j++) {
+                        // Construct the class name
+                        let className = "sel" + i + j;
+
+                        // Get the dropdown element
+                        let dropdown = document.getElementsByClassName(className);
+                        console.log(dropdown);
+                        // Check if the dropdown exists
+                        if (dropdown.length > 0) {
+                            let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
+                            let computedStyles = getComputedStyle(selectedOption);
+                            let backgroundColor = computedStyles.backgroundColor;
+
+                            // Set the background color
+                            dropdown[0].style.backgroundColor = backgroundColor;
+                        }
+                    }
+                }
+
                 // console.log(matrix);
                 // Set the flag to true to indicate that the function has been executed
                 hasFunctionExecuted = true;
