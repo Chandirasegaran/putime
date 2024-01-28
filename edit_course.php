@@ -47,40 +47,71 @@ include 'db_connection_close.php';
                 <th>Subject Name</th>
                 <th>Hours Required</th>
                 <th>Lab</th>
-
             </tr>
         </thead>
         <tbody>
             <?php
-            $iter=1;
-            // Display fetched rows in the table
-            if ($result && $result->num_rows > 0) {
-                echo '<form action="update_subject.php" method="post">';
-                echo '<input type="hidden" name="courseName" value="' . $courseName . '">';
+         $iter=1;
+         // Display fetched rows in the table
+         if ($result && $result->num_rows > 0) {
+             echo '<form action="update_subject.php" method="post">';
+             echo '<input type="hidden" name="courseName" value="' . $courseName . '">';
+         
+             while ($row = $result->fetch_assoc()) {
+                 echo '<tr id=tbody>';
+                 echo '<td> <input type="text" name="subjectCode'.$iter.'" value="' . (isset($_POST['subjectCode'.$iter]) ? $_POST['subjectCode'.$iter] : $row['subjectCode']) . '" placeholder="' . $row['subjectCode'] . '"></td>';
+                 echo '<td> <input name="subjectName'.$iter.'" value="' . (isset($_POST['subjectName'.$iter]) ? $_POST['subjectName'.$iter] : $row['subjectName']) . '" type="text" placeholder="' . $row['subjectName'] . '"></td>';
+                 echo '<td> <input name="hoursRequired'.$iter.'" value="' . (isset($_POST['hoursRequired'.$iter]) ? $_POST['hoursRequired'.$iter] : $row['hoursRequired']) . '" type="number" placeholder="' . $row['hoursRequired'] . '"></td>';
+                 echo '<td> <input name="lab'.$iter.'" value="' . (isset($_POST['lab'.$iter]) ? $_POST['lab'.$iter] : $row['lab']) . '" type="text" placeholder="' . $row['lab'] . '"></td>';
+                 echo '</tr>';
+                 $iter++;
+             }
 
-                while ($row = $result->fetch_assoc()) {
-                    echo '<tr>';
-                    echo '<td> <input  type="text" name="subjectCode'.$iter.'" placeholder="' . $row['subjectCode'] . '"></td>';
-                    echo '"subjectCode'.$iter.'"';
-                    echo '<td> <input name="subjectName'.$iter.'" type="text"  placeholder="' . $row['subjectName'] . '"></td>';
-                    echo '<td> <input name="hoursRequired'.$iter.'" type="number"  placeholder="' . $row['hoursRequired'] . '"></td>';
-                    echo '<td> <input name="lab'.$iter.'" type="text"  placeholder="' . $row['lab'] . '"></td>';
-                    echo '</tr>';
-                    $iter++;
-                }
+             echo '<input type="hidden" name="numberOfSubjects" value="' . $iter . '">';
 
-                echo '<input type="hidden" name="numberOfSubjects" value="' . $iter . '">';
-                echo '<td><button type="submit" class="btn btn-primary">Save Changes</button></td>';
-                echo '</form>';
-            } else {
-                echo '<tr><td colspan="5">No subjects available</td></tr>';
+             echo '<td><button  class="btn btn-success float-right " onclick="addRow()">AddRow</button></td>';
+
+             echo '<td><button type="submit" class="btn btn-primary">Save Changes</button></td>';
+             echo '</form>';
+         }  
+          else {
+             echo '<tr><td colspan="5">No subjects available</td></tr>';
             }
             ?>
         </tbody>
     </table>
-    <!-- JavaScript for editing -->
-    <script>
-    </script>
+   
 </body>
 
+    <script>
+        let lab_count = 2;
+        let subname_count = 2;
+        let subcode_count = 2;
+        let hoursRequiredcount=2;
+        // Function to add a new row to the table
+        function addRow() {
+            var newRow = '<tr>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="50" Required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired'+hoursRequiredcount+'" Required></td>' +
+                '<td>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="no" checked> No' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="1"> 1' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="2"> 2' +
+                '</div>' +
+                '</td>' +
+                '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                '</tr>';
+            document.querySelector('#tbody').insertAdjacentHTML('beforeend', newRow);
+            lab_count++;
+            subname_count++;
+            subcode_count++;
+            hoursRequiredcount++;
+        }
+    </script>
 </html>

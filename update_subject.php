@@ -17,15 +17,15 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
     echo  ${"lab{$i}"};
 
 }
-// include 'db_connection.php';
+include 'db_connection.php';
 
-// // Drop existing Subject table
-// $sqlDrop = 'truncate TABLE ' . $courseName . '_Subjects';
+// Drop existing Subject table
+$sqlDrop = 'truncate TABLE ' . $courseName . '_Subjects';
 
 
-// if ($conn->query($sqlDrop) !== TRUE) {
-//     echo 'Error dropping Subject table: ' . $conn->error;
-// }
+if ($conn->query($sqlDrop) !== TRUE) {
+    echo 'Error dropping Subject table: ' . $conn->error;
+}
 
 
 
@@ -54,18 +54,21 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
 //     }
 // }
 
-// // Example: Insert data into a table
-// for ($i = 1; $i <= $numberOfSubjects; $i++) {
-//     if (${"subjectCode{$i}"} !== null) {
-//         $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName, hoursRequired, lab)
-//                 VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
-//         if ($conn->query($sql) !== TRUE) {
-//             echo 'Error: ' . $sql . '<br>' . $conn->error;
-//         }
-//     } else {
-//         break;
-//     }
-// }
-// include 'db_connection_close.php';
+// Example: Insert data into a table
+
+for ($i = 1; $i <= $numberOfSubjects; $i++) {
+    if (${"subjectCode{$i}"} !== null) {
+        $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName, hoursRequired, lab)
+                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
+        if ($conn->query($sql) !== TRUE) {
+            echo 'Error: ' . $sql . '<br>' . $conn->error;
+        }
+    } 
+    else {
+        break;
+    }
+}
+include 'db_connection_close.php';
+
 // // header("Location: index.php");
 ?>
