@@ -119,6 +119,11 @@ include("db_connection_close.php");
                         <form action="create_course.php" method="post">
                             <div class="form-group">
                                 <label for="CourseName">Course Name:</label>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="hasbatches" id="batches">
+                                    <label class="form-check-label" for="batches">Has Batches</label>
+                                </div>
+                                <br>
                                 <input type="text" name="coursename" class="form-control" id="CourseName"
                                     placeholder="Enter class name" required oninput="allowTextOnly(this)">
                             </div>
@@ -161,7 +166,7 @@ include("db_connection_close.php");
                             </table>
 
                             <!-- Add Row Button -->
-                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRow()">Add
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowhc()">Add
                                 Row</button>
 
                     </div>
@@ -270,7 +275,7 @@ include("db_connection_close.php");
                             </table>
 
                             <!-- Add Row Button -->
-                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRow()">Add
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowsc()">Add
                                 Row</button>
 
                     </div>
@@ -374,7 +379,7 @@ include("db_connection_close.php");
                             </table>
 
                             <!-- Add Row Button -->
-                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRow()">Add
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowse()">Add
                                 Row</button>
 
                     </div>
@@ -436,7 +441,7 @@ include("db_connection_close.php");
         let subcode_count = 2;
         let hoursRequiredcount = 2;
         // Function to add a new row to the table
-        function addRow() {
+        function addRowhc() {
             var newRow = '<tr>' +
                 '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="8" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="50" Required></td>' +
@@ -470,7 +475,7 @@ include("db_connection_close.php");
         let scsubcode_count = 2;
         let schoursRequiredcount = 2;
         // Function to add a new row to the table
-        function addRow() {
+        function addRowsc() {
             var newRow = '<tr>' +
                 '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="8" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + scsubname_count + '" maxlength="50" Required></td>' +
@@ -503,7 +508,7 @@ include("db_connection_close.php");
         let sesubcode_count = 2;
         let sehoursRequiredcount = 2;
         // Function to add a new row to the table
-        function addRow() {
+        function addRowse() {
             var newRow = '<tr>' +
                 '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="8" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + sesubname_count + '" maxlength="50" Required></td>' +
