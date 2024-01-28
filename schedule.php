@@ -171,13 +171,11 @@ for(let i=1;i<=5;i++)
         for(let k=0;k<=(document.getElementById("hidval").innerText-1);k++)
         {
             let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
-            let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
             
             
             let elements1 = document.querySelectorAll('.table'+i.toString()+j.toString());
             // Create an array to store the values
             let valuesArray = [];
-            
             // Iterate over the NodeList and push values into the array
             elements1.forEach(function (elementpara) {
                 valuesArray.push(elementpara.innerText);
