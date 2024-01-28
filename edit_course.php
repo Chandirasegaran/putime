@@ -47,7 +47,7 @@ include 'db_connection_close.php';
                 <th>Subject Code</th>
                 <th>Subject Name</th>
                 <th>Hours Required</th>
-                <th>Lab</th>
+                <th>Lab [no/1/2]</th>
             </tr>
         </thead>
         <form id="subjectForm" action="update_subject.php" method="post">
