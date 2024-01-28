@@ -90,6 +90,7 @@ $sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . '_Subjects (
     subjectCode VARCHAR(8) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
+    hoursRequiredDup INT,
     lab VARCHAR(10),
     staffName VARCHAR(255)
 )';
@@ -103,8 +104,8 @@ if ($conn->query($sql) !== TRUE) {
 // Example: Insert data into a table
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     if (${"subjectCode{$i}"} !== null) {
-        $sql = "INSERT INTO {$currsem}{$courseName}_Subjects (subjectCode, subjectName, hoursRequired, lab)
-                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
+        $sql = "INSERT INTO {$currsem}{$courseName}_Subjects (subjectCode, subjectName, hoursRequiredDup , hoursRequired, lab)
+                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
         if ($conn->query($sql) !== TRUE) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
         }
@@ -167,6 +168,7 @@ if ($bat == true) {
     subjectCode VARCHAR(8) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
+    hoursRequiredDup INT,
     lab VARCHAR(10),
     staffName VARCHAR(255)
 )';
@@ -180,8 +182,8 @@ if ($bat == true) {
     // Example: Insert data into a table
     for ($i = 1; $i <= $numberOfSubjects; $i++) {
         if (${"subjectCode{$i}"} !== null) {
-            $sql = "INSERT INTO {$currsem}{$courseName}{$batch}_Subjects (subjectCode, subjectName, hoursRequired, lab)
-                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
+            $sql = "INSERT INTO {$currsem}{$courseName}{$batch}_Subjects (subjectCode, subjectName,hoursRequiredDup,hoursRequired, lab)
+                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
             if ($conn->query($sql) !== TRUE) {
                 echo 'Error: ' . $sql . '<br>' . $conn->error;
             }

@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                             echo '</div>';
                             $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
                             $labResult = $conn->query($labQuery);
-                            echo '<div class="lab'.$i.$j.'">';
+                            echo '<div class="lab'.$i.$j.'" style="display:none">';
                             if ($labResult->num_rows > 0) {
                                 while ($labRow = $labResult->fetch_assoc()) {
                                     echo $labRow['lab'];
