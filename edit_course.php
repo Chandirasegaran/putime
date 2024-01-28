@@ -82,7 +82,7 @@ include 'db_connection_close.php';
 <script>
     function delrow(x) {
         <?php
-        $iter--;
+        $iter=$iter-1;
         ?>
         var elementToRemove = document.getElementById("row" + x);
         if (elementToRemove) {
