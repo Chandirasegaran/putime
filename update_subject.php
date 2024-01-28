@@ -1,11 +1,11 @@
 <?php
 include("db_connection.php");
-echo 'jm';
-echo $_POST["subjectCode1"];
+
 $courseName = isset($_POST["courseName"]) ? $_POST["courseName"] : '';
 $numberOfSubjects = isset($_POST["numberOfSubjects"]) ? $_POST["numberOfSubjects"] : '';
 echo $courseName;
 echo $numberOfSubjects;
+
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     ${"subjectCode{$i}"} = isset($_POST["subjectCode{$i}"]) ? $_POST["subjectCode{$i}"] : null;
     ${"subjectName{$i}"} = isset($_POST["subjectName{$i}"]) ? $_POST["subjectName{$i}"] : null;
@@ -15,19 +15,15 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
     echo  ${"subjectName{$i}"};
     echo  ${"hoursRequired{$i}"};
     echo  ${"lab{$i}"};
-
 }
+
 include 'db_connection.php';
 
 // Drop existing Subject table
 $sqlDrop = 'truncate TABLE ' . $courseName . '_Subjects';
-
-
 if ($conn->query($sqlDrop) !== TRUE) {
     echo 'Error dropping Subject table: ' . $conn->error;
 }
-
-
 
 // // Create Subject table
 // $sqlCreate = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
@@ -37,8 +33,6 @@ if ($conn->query($sqlDrop) !== TRUE) {
 //     lab VARCHAR(10),
 //     staffName VARCHAR(255)
 // )';
-
-
 
 // if ($conn->query($sql) !== TRUE) {
 //     echo 'Error creating Subject table: ' . $conn->error;
@@ -53,7 +47,6 @@ if ($conn->query($sqlDrop) !== TRUE) {
 //         echo ${"lab{$i}"};
 //     }
 // }
-
 // Example: Insert data into a table
 
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
@@ -69,6 +62,5 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
     }
 }
 include 'db_connection_close.php';
-
-// // header("Location: index.php");
+header("Location: index.php");
 ?>
