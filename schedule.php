@@ -171,16 +171,29 @@ for(let i=1;i<=5;i++)
         for(let k=0;k<=(document.getElementById("hidval").innerText-1);k++)
         {
             let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
-            
+            let labvar=(document.getElementById(i.toString() + j.toString() + k.toString())).value + ".lab";
             
             let elements1 = document.querySelectorAll('.table'+i.toString()+j.toString());
+            let elements2 = document.querySelectorAll('.lab'+i.toString()+j.toString());
             // Create an array to store the values
             let valuesArray = [];
+            let labArray=[];
             // Iterate over the NodeList and push values into the array
             elements1.forEach(function (elementpara) {
                 valuesArray.push(elementpara.innerText);
             });
+            
+            elements2.forEach(function (elementparalab) {
+                labArray.push(elementparalab.innerText);
+            });
+            
             if(valuesArray.includes(eval(clsvar)))
+            {
+                console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
+                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                // console.log(eval(clsvar),valuesArray);
+            }
+            if(eval(labvar)!='no' && labArray.includes(eval(labvar)))
             {
                 console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
