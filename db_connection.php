@@ -40,6 +40,39 @@ if ($conn->query($sql) !== TRUE) {
     echo 'Error creating  Subject table: ' . $conn->error;
 }
 
+// $sql = 'CREATE TABLE IF NOT EXISTS SOFTCORETB (
+//     COURSE VARCHAR(50) PRIMARY KEY
+// )';
+
+
+// if ($conn->query($sql) !== TRUE) {
+//     echo 'Error creating EVEN Subject table: ' . $conn->error;
+// }
+$sql = 'CREATE TABLE IF NOT EXISTS SOFTCORETB (
+    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectName VARCHAR(255),
+    hoursRequired INT,
+    lab VARCHAR(10)
+)';
+
+
+if ($conn->query($sql) !== TRUE) {
+    echo 'Error creating Softcore table: ' . $conn->error;
+}
+
+$sql = 'CREATE TABLE IF NOT EXISTS SETB (
+    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectName VARCHAR(255),
+    hoursRequired INT,
+    lab VARCHAR(10)
+)';
+
+
+if ($conn->query($sql) !== TRUE) {
+    echo 'Error creating Skill Enhancement table: ' . $conn->error;
+}
+
+
 // $sql = 'CREATE TABLE IF NOT EXISTS ADMINEVEN (
 //     COURSE VARCHAR(50) PRIMARY KEY
 // )';

@@ -25,7 +25,7 @@ include("db_connection_close.php");
 
     <!-- Select Sem -->
 
-    <!-- Modal  without bootstrap--> 
+    <!-- Modal  without bootstrap-->
     <!-- <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -101,7 +101,7 @@ include("db_connection_close.php");
         <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
             ADD CLASS
         </button>
-
+        <br>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -209,6 +209,212 @@ include("db_connection_close.php");
             $conn->close();
             ?>
         </div>
+        <hr noshade>
+
+        <div class="mt-5">
+            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#softcoreModal">
+                ADD SOFTCORE
+            </button>
+        </div>
+        <br>
+        <div class="modal fade" id="softcoreModal" tabindex="-1" role="dialog" aria-labelledby="softcoreModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <!-- Increased modal width using modal-xl for larger screens -->
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class=" modal-title " id="softcoreModalLabel">Add Softcores</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="create_softcore.php" method="post">
+
+                            <!-- Table -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Subject Name</th>
+                                        <th>Hours Required</th>
+                                        <th>Lab</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8"
+                                                Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50"
+                                                Required></td>
+                                        <td><input type="number" class="form-control" name="hoursRequired1" Required>
+                                        </td>
+                                        <td>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="no"
+                                                    checked> No
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="1"> 1
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="2"> 2
+                                            </div>
+                                        </td>
+                                        <td><button id="c_delete_row_btn" class="btn btn-danger"
+                                                onclick="deleteRow(this)">Delete</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Add Row Button -->
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRow()">Add
+                                Row</button>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create Softcores</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div>
+            <?php
+            include 'db_connection.php';
+            $sql = ("SELECT * FROM SOFTCORETB");
+            // echo $sql;
+            $SCResult = $conn->query($sql);
+            if ($SCResult === false) {
+                die("Error executing the query: " . $conn->error);
+            }
+            if ($SCResult->num_rows > 0) {
+                echo '<h2>Softcore Details</h2>';
+                echo '<table class="table">';
+                echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Action</th></tr></thead>';
+                echo '<tbody>';
+                while ($SCRow = $SCResult->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . $SCRow["subjectCode"] . '</td>';
+                    echo '<td>' . $SCRow["subjectName"] . '</td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteScCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete class</button></td>';
+                    echo '</tr>';
+                }
+                echo '</tbody></table>';
+            } else {
+                echo 'No Course records found.';
+            }
+            $conn->close();
+            ?>
+        </div>
+
+
+        <!-- Skill Enhancement -->
+        <br>
+        <hr noshade>
+        <div class="mt-5">
+            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#seModal">
+                ADD SKILL ENHANCEMENT
+            </button>
+        </div>
+        <br>
+        <div class="modal fade" id="seModal" tabindex="-1" role="dialog" aria-labelledby="seModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <!-- Increased modal width using modal-xl for larger screens -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="seModalLabel">Add Skill Enhancement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="create_se.php" method="post">
+
+                            <!-- Table -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Subject Name</th>
+                                        <th>Hours Required</th>
+                                        <th>Lab</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8"
+                                                Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50"
+                                                Required></td>
+                                        <td><input type="number" class="form-control" name="hoursRequired1" Required>
+                                        </td>
+                                        <td>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="no"
+                                                    checked> No
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="1"> 1
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="2"> 2
+                                            </div>
+                                        </td>
+                                        <td><button id="c_delete_row_btn" class="btn btn-danger"
+                                                onclick="deleteRow(this)">Delete</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Add Row Button -->
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRow()">Add
+                                Row</button>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create Softcores</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div>
+            <?php
+            include 'db_connection.php';
+            $sql = ("SELECT * FROM SETB");
+            // echo $sql;
+            $SCResult = $conn->query($sql);
+            if ($SCResult === false) {
+                die("Error executing the query: " . $conn->error);
+            }
+            if ($SCResult->num_rows > 0) {
+                echo '<h2>Skill Enhancement Details</h2>';
+                echo '<table class="table">';
+                echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Action</th></tr></thead>';
+                echo '<tbody>';
+                while ($SCRow = $SCResult->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . $SCRow["subjectCode"] . '</td>';
+                    echo '<td>' . $SCRow["subjectName"] . '</td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteSeCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete class</button></td>';
+                    echo '</tr>';
+                }
+                echo '</tbody></table>';
+            } else {
+                echo 'No Course records found.';
+            }
+            $conn->close();
+            ?>
+        </div>
+
 
     </div>
 
@@ -255,6 +461,74 @@ include("db_connection_close.php");
             hoursRequiredcount++;
         }
 
+
+
+        // Soft core table
+
+        let sclab_count = 2;
+        let scsubname_count = 2;
+        let scsubcode_count = 2;
+        let schoursRequiredcount = 2;
+        // Function to add a new row to the table
+        function addRow() {
+            var newRow = '<tr>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + scsubname_count + '" maxlength="50" Required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired' + schoursRequiredcount + '" Required></td>' +
+                '<td>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + sclab_count + '" value="no" checked> No' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + sclab_count + '" value="1"> 1' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + sclab_count + '" value="2"> 2' +
+                '</div>' +
+                '</td>' +
+                '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                '</tr>';
+            document.querySelector('#softcoreModal table tbody').insertAdjacentHTML('beforeend', newRow);
+            sclab_count++;
+            scsubname_count++;
+            scsubcode_count++;
+            schoursRequiredcount++;
+        }
+
+
+        // Skill Enhancement table
+
+        let selab_count = 2;
+        let sesubname_count = 2;
+        let sesubcode_count = 2;
+        let sehoursRequiredcount = 2;
+        // Function to add a new row to the table
+        function addRow() {
+            var newRow = '<tr>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + sesubname_count + '" maxlength="50" Required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired' + sehoursRequiredcount + '" Required></td>' +
+                '<td>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + selab_count + '" value="no" checked> No' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + selab_count + '" value="1"> 1' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + selab_count + '" value="2"> 2' +
+                '</div>' +
+                '</td>' +
+                '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                '</tr>';
+            document.querySelector('#seModal table tbody').insertAdjacentHTML('beforeend', newRow);
+            selab_count++;
+            sesubname_count++;
+            sesubcode_count++;
+            sehoursRequiredcount++;
+        }
+
+
         // Function to delete a row
         function deleteRow(button) {
             lab_count--;
@@ -278,7 +552,23 @@ include("db_connection_close.php");
                 window.location.href = 'delete_course.php?coursename=' + courseName;
             }
         }
+        function deleteScCourse(courseName) {
+            console.log('Delete Course called with courseName:', courseName);
+            var confirmation = confirm("Are you sure you want to delete this Course record?");
+            if (confirmation) {
+                // Redirect to the PHP file that handles the deletion
+                window.location.href = 'delete_sc_course.php?coursename=' + courseName;
+            }
+        }
 
+        function deleteSeCourse(courseName) {
+            console.log('Delete Course called with courseName:', courseName);
+            var confirmation = confirm("Are you sure you want to delete this Course record?");
+            if (confirmation) {
+                // Redirect to the PHP file that handles the deletion
+                window.location.href = 'delete_se_course.php?coursename=' + courseName;
+            }
+        }
         // Select Sem
 
         function showSemesterModal() {
