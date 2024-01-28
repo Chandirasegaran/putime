@@ -225,7 +225,29 @@
         // Start observing the "assign-schedule" element
         observer.observe(document.getElementById("assign-schedule"), config);
 
+    function mycheck()
+    {
+        for (let i = 1; i <= 5; i++) {
+                    // Iterate through the second digit (1 to 8)
+                    for (let j = 1; j <= 8; j++) {
+                        // Construct the class name
+                        let className = "sel" + i + j;
 
+                        // Get the dropdown element
+                        let dropdown = document.getElementsByClassName(className);
+                        console.log(dropdown);
+                        // Check if the dropdown exists
+                        if (dropdown.length > 0) {
+                            let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
+                            let computedStyles = getComputedStyle(selectedOption);
+                            let backgroundColor = computedStyles.backgroundColor;
+
+                            // Set the background color
+                            dropdown[0].style.backgroundColor = backgroundColor;
+                        }
+                    }
+                }
+    }
 
 
     </script>
