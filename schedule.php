@@ -36,8 +36,7 @@
                 <?php
                 include 'db_connection.php';
                 // Fetch and display the class schedule
-                // $scheduleResult = $conn->query("SELECT * FROM admin");
-                $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven") );
+                $scheduleResult = $conn->query("SELECT * FROM admin");
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
                         echo '<option value="' . $classRow["COURSE"] . '">' . $classRow["COURSE"] . '</option>';
