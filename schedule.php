@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>PU Time</title>
     <!-- Required meta tags -->
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
     <?php include 'navbar.php' ?>
     <div class="container mt-5">
@@ -19,25 +21,24 @@
 
             <label for="listcourse">Select Your Course for Scheduling </label>
             <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()">
-            <option value="select" selected id="SelectCourseDrop">Select</option>
-            <script>
-            let count=1
-            function hideselect(){
-                count++;
-                // console.log(count);
-                if(count==3)
-                {
-                document.getElementById("SelectCourseDrop").remove();
-                document.getElementById("listcourse").removeAttribute("onclick");
-                }
-            }
-            
-            </script>
+                <option value="select" selected id="SelectCourseDrop">Select</option>
+                <script>
+                    let count = 1
+                    function hideselect() {
+                        count++;
+                        // console.log(count);
+                        if (count == 3) {
+                            document.getElementById("SelectCourseDrop").remove();
+                            document.getElementById("listcourse").removeAttribute("onclick");
+                        }
+                    }
+
+                </script>
                 <?php
                 include 'db_connection.php';
                 // Fetch and display the class schedule
                 // $scheduleResult = $conn->query("SELECT * FROM admin");
-                $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven") );
+                $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
                         echo '<option value="' . $classRow["COURSE"] . '">' . $classRow["COURSE"] . '</option>';
@@ -55,11 +56,11 @@
             <hr>
             <br>
             <form action="update_course_table.php" method="post">
-            <div id="assigningtable">
-                <!-- Displaying Table -->
-            </div>
-            
-           
+                <div id="assigningtable">
+                    <!-- Displaying Table -->
+                </div>
+
+
             </form>
         </div>
     </div>
@@ -93,8 +94,7 @@
                 }
             });
         });
-        function check()
-        {
+        function check() {
             console.log("H");
             return false;
         }
@@ -131,92 +131,82 @@
             });
         });
     </script>
-<script>
-    // function removesel(clsname){
-    //     console.log(document.getElementsByClassName(clsname));
-    // };
-    var hasFunctionExecuted = false;
-    // Your onmouseover function
-    function generatematrix() {
-        if (!hasFunctionExecuted) {
-            // Your code to execute on mouseover goes here
-        // Assuming you have a variable for the total number of subjects ($si in this case)
-        for (var i = 1; i <= document.getElementById('hidval').innerText; i++) {
-            let rowName = document.getElementById('s' + i + '1').innerText;
-            // console.log(rowName);
-            // Create a class variable dynamically using the name
-            window[rowName] = {
-                name: document.getElementById('s' + i + '2').innerText,
-                staff: document.getElementById('s' + i + '3').value,
-                hours: document.getElementById('s' + i + '4').innerText,
-                lab: document.getElementById('s' + i + '5').innerText
-            };
-            // Accessing class variables
-            // console.log(window[rowName].name);  // s11 name
-            // console.log(window[rowName].staff); // s11 staff
-            // console.log(window[rowName].hours); // s11 hours
-            // console.log(window[rowName].lab);   // s11 lab
-            //     row.push(document.getElementById('s' + i + '1').innerText);
-            //     row.push(document.getElementById('s' + i + '2').innerText);
-            //     row.push(document.getElementById('s' + i + '3').value);
-            //     row.push(document.getElementById('s' + i + '4').innerText);
-            //     row.push(document.getElementById('s' + i + '5').innerText);
-            // matrix.push(row);
-}
-console.log("class created");
-for(let i=1;i<=5;i++)
-{
-    for(let j=1;j<=8;j++)
-    {
-        for(let k=0;k<=(document.getElementById("hidval").innerText-1);k++)
-        {
-            let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
-            let labvar=(document.getElementById(i.toString() + j.toString() + k.toString())).value + ".lab";
-            
-            let elements1 = document.querySelectorAll('.table'+i.toString()+j.toString());
-            let elements2 = document.querySelectorAll('.lab'+i.toString()+j.toString());
-            // Create an array to store the values
-            let valuesArray = [];
-            let labArray=[];
-            // Iterate over the NodeList and push values into the array
-            elements1.forEach(function (elementpara) {
-                valuesArray.push(elementpara.innerText);
-            });
-            
-            elements2.forEach(function (elementparalab) {
-                labArray.push(elementparalab.innerText);
-            });
-            
-            if(valuesArray.includes(eval(clsvar)))
-            {
-                console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
-                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                // console.log(eval(clsvar),valuesArray);
-            }
-            else if(eval(labvar)!='no' && labArray.includes(eval(labvar)))
-            {
-                console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
-                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                console.log(eval(labvar),valuesArray);
+    <script>
+        // function removesel(clsname){
+        //     console.log(document.getElementsByClassName(clsname));
+        // };
+        var hasFunctionExecuted = false;
+        // Your onmouseover function
+        function generatematrix() {
+            if (!hasFunctionExecuted) {
+                // Your code to execute on mouseover goes here
+                // Assuming you have a variable for the total number of subjects ($si in this case)
+                for (var i = 1; i <= document.getElementById('hidval').innerText; i++) {
+                    let rowName = document.getElementById('s' + i + '1').innerText;
+                    // console.log(rowName);
+                    // Create a class variable dynamically using the name
+                    window[rowName] = {
+                        name: document.getElementById('s' + i + '2').innerText,
+                        staff: document.getElementById('s' + i + '3').value,
+                        hours: document.getElementById('s' + i + '4').innerText,
+                        lab: document.getElementById('s' + i + '5').innerText
+                    };
+                    // Accessing class variables
+                    // console.log(window[rowName].name);  // s11 name
+                    // console.log(window[rowName].staff); // s11 staff
+                    // console.log(window[rowName].hours); // s11 hours
+                    // console.log(window[rowName].lab);   // s11 lab
+                    //     row.push(document.getElementById('s' + i + '1').innerText);
+                    //     row.push(document.getElementById('s' + i + '2').innerText);
+                    //     row.push(document.getElementById('s' + i + '3').value);
+                    //     row.push(document.getElementById('s' + i + '4').innerText);
+                    //     row.push(document.getElementById('s' + i + '5').innerText);
+                    // matrix.push(row);
+                }
+                
+                
+                console.log("class created");
+                for (let i = 1; i <= 5; i++) {
+                    for (let j = 1; j <= 8; j++) {
+                        for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
+                            let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
+                            // console.log(eval(clsvar));
+
+                            let elements1 = document.querySelectorAll('.table' + i.toString() + j.toString());
+                            // Create an array to store the values
+                            let valuesArray = [];
+                            // Iterate over the NodeList and push values into the array
+                            elements1.forEach(function (elementpara) {
+                                valuesArray.push(elementpara.innerText);
+                            });
+                            if (valuesArray.includes(eval(clsvar))) {
+                                console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                                // console.log(eval(clsvar),valuesArray);
+                            }
+                        }
+                    }
+                }
+                // console.log(matrix);
+                // Set the flag to true to indicate that the function has been executed
+                hasFunctionExecuted = true;
             }
         }
-    }
-}
-        // console.log(matrix);
-            // Set the flag to true to indicate that the function has been executed
-            hasFunctionExecuted = true;
+        // Function to reset hasFunctionExecuted to false when the content of "assign-schedule" is modified
+        function resetFunctionExecutionFlag() {
+            hasFunctionExecuted = false;
         }
-    }
-    // Function to reset hasFunctionExecuted to false when the content of "assign-schedule" is modified
-    function resetFunctionExecutionFlag() {
-        hasFunctionExecuted = false;
-    }
-    // Create a MutationObserver to observe changes in the content of "assign-schedule"
-    var observer = new MutationObserver(resetFunctionExecutionFlag);
-    // Define the configuration for the observer
-    var config = { childList: true, subtree: true };
-    // Start observing the "assign-schedule" element
-    observer.observe(document.getElementById("assign-schedule"), config);
-</script>
+        // Create a MutationObserver to observe changes in the content of "assign-schedule"
+        var observer = new MutationObserver(resetFunctionExecutionFlag);
+        // Define the configuration for the observer
+        var config = { childList: true, subtree: true };
+        // Start observing the "assign-schedule" element
+        observer.observe(document.getElementById("assign-schedule"), config);
+
+
+
+
+    </script>
 </body>
+
 </html>
