@@ -73,15 +73,6 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 
-// $sql = 'CREATE TABLE IF NOT EXISTS ADMINEVEN (
-//     COURSE VARCHAR(50) PRIMARY KEY
-// )';
-
-
-// if ($conn->query($sql) !== TRUE) {
-//     echo 'Error creating EVEN Subject table: ' . $conn->error;
-// }
-
 $sql = 'CREATE TABLE IF NOT EXISTS STAFF (
     REGNO INT PRIMARY KEY AUTO_INCREMENT,
     NAME VARCHAR(50)

@@ -215,20 +215,16 @@ include("db_connection_close.php");
                                     <!-- Rows will be added dynamically -->
                                 </tbody>
                             </table>
+                            <button type="button" id="ed_add_row_btn" class="btn btn-success float-right"
+                                onclick="addSubjectRow()">Add Subject</button>
 
                             <!-- Button to add a new row -->
-                            <button type="button" id="ed_add_row_btn" class="btn btn-success float-right"
-                                onclick="addSubjectRow()">Add
-                                Subject</button>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input class="btn btn-primary" type="submit" value="Save Changes">
-                                <!-- <button type="button" class="btn btn-primary" onclick="submitEditForm()">Save Changes</button> -->
-                                <!-- Changed to type="button" to handle via JavaScript -->
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-footer wt-5">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input class="btn btn-primary" type="submit" value="Save Changes">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -632,7 +628,7 @@ include("db_connection_close.php");
                                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
                                 '</div>' +
                                 '</td>' +
-                                '<td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                                '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                                 '</tr>';
                             editcount++;
                             $tableBody.append(row);
