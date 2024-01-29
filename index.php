@@ -180,6 +180,7 @@ include("db_connection_close.php");
             ?>
         </div>
         <hr noshade>
+
         <!-- Edit Class Modal -->
         <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel"
             aria-hidden="true">
@@ -192,11 +193,11 @@ include("db_connection_close.php");
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="editClassForm" method="post">
+                        <form id="editClassForm" action="update_edit_course.php" method="post">
                             <!-- Removed action attribute to handle form submission via JavaScript -->
                             <div class="form-group">
                                 <label for="editCourseName">Course Name:</label>
-                                <input type="text" class="form-control" id="editCourseName" required>
+                                <input name="courseName" type="text" class="form-control" id="editCourseName" required>
                             </div>
 
                             <!-- Table for subjects -->
@@ -219,13 +220,15 @@ include("db_connection_close.php");
                             <button type="button" id="ed_add_row_btn" class="btn btn-success float-right"
                                 onclick="addSubjectRow()">Add
                                 Subject</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="submitEditForm()">Save Changes</button>
-                        <!-- Changed to type="button" to handle via JavaScript -->
-                    </div>
+                        
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input class="btn btn-primary"  type="submit" value="Save Changes">
+                                    <!-- <button type="button" class="btn btn-primary" onclick="submitEditForm()">Save Changes</button> -->
+                                    <!-- Changed to type="button" to handle via JavaScript -->
+                                </div>
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>
