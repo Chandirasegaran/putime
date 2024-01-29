@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     // Build HTML for the subject details, staff names, hoursRequired, and lab table
     $tableHtml = '<form method="post" action="update_staff.php">'; // Assuming the update script is named update_staff.php
-    $tableHtml .= '<table class="table table-bordered" >';
+    $tableHtml .= '<table class="table table-bordered" id="stab" onchange="alertstaffupdate()">';
     $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Hours Required</th><th>Lab</th></tr></thead>';
     $tableHtml .= '<tbody>';
     $si = 0;
@@ -45,13 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     $tableHtml .= '</tbody>';
     $tableHtml .= '</table>';
-    $tableHtml .= '<input type="hidden" name="course" value="' . $course .'">';
+    $tableHtml .= '<input type="hidden" name="course" value="' . $course . '">';
     $tableHtml .= '<input class="btn btn-success" type="submit" value="Update Staff">';
     $tableHtml .= '</form>';
     echo $tableHtml;
-    
-    echo '<div id="hidval" style="display: none;">'.$si.'</div>';
-    
+
+    echo '<div id="hidval" style="display: none;">' . $si . '</div>';
+
 }
 
 $conn->close();

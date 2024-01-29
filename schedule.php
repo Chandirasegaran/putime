@@ -170,14 +170,14 @@
                     for (let j = 1; j <= 8; j++) {
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
                             let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
-                            let labvar=(document.getElementById(i.toString() + j.toString() + k.toString())).value + ".lab";
+                            let labvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".lab";
                             // console.log(eval(clsvar));
 
                             let elements1 = document.querySelectorAll('.table' + i.toString() + j.toString());
                             let elements2 = document.querySelectorAll('.lab' + i.toString() + j.toString());
                             // Create an array to store the values
                             let valuesArray = [];
-                            let labArray=[];
+                            let labArray = [];
                             // Iterate over the NodeList and push values into the array
                             elements1.forEach(function (elementpara) {
                                 valuesArray.push(elementpara.innerText);
@@ -190,10 +190,9 @@
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                                 // console.log(eval(clsvar),valuesArray);
                             }
-                            else if(eval(labvar)!='no' && labArray.includes(eval(labvar)))
-                            {
+                            else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
-                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();  
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             }
                         }
                     }
@@ -236,30 +235,32 @@
         // Start observing the "assign-schedule" element
         observer.observe(document.getElementById("assign-schedule"), config);
 
-    function mycheck()
-    {
-        for (let i = 1; i <= 5; i++) {
-                    // Iterate through the second digit (1 to 8)
-                    for (let j = 1; j <= 8; j++) {
-                        // Construct the class name
-                        let className = "sel" + i + j;
+        function mycheck() {
+            for (let i = 1; i <= 5; i++) {
+                // Iterate through the second digit (1 to 8)
+                for (let j = 1; j <= 8; j++) {
+                    // Construct the class name
+                    let className = "sel" + i + j;
 
-                        // Get the dropdown element
-                        let dropdown = document.getElementsByClassName(className);
-                        console.log(dropdown);
-                        // Check if the dropdown exists
-                        if (dropdown.length > 0) {
-                            let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
-                            let computedStyles = getComputedStyle(selectedOption);
-                            let backgroundColor = computedStyles.backgroundColor;
+                    // Get the dropdown element
+                    let dropdown = document.getElementsByClassName(className);
+                    console.log(dropdown);
+                    // Check if the dropdown exists
+                    if (dropdown.length > 0) {
+                        let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
+                        let computedStyles = getComputedStyle(selectedOption);
+                        let backgroundColor = computedStyles.backgroundColor;
 
-                            // Set the background color
-                            dropdown[0].style.backgroundColor = backgroundColor;
-                        }
+                        // Set the background color
+                        dropdown[0].style.backgroundColor = backgroundColor;
                     }
                 }
-    }
-
+            }
+        }
+        function alertstaffupdate(){
+ 
+            alert("Make Sure to click the Update Staff Button!");
+        }
 
     </script>
 </body>
