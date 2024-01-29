@@ -8,7 +8,7 @@ if(isset($_COOKIE['whichsem'])){
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "2503";
 $conn = new mysqli($servername, $username, $password);
 
 $dbname = "putimetbdb";

@@ -17,46 +17,12 @@ include("db_connection_close.php");
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 
 <body>
 
     <?php include 'navbar.php' ?>
-
-    <!-- Select Sem -->
-
-    <!-- Modal  without bootstrap-->
-    <!-- <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="semesterModalLabel">Choose your semester</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="set_semester.php" method="post">
-                        <label> 
-                            <input type="radio" name="semester" value="odd" checked>
-                            Odd Semester
-                        </label>
-
-                        <label>
-                            <input type="radio" name="semester" value="even">
-                            Even Semester
-                        </label>
-
-                        <br>
-
-                        <input type="submit" value="Choose!">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <!-- Modal -->
     <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
         aria-hidden="true">
@@ -182,17 +148,12 @@ include("db_connection_close.php");
         <div>
             <?php
             include 'db_connection.php';
-            // Fetch and display class details
-            // $classResult =$conn->query("SELECT * FROM adminodd"); // Initialize $classResult
+
             $sql = ("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
             // echo $sql;
             $classResult = $conn->query($sql);
 
-            // if ($_COOKIE['whichsem'] == "Odd") {
-            //     $classResult = $conn->query("SELECT * FROM adminodd");
-            // } elseif ($_COOKIE['whichsem'] == "Even") {
-            //     $classResult = $conn->query("SELECT * FROM admineven");
-            // }
+
             if ($classResult === false) {
                 die("Error executing the query: " . $conn->error);
             }
@@ -204,7 +165,11 @@ include("db_connection_close.php");
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $classRow["COURSE"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteCourse(' . "'" . $classRow["COURSE"] . "'" . ')">Delete class</button></td>';
+                    echo '<td>
+                    <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
+                    <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
+                    </td>';
+
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -215,6 +180,56 @@ include("db_connection_close.php");
             ?>
         </div>
         <hr noshade>
+        <!-- Edit Class Modal -->
+        <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editClassModalLabel">Edit Class</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editClassForm" method="post">
+                            <!-- Removed action attribute to handle form submission via JavaScript -->
+                            <div class="form-group">
+                                <label for="editCourseName">Course Name:</label>
+                                <input type="text" class="form-control" id="editCourseName" required>
+                            </div>
+
+                            <!-- Table for subjects -->
+                            <table class="table" id="editSubjectsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Subject Name</th>
+                                        <th>Hours Required</th>
+                                        <th>Lab</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Rows will be added dynamically -->
+                                </tbody>
+                            </table>
+
+                            <!-- Button to add a new row -->
+                            <button type="button" id="ed_add_row_btn" class="btn btn-success float-right"
+                                onclick="addSubjectRow()">Add
+                                Subject</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="submitEditForm()">Save Changes</button>
+                        <!-- Changed to type="button" to handle via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="mt-5">
             <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#softcoreModal">
@@ -423,17 +438,6 @@ include("db_connection_close.php");
 
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
 
     <script>
         let lab_count = 2;
@@ -588,6 +592,108 @@ include("db_connection_close.php");
             showSemesterModal();
         });
     </script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+
+    <script>
+        let edlab_count = 1;
+        function editCourse(courseName) {
+            console.log(courseName)
+            // Use AJAX to fetch course details
+            $.ajax({
+                url: 'get_course_details.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'courseName': courseName },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        // Populate the course name
+                        $('#editCourseName').val(response.data.course_name);
+
+                        // Clear existing rows in the table
+                        var $tableBody = $('#editSubjectsTable tbody');
+                        $tableBody.empty();
+                        // Assuming 'subjects' is an array of subject objects associated with the course
+                        response.data.subjects.forEach(function (subject) {
+                            var row = '<tr>' +
+                                '<td><input name="scode" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                '<td><input name="sname" type="text" class="form-control" value="' + subject.name + '"></td>' +
+                                '<td><input name="shours" type="number" class="form-control" value="' + subject.hours + '"></td>' +
+                                '<td>' +
+                                '<div class="form-check form-check-inline">' +
+                                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="no" ' + (subject.lab === 'no' ? 'checked' : '') + '> No' +
+                                '</div>' +
+                                '<div class="form-check form-check-inline">' +
+                                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="1" ' + (subject.lab === '1' ? 'checked' : '') + '> 1' +
+                                '</div>' +
+                                '<div class="form-check form-check-inline">' +
+                                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
+                                '</div>' +
+                                '</td>' +
+                                '<td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                                '</tr>';
+                            edlab_count++;
+                            $tableBody.append(row);
+                        });
+
+                        jQuery.noConflict();
+                        jQuery('#editClassModal').modal('show');
+
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while fetching the class details.');
+                }
+            });
+        }
+
+        let edsubname_count = 2;
+        let edsubcode_count = 2;
+        let edhoursRequiredcount = 2;
+        function addSubjectRow() {
+            // Function to add a new row for a subject in the edit modal
+            var newRow = '<tr>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + edsubcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + edsubname_count + '" maxlength="50" Required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired' + edhoursRequiredcount + '" Required></td>' +
+                '<td>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="no" checked> No' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="1"> 1' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="2"> 2' +
+                '</div>' +
+                '</td>' +
+                '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                '</tr>';
+            document.querySelector('#editSubjectsTable tbody').insertAdjacentHTML('beforeend', newRow);
+            edlab_count++;
+            edsubname_count++;
+            edsubcode_count++;
+            edhoursRequiredcount++;
+        }
+
+        function submitEditForm() {
+            // Function to handle form submission, potentially making an AJAX post request to a PHP script to update the course details
+        }
+
+        function deleteRow(button) {
+            // Function to delete a row from the subjects table
+            $(button).closest('tr').remove();
+        }
+
+    </script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
 </body>
 
