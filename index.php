@@ -220,15 +220,15 @@ include("db_connection_close.php");
                             <button type="button" id="ed_add_row_btn" class="btn btn-success float-right"
                                 onclick="addSubjectRow()">Add
                                 Subject</button>
-                        
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input class="btn btn-primary"  type="submit" value="Save Changes">
-                                    <!-- <button type="button" class="btn btn-primary" onclick="submitEditForm()">Save Changes</button> -->
-                                    <!-- Changed to type="button" to handle via JavaScript -->
-                                </div>
-                            </form>
-                        </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <input class="btn btn-primary" type="submit" value="Save Changes">
+                                <!-- <button type="button" class="btn btn-primary" onclick="submitEditForm()">Save Changes</button> -->
+                                <!-- Changed to type="button" to handle via JavaScript -->
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -598,7 +598,7 @@ include("db_connection_close.php");
     <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
 
     <script>
-        let edlab_count = 1;
+        let editcount = 1;
         function editCourse(courseName) {
             console.log(courseName)
             // Use AJAX to fetch course details
@@ -618,23 +618,23 @@ include("db_connection_close.php");
                         // Assuming 'subjects' is an array of subject objects associated with the course
                         response.data.subjects.forEach(function (subject) {
                             var row = '<tr>' +
-                                '<td><input name="scode" type="text" class="form-control" value="' + subject.code + '"></td>' +
-                                '<td><input name="sname" type="text" class="form-control" value="' + subject.name + '"></td>' +
-                                '<td><input name="shours" type="number" class="form-control" value="' + subject.hours + '"></td>' +
+                                '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
+                                '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
                                 '<td>' +
                                 '<div class="form-check form-check-inline">' +
-                                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="no" ' + (subject.lab === 'no' ? 'checked' : '') + '> No' +
+                                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" ' + (subject.lab === 'no' ? 'checked' : '') + '> No' +
                                 '</div>' +
                                 '<div class="form-check form-check-inline">' +
-                                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="1" ' + (subject.lab === '1' ? 'checked' : '') + '> 1' +
+                                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1" ' + (subject.lab === '1' ? 'checked' : '') + '> 1' +
                                 '</div>' +
                                 '<div class="form-check form-check-inline">' +
-                                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
+                                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
                                 '</div>' +
                                 '</td>' +
                                 '<td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                                 '</tr>';
-                            edlab_count++;
+                            editcount++;
                             $tableBody.append(row);
                         });
 
@@ -651,33 +651,33 @@ include("db_connection_close.php");
             });
         }
 
-        let edsubname_count = 2;
-        let edsubcode_count = 2;
-        let edhoursRequiredcount = 2;
+        // let edsubname_count = 2;
+        // let edsubcode_count = 2;
+        // let edhoursRequiredcount = 2;
         function addSubjectRow() {
             // Function to add a new row for a subject in the edit modal
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + edsubcode_count + '" maxlength="8" Required></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + edsubname_count + '" maxlength="50" Required></td>' +
-                '<td><input type="number" class="form-control" name="hoursRequired' + edhoursRequiredcount + '" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + editcount + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + editcount + '" maxlength="50" Required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" Required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="no" checked> No' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="1"> 1' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1"> 1' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + edlab_count + '" value="2"> 2' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#editSubjectsTable tbody').insertAdjacentHTML('beforeend', newRow);
-            edlab_count++;
-            edsubname_count++;
-            edsubcode_count++;
-            edhoursRequiredcount++;
+            editcount++;
+            // edsubname_count++;
+            // edsubcode_count++;
+            // edhoursRequiredcount++;
         }
 
         function submitEditForm() {
