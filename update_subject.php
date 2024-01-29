@@ -25,30 +25,6 @@ if ($conn->query($sqlDrop) !== TRUE) {
     echo 'Error dropping Subject table: ' . $conn->error;
 }
 
-// // Create Subject table
-// $sqlCreate = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
-//     subjectCode VARCHAR(8),
-//     subjectName VARCHAR(255),
-//     hoursRequired int(255),
-//     lab VARCHAR(10),
-//     staffName VARCHAR(255)
-// )';
-
-// if ($conn->query($sql) !== TRUE) {
-//     echo 'Error creating Subject table: ' . $conn->error;
-// } else {
-//     echo 'tabe created';
-//     $numberOfSubjects = 25;
-
-//     for ($i = 1; $i <= $numberOfSubjects; $i++) {
-//         echo ${"subjectCode{$i}"};
-//         echo  ${"subjectName{$i}"};
-//         echo ${"hoursRequired{$i}"};
-//         echo ${"lab{$i}"};
-//     }
-// }
-// Example: Insert data into a table
-
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     if (${"subjectCode{$i}"} !== null) {
         $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName, hoursRequired, lab)
@@ -56,11 +32,9 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
         if ($conn->query($sql) !== TRUE) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
         }
-    } 
-    else {
+    } else {
         break;
     }
 }
 include 'db_connection_close.php';
 header("Location: index.php");
-?>
