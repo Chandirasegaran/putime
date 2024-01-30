@@ -547,7 +547,9 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+
                 '<td><input type="text" class="form-control" value="hc" name="type' + subname_count + '" ></td>' +
+
 
                 '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';

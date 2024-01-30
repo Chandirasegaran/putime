@@ -1,14 +1,15 @@
 <?php
-$currsem = null;
-if (isset($_COOKIE['whichsem'])) {
-    $currsem = $_COOKIE['whichsem'];
+
+$currsem=null;
+if(isset($_COOKIE['whichsem'])){
+    $currsem=$_COOKIE['whichsem'];
 }
 
 
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "semEIGHT*8";
+$password = "";
 $conn = new mysqli($servername, $username, $password);
 
 $dbname = "putimetbdb";
@@ -82,3 +83,5 @@ $sql = 'CREATE TABLE IF NOT EXISTS STAFF (
 if ($conn->query($sql) !== TRUE) {
     echo 'Error creating Staff table: ' . $conn->error;
 }
+?>
+

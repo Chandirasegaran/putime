@@ -19,7 +19,9 @@
 
 
             <label for="listcourse">Select Your Course for Scheduling </label>
+
             <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()" onchange="checkHour()">
+
                 <option value="select" selected id="SelectCourseDrop">Select</option>
                 <script>
                     let count = 1
@@ -37,6 +39,7 @@
                         checkHoursReq();
                         hourCheck();
                     }
+
                 </script>
                 <?php
                 include 'db_connection.php';
@@ -63,6 +66,7 @@
                 <div id="assigningtable">
                     <!-- Displaying Table -->
                 </div>
+
             </form>
         </div>
     </div>
@@ -90,7 +94,9 @@
                             // Update the subjectStaffTable div with the received table data
                             document.getElementById('subjectStaffTable').innerHTML = subjectStaffTable;
 
+
                             checkHoursReq();
+
 
                         },
                         error: function(error) {
@@ -192,6 +198,7 @@
                                 });
                             }
                             let vcheckarray = [];
+
                             if (j == 1) {
                                 // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
                                 for (let i1 = 1; i1 <= 7; i1++) {
@@ -204,6 +211,7 @@
                                     });
                                 }
                                 // console.log(vcheckarray);
+
                             }
 
                             let valuesArray = [];
@@ -216,6 +224,7 @@
                                 labArray.push(elementpara.innerText);
                             });
                             if (valuesArray.includes(eval(clsvar))) {
+
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                                 // console.log(eval(clsvar),valuesArray);
@@ -225,6 +234,7 @@
                             } else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                             } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
+
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                             }
                         }
@@ -239,7 +249,9 @@
 
                         // Get the dropdown element
                         let dropdown = document.getElementsByClassName(className);
+
                         // console.log(dropdown);
+
                         // Check if the dropdown exists
                         if (dropdown.length > 0) {
                             let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
@@ -257,7 +269,9 @@
                 hasFunctionExecuted = true;
             }
 
+
         }
+
 
 
         // Function to reset hasFunctionExecuted to false when the content of "assign-schedule" is modified
@@ -274,18 +288,22 @@
         // Start observing the "assign-schedule" element
         observer.observe(document.getElementById("assign-schedule"), config);
 
+
         //change the drop dop color when a option is selected
         function mycheck() {
             hourCheck();
+
 
             for (let i = 1; i <= 5; i++) {
                 // Iterate through the second digit (1 to 8)
                 for (let j = 1; j <= 8; j++) {
                     // Construct the class name
                     let className = "sel" + i + j;
+
                     // Get the dropdown element
                     let dropdown = document.getElementsByClassName(className);
                     // console.log(dropdown);
+
                     // Check if the dropdown exists
                     if (dropdown.length > 0) {
                         let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
@@ -314,6 +332,7 @@
             });
         });
     </script>
+
     <script>
         //s11 s21 course code
         //s14 s24 hourse required
@@ -444,6 +463,7 @@
             });
         }
     </script>
+
 </body>
 
 </html>

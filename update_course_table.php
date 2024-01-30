@@ -176,7 +176,7 @@ for ($i = 0; $i < count($days); $i++) {
         $value = $_POST[$fieldName];
         $values[] = "'$value'";
     }
-    
+
     $sqlInsertData .= "(" . implode(", ", $values) . "), ";
 }
 
