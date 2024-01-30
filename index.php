@@ -188,7 +188,7 @@ include("db_connection_close.php");
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editClassModalLabel">Edit Class</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" onclick="refreshpage()" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -221,7 +221,7 @@ include("db_connection_close.php");
                             <!-- Button to add a new row -->
                         </div>
                         <div class="modal-footer wt-5">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" onclick="refreshpage()"; data-dismiss="modal"> Close</button>
                             <input class="btn btn-primary" type="submit" value="Save Changes">
                         </div>
                     </form>
@@ -675,10 +675,10 @@ include("db_connection_close.php");
             // edsubcode_count++;
             // edhoursRequiredcount++;
         }
-
-        function submitEditForm() {
-            // Function to handle form submission, potentially making an AJAX post request to a PHP script to update the course details
+        function refreshpage(){
+            location.reload();
         }
+
 
         function deleteRow(button) {
             // Function to delete a row from the subjects table
