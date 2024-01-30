@@ -200,7 +200,7 @@ include("db_connection_close.php");
                                 <label for="editCourseName">Course Name:</label>
                                 <input name="courseName" type="text" class="form-control" id="editCourseName" required>
                             </div>
-                            <!-- Table for subjects -->
+                            <!-- Table for Hardcore subjects -->
                             <table class="table table-bordered" id="editSubjectsTable">
                                 <thead class="thead-dark">
                                     <tr>
@@ -208,7 +208,9 @@ include("db_connection_close.php");
                                         <th>Subject Name</th>
                                         <th>Hours Required</th>
                                         <th>Lab</th>
+                                        <th>Type</th>
                                         <th>Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -225,6 +227,8 @@ include("db_connection_close.php");
                             Close</button>
                         <input class="btn btn-primary" type="submit" value="Save Changes">
                     </div> -->
+
+
                             <!-- Softcores Table -->
                             <?php
                             include 'db_connection.php';
@@ -250,6 +254,7 @@ include("db_connection_close.php");
                                                 <th>Subject Name</th>
                                                 <th>Hours Required</th>
                                                 <th>Lab</th>
+                                                <th>Type</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -284,6 +289,7 @@ include("db_connection_close.php");
                                                 <th>Subject Name</th>
                                                 <th>Hours Required</th>
                                                 <th>Lab</th>
+                                                <th>Type</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -705,6 +711,8 @@ include("db_connection_close.php");
                                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
                                 '</div>' +
                                 '</td>' +
+                                '<td><input type="text" class="form-control" value="hc" name="type' + editcount + '" ></td>' +
+
                                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                                 '</tr>';
                             editcount++;
@@ -744,6 +752,7 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="hc" name="type' + editcount + '" ></td>' +
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#editSubjectsTable tbody').insertAdjacentHTML('beforeend', newRow);
@@ -777,6 +786,8 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="sc" name="type' + editcount + '" ></td>' +
+
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#addSoftcoreTableId tbody').insertAdjacentHTML('beforeend', newRow);
@@ -805,6 +816,8 @@ include("db_connection_close.php");
                     row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
                     // Update radio button based on the lab value
                     row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+
+                    row.querySelector('[name^="type"]').value = "sc";
                 },
                 error: function (xhr, status, error) {
                     console.error('An error occurred while fetching subject details.');
@@ -838,6 +851,8 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="se" name="type' + editcount + '" ></td>' +
+
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
@@ -866,6 +881,8 @@ include("db_connection_close.php");
                     row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
                     // Update radio button based on the lab value
                     row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+                    row.querySelector('[name^="type"]').value = "sc";
+
                 },
                 error: function (xhr, status, error) {
                     console.error('An error occurred while fetching subject details.');

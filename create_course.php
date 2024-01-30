@@ -86,13 +86,14 @@ if ($conn->query($sqlInsertData) !== TRUE) {
 
 // Subject Table
 
-$sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . '_Subjects (
+$sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . $batch . '_Subjects (
     subjectCode VARCHAR(8) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     hoursRequiredDup INT,
     lab VARCHAR(10),
-    staffName VARCHAR(255)
+    staffName VARCHAR(255),
+    stype VARCHAR(10)
 )';
 
 
@@ -104,8 +105,8 @@ if ($conn->query($sql) !== TRUE) {
 // Example: Insert data into a table
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     if (${"subjectCode{$i}"} !== null) {
-        $sql = "INSERT INTO {$currsem}{$courseName}_Subjects (subjectCode, subjectName, hoursRequiredDup , hoursRequired, lab)
-                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
+        $sql = "INSERT INTO {$currsem}{$courseName}{$batch}_Subjects (subjectCode, subjectName,hoursRequiredDup,hoursRequired, lab, stype)
+            VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}' ,'hc')";
         if ($conn->query($sql) !== TRUE) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
         }
@@ -118,7 +119,7 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
 if ($bat == true) {
 
     // Batch 2
-    $batch="B2";
+    $batch = "B2";
     $sql = "INSERT INTO " . ($currsem == "odd" ? "adminodd" : "admineven") . " (COURSE) VALUES ('$currsem$courseName$batch')";
 
     if ($conn->query($sql) !== TRUE) {
@@ -170,7 +171,8 @@ if ($bat == true) {
     hoursRequired INT,
     hoursRequiredDup INT,
     lab VARCHAR(10),
-    staffName VARCHAR(255)
+    staffName VARCHAR(255),
+    stype VARCHAR(10)
 )';
 
 
@@ -182,8 +184,8 @@ if ($bat == true) {
     // Example: Insert data into a table
     for ($i = 1; $i <= $numberOfSubjects; $i++) {
         if (${"subjectCode{$i}"} !== null) {
-            $sql = "INSERT INTO {$currsem}{$courseName}{$batch}_Subjects (subjectCode, subjectName,hoursRequiredDup,hoursRequired, lab)
-                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
+            $sql = "INSERT INTO {$currsem}{$courseName}{$batch}_Subjects (subjectCode, subjectName,hoursRequiredDup,hoursRequired, lab, stype)
+                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}' ,'hc')";
             if ($conn->query($sql) !== TRUE) {
                 echo 'Error: ' . $sql . '<br>' . $conn->error;
             }
