@@ -468,7 +468,19 @@ include 'db_connection.php';
 
         </div>
 
-
+        <div class="d-flex justify-content-center">
+                <script>
+                    function prt()
+                    {
+                        document.getElementById('btnhid').style.display = 'none';
+                        window.print();
+                        location.reload();
+                    }
+                </script>
+    <button type="button" id="btnhid" class="btn btn-primary col-3" onclick="prt()">Print</button>
+</div>
+<pre><br></pre>
+        </div>
     </div>
 
     <!-- Include Bootstrap JS and jQuery -->
