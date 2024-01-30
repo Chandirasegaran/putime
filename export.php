@@ -142,13 +142,42 @@ include 'db_connection.php';
                     echo "</tr>";
                 }
                 echo "</tbody></table> <br>";
+
+            // Fetch and display data for each table
+            $sqlGetData = "SELECT * FROM $tableName". "_subjects";
+            $resultData = $conn->query($sqlGetData);
+
+            if ($resultData && $resultData->num_rows > 0) {
+                echo "<table class='table table-bordered'><thead><tr>";
+
+                // Fetching column names for headers
+                $columns = array_keys($resultData->fetch_assoc());
+                foreach ($columns as $column) {
+                    echo "<th>" . $column . "</th>";
+                }
+                echo "</tr></thead><tbody>";
+
+                // Reset pointer to the first row
+                $resultData->data_seek(0);
+
+                // Output data of each row
+                while ($row = $resultData->fetch_assoc()) {
+                    echo "<tr>";
+                    foreach ($row as $rowData) {
+                        echo "<td>" . $rowData . "</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</tbody></table> <br>";
+
+                
             } else {
                 echo "No data available for table " . $tableName . "<br>";
             }
+
+
         }
-    } else {
-        echo "No table names found in $adminTable.";
-    }
+    } }
     ?>
 </div>
 
