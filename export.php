@@ -270,8 +270,8 @@
                 include 'db_connection.php';
                 $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
 
-                // echo '<H1 class="mt-5">Final Schedule</H1>
-                //         <h2>Class Schedule</h2>';
+                echo '<H1 class="mt-5">Final Schedule</H1>
+                        <h2>Class Schedule</h2>';
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
 
@@ -280,9 +280,9 @@
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
-                            // echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
+                            echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
 
-                            echo '<table class="table table-bordered" style="display:none">';
+                            echo '<table class="table table-bordered">';
                             $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
                             echo '<thead>';
                             echo '<tr>';
@@ -294,7 +294,7 @@
                             echo '<tbody>';
 
                             $rowNumber = 1; // Counter for row numbers
-                            $i = 0;
+                            $i = 1;
                             while ($row = $result->fetch_assoc()) {
                                 echo '<tr>';
                                 $i++;
@@ -352,7 +352,7 @@ if ($resultStaff->num_rows > 0) {
     while ($staffRow = $resultStaff->fetch_assoc()) {
         $staffName = $staffRow['name'];
 
-        echo "<br><h4>Timetable for $staffName</h4>";
+        echo "br><h4>Timetable for $staffName</h4>";
         echo "<table class='table table-bordered'>";
         echo "<thead>";
         echo "<tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr>";
