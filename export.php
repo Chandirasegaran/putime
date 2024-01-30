@@ -4,7 +4,7 @@ include 'db_connection.php';
 
 // Check the value of the 'whichsem' cookie
 $whichSemCookie = $_COOKIE['whichsem'];
-$adminTable = ($whichSemCookie === 'Odd Semester') ? 'adminodd' : 'admineven';
+$adminTable = ($whichSemCookie === 'odd') ? 'adminodd' : 'admineven';
 
 // Define the new name of the merged table
 $mergedTable = 'merged_table'; // Updated table name
@@ -24,9 +24,10 @@ $sqlCreateTable = "CREATE TABLE $mergedTable (
     subjectName VARCHAR(255),
     hoursRequired INT,
     hoursRequiredDup INT,
-    lab INT,
+    lab VARCHAR(10),
     staffName VARCHAR(255),
-    stype VARCHAR(255)
+    stype VARCHAR(255),
+    courseName varchar(255) 
 )";
 $conn->query($sqlCreateTable);
 
@@ -37,11 +38,12 @@ $resultGetTableNames = $conn->query($sqlGetTableNames);
 if ($resultGetTableNames->num_rows > 0) {
     while ($row = $resultGetTableNames->fetch_assoc()) {
         $subjectTableWithSuffix = $row['tableName'];
-        
+        $coursenamewithtrim = str_replace(['odd', 'even', '_subjects'], '', trim($subjectTableWithSuffix));
+       
         // Merge data from individual subject tables into 'merged_table'
-        $sqlMergeData = "INSERT INTO $mergedTable (subjectCode, subjectName, hoursRequired, hoursRequiredDup, lab, staffName, stype)
-                         SELECT subjectCode, subjectName, hoursRequired, hoursRequiredDup, lab, staffName, stype
-                         FROM $subjectTableWithSuffix";
+        $sqlMergeData = "INSERT INTO $mergedTable (subjectCode, subjectName, hoursRequired, hoursRequiredDup, lab, staffName, stype,courseName)
+                         SELECT subjectCode, subjectName, hoursRequired, hoursRequiredDup, lab, staffName, stype, '$coursenamewithtrim'
+                         FROM $subjectTableWithSuffix" ;
         $conn->query($sqlMergeData);
     }
 }
