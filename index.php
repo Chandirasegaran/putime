@@ -167,6 +167,7 @@ include("db_connection_close.php");
                     echo '<td>' . $classRow["COURSE"] . '</td>';
                     echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
+                    <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
                     </td>';
 
@@ -702,8 +703,8 @@ include("db_connection_close.php");
                         $tableBody.empty();
                         // Assuming 'subjects' is an array of subject objects associated with the course
                         response.data.subjects.forEach(function (subject) {
-                            let a =subject.type;
-                            if (a == ' hc' || a=='hc') {
+                            let a = subject.type;
+                            if (a == ' hc' || a == 'hc') {
                                 var row = '<tr>' +
                                     '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
@@ -757,8 +758,8 @@ include("db_connection_close.php");
                         $tableBody.empty();
                         // Assuming 'subjects' is an array of subject objects associated with the course
                         response.data.subjects.forEach(function (subject) {
-                            let a =subject.type;
-                            if (a == ' sc' || a=='sc') {
+                            let a = subject.type;
+                            if (a == ' sc' || a == 'sc') {
                                 var row = '<tr>' +
                                     '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
@@ -811,8 +812,8 @@ include("db_connection_close.php");
                         $tableBody.empty();
                         // Assuming 'subjects' is an array of subject objects associated with the course
                         response.data.subjects.forEach(function (subject) {
-                            let a =subject.type;
-                            if (a == ' se' || a=='se') {
+                            let a = subject.type;
+                            if (a == ' se' || a == 'se') {
                                 var row = '<tr>' +
                                     '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
@@ -1017,6 +1018,28 @@ include("db_connection_close.php");
             // Function to delete a row from the subjects table
             $(button).closest('tr').remove();
         }
+
+        function resetScCourse(courseName) {
+            // Use AJAX to reset softcore values
+            $.ajax({
+                url: 'reset_softcore.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'courseName': courseName },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                        // Perform any additional actions on success
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while resetting softcore values.');
+                }
+            });
+        }
+
 
     </script>
     <!-- Include jQuery -->
