@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $tableHtml .= '</tbody>';
     $tableHtml .= '</table>';
     $tableHtml .= '<input type="hidden" name="course" value="' . $course . '">';
-    $tableHtml .= '<input class="btn btn-success" type="submit" value="Update Staff">';
+    $tableHtml .= '<input class="btn btn-success"  type="submit" value="Update Staff">';
     $tableHtml .= '</form>';
     echo $tableHtml;
 

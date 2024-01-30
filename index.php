@@ -167,6 +167,7 @@ include("db_connection_close.php");
                     echo '<td>' . $classRow["COURSE"] . '</td>';
                     echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
+                    <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
                     </td>';
 
@@ -188,27 +189,29 @@ include("db_connection_close.php");
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editClassModalLabel">Edit Class</h5>
-                        <button type="button" onclick="refreshpage()" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" onclick="refreshpage()" class="close" data-dismiss="modal"
+                            aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form id="editClassForm" action="update_edit_course.php" method="post">
-                            <!-- Removed action attribute to handle form submission via JavaScript -->
+                            <!-- Course Details -->
                             <div class="form-group">
                                 <label for="editCourseName">Course Name:</label>
                                 <input name="courseName" type="text" class="form-control" id="editCourseName" required>
                             </div>
-
-                            <!-- Table for subjects -->
-                            <table class="table" id="editSubjectsTable">
-                                <thead>
+                            <!-- Table for Hardcore subjects -->
+                            <table class="table table-bordered" id="editSubjectsTable">
+                                <thead class="thead-dark">
                                     <tr>
                                         <th>Subject Code</th>
                                         <th>Subject Name</th>
                                         <th>Hours Required</th>
                                         <th>Lab</th>
+                                        <th>Type</th>
                                         <th>Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -219,11 +222,95 @@ include("db_connection_close.php");
                                 onclick="addSubjectRow()">Add Subject</button>
 
                             <!-- Button to add a new row -->
-                        </div>
-                        <div class="modal-footer wt-5">
-                        <button type="button" class="btn btn-secondary" onclick="refreshpage()"; data-dismiss="modal"> Close</button>
-                            <input class="btn btn-primary" type="submit" value="Save Changes">
-                        </div>
+                            <!-- </div> -->
+                            <!-- <div class="modal-footer wt-5">
+                        <button type="button" class="btn btn-secondary" onclick="refreshpage()" ; data-dismiss="modal">
+                            Close</button>
+                        <input class="btn btn-primary" type="submit" value="Save Changes">
+                    </div> -->
+
+
+                            <!-- Softcores Table -->
+                            <?php
+                            include 'db_connection.php';
+
+                            // Fetch subject codes from the database table
+                            $softcoreCodesQuery = $conn->query("SELECT subjectCode FROM softcoretb");
+                            $softcoreCodes = array();
+
+                            while ($row = $softcoreCodesQuery->fetch_assoc()) {
+                                $softcoreCodes[] = $row['subjectCode'];
+                            }
+
+                            $conn->close();
+                            ?>
+
+                            <div class="mt-4">
+                                <h5>Softcores</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="addSoftcoreTableId">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Subject Code</th>
+                                                <th>Subject Name</th>
+                                                <th>Hours Required</th>
+                                                <th>Lab</th>
+                                                <th>Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Rows will be added dynamically -->
+                                        </tbody>
+                                    </table>
+                                    <button type="button" id="ed_add_sc_row_btn" class="btn btn-success float-right"
+                                        onclick="addSoftcoreRow()">Add Softcore</button>
+                                </div>
+                            </div>
+
+                            <!-- Skill Enhancement Table -->
+                            <?php
+                            include 'db_connection.php';
+
+                            // Fetch subject codes from the database table
+                            $seQuery = $conn->query("SELECT subjectCode FROM setb");
+                            $seCodes = array();
+
+                            while ($row = $seQuery->fetch_assoc()) {
+                                $seCodes[] = $row['subjectCode'];
+                            }
+                            ?>
+                            <div class="mt-4">
+                                <h5>Skill Enhancement</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="addSkillTableId">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Subject Code</th>
+                                                <th>Subject Name</th>
+                                                <th>Hours Required</th>
+                                                <th>Lab</th>
+                                                <th>Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Rows will be added dynamically -->
+                                        </tbody>
+                                    </table>
+                                    <button type="button" id="ed_add_se_row_btn" class="btn btn-success float-right"
+                                        onclick="addSkillRow()">Add Skill Enhancement</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal Footer -->
+                            <div class="modal-footer mt-5">
+                                <button type="button" class="btn btn-secondary" onclick="refreshpage()"
+                                    data-dismiss="modal">Close</button>
+                                <input class="btn btn-primary" type="submit" value="Save Changes">
+                            </div>
+                    </div>
+
                     </form>
                 </div>
             </div>
@@ -460,6 +547,8 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="hc" name="type' + subname_count + '" ></td>' +
+
                 '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#exampleModal table tbody').insertAdjacentHTML('beforeend', newRow);
@@ -494,6 +583,8 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + sclab_count + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="sc" name="type' + scsubcode_count + '" ></td>' +
+
                 '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#softcoreModal table tbody').insertAdjacentHTML('beforeend', newRow);
@@ -527,6 +618,8 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + selab_count + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="se" name="type' + sesubcode_count + '" ></td>' +
+
                 '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#seModal table tbody').insertAdjacentHTML('beforeend', newRow);
@@ -590,10 +683,7 @@ include("db_connection_close.php");
         $(document).ready(function () {
             showSemesterModal();
         });
-    </script>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
 
-    <script>
         let editcount = 1;
         function editCourse(courseName) {
             console.log(courseName)
@@ -613,25 +703,139 @@ include("db_connection_close.php");
                         $tableBody.empty();
                         // Assuming 'subjects' is an array of subject objects associated with the course
                         response.data.subjects.forEach(function (subject) {
-                            var row = '<tr>' +
-                                '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
-                                '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
-                                '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
-                                '<td>' +
-                                '<div class="form-check form-check-inline">' +
-                                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" ' + (subject.lab === 'no' ? 'checked' : '') + '> No' +
-                                '</div>' +
-                                '<div class="form-check form-check-inline">' +
-                                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1" ' + (subject.lab === '1' ? 'checked' : '') + '> 1' +
-                                '</div>' +
-                                '<div class="form-check form-check-inline">' +
-                                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
-                                '</div>' +
-                                '</td>' +
-                                '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
-                                '</tr>';
-                            editcount++;
-                            $tableBody.append(row);
+                            let a = subject.type;
+                            if (a == ' hc' || a == 'hc') {
+                                var row = '<tr>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
+                                    '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
+                                    '<td>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" ' + (subject.lab === 'no' ? 'checked' : '') + '> No' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1" ' + (subject.lab === '1' ? 'checked' : '') + '> 1' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
+                                    '</div>' +
+                                    '</td>' +
+                                    '<td><input type="text" class="form-control" value="' + subject.type + '" name="type' + editcount + '" ></td>' +
+
+                                    '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                                    '</tr>';
+                                editcount++;
+                                $tableBody.append(row);
+                            }
+                        });
+
+                        jQuery.noConflict();
+                        jQuery('#editClassModal').modal('show');
+
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while fetching the class details.');
+                }
+            });
+
+
+            // Softcore
+            $.ajax({
+                url: 'get_course_details.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'courseName': courseName },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        // Populate the course name
+                        $('#editCourseName').val(response.data.course_name);
+
+                        // Clear existing rows in the table
+                        var $tableBody = $('#addSoftcoreTableId tbody');
+                        $tableBody.empty();
+                        // Assuming 'subjects' is an array of subject objects associated with the course
+                        response.data.subjects.forEach(function (subject) {
+                            let a = subject.type;
+                            if (a == ' sc' || a == 'sc') {
+                                var row = '<tr>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
+                                    '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
+                                    '<td>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" ' + (subject.lab === 'no' ? 'checked' : '') + '> No' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1" ' + (subject.lab === '1' ? 'checked' : '') + '> 1' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
+                                    '</div>' +
+                                    '</td>' +
+                                    '<td><input type="text" class="form-control" value="' + subject.type + '" name="type' + editcount + '" ></td>' +
+
+                                    '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                                    '</tr>';
+                                editcount++;
+                                $tableBody.append(row);
+                            }
+                        });
+
+                        jQuery.noConflict();
+                        jQuery('#editClassModal').modal('show');
+
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while fetching the class details.');
+                }
+            });
+
+            // Skill Enhancement
+            $.ajax({
+                url: 'get_course_details.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'courseName': courseName },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        // Populate the course name
+                        $('#editCourseName').val(response.data.course_name);
+
+                        // Clear existing rows in the table
+                        var $tableBody = $('#addSkillTableId tbody');
+                        $tableBody.empty();
+                        // Assuming 'subjects' is an array of subject objects associated with the course
+                        response.data.subjects.forEach(function (subject) {
+                            let a = subject.type;
+                            if (a == ' se' || a == 'se') {
+                                var row = '<tr>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
+                                    '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
+                                    '<td>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" ' + (subject.lab === 'no' ? 'checked' : '') + '> No' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1" ' + (subject.lab === '1' ? 'checked' : '') + '> 1' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
+                                    '</div>' +
+                                    '</td>' +
+                                    '<td><input type="text" class="form-control" value="' + subject.type + '" name="type' + editcount + '" ></td>' +
+
+                                    '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                                    '</tr>';
+                                editcount++;
+                                $tableBody.append(row);
+                            }
                         });
 
                         jQuery.noConflict();
@@ -667,6 +871,7 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="hc" name="type' + editcount + '" ></td>' +
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#editSubjectsTable tbody').insertAdjacentHTML('beforeend', newRow);
@@ -675,7 +880,136 @@ include("db_connection_close.php");
             // edsubcode_count++;
             // edhoursRequiredcount++;
         }
-        function refreshpage(){
+        function addSoftcoreRow() {
+            // Function to add a new row for a subject in the edit modal
+            var newRow = '<tr>' +
+                '<td><input list="softcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchScSubjectDetails(this)" required>' +
+                '<datalist id="softcoreCodes">';
+
+            // Add options for each softcore code
+            <?php foreach ($softcoreCodes as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+
+            newRow += '</datalist></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + editcount + '" required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
+                '<td>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1"> 1' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
+                '</div>' +
+                '</td>' +
+                '<td><input type="text" class="form-control" value="sc" name="type' + editcount + '" ></td>' +
+
+                '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                '</tr>';
+            document.querySelector('#addSoftcoreTableId tbody').insertAdjacentHTML('beforeend', newRow);
+            editcount++;
+        }
+
+        function fetchScSubjectDetails(input) {
+            // console.log(input.value );
+            var subjectCode = input.value;
+            var row = input.closest('tr');
+
+            // Make an AJAX request to fetch subject details
+            jQuery.ajax({
+                url: 'get_sc_details_edit.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'subjectCode': subjectCode },
+                success: function (response) {
+                    if (response.error) {
+                        console.error(response.error);
+                        return;
+                    }
+
+                    // Update the corresponding fields in the row
+                    row.querySelector('[name^="subjectName"]').value = response.subjectName;
+                    row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+                    // Update radio button based on the lab value
+                    row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+
+                    row.querySelector('[name^="type"]').value = "sc";
+                },
+                error: function (xhr, status, error) {
+                    console.error('An error occurred while fetching subject details.');
+                }
+            });
+        }
+
+
+        function addSkillRow() {
+            // Function to add a new row for a subject in the edit modal
+            var newRow = '<tr>' +
+                '<td><input list="seCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchseSubjectDetails(this)" required>' +
+                '<datalist id="seCodes">';
+
+            // Add options for each softcore code
+            <?php foreach ($seCodes as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+
+            newRow += '</datalist></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + editcount + '" required></td>' +
+                '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
+                '<td>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1"> 1' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
+                '</div>' +
+                '</td>' +
+                '<td><input type="text" class="form-control" value="se" name="type' + editcount + '" ></td>' +
+
+                '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                '</tr>';
+            document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
+            editcount++;
+        }
+
+        function fetchseSubjectDetails(input) {
+            console.log(input.value);
+            var subjectCode = input.value;
+            var row = input.closest('tr');
+
+            // Make an AJAX request to fetch subject details
+            jQuery.ajax({
+                url: 'get_se_details_edit.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'subjectCode': subjectCode },
+                success: function (response) {
+                    if (response.error) {
+                        console.error(response.error);
+                        return;
+                    }
+
+                    // Update the corresponding fields in the row
+                    row.querySelector('[name^="subjectName"]').value = response.subjectName;
+                    row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+                    // Update radio button based on the lab value
+                    row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+                    row.querySelector('[name^="type"]').value = "se";
+
+                },
+                error: function (xhr, status, error) {
+                    console.error('An error occurred while fetching subject details.');
+                }
+            });
+        }
+
+        function refreshpage() {
             location.reload();
         }
 
@@ -684,6 +1018,28 @@ include("db_connection_close.php");
             // Function to delete a row from the subjects table
             $(button).closest('tr').remove();
         }
+
+        function resetScCourse(courseName) {
+            // Use AJAX to reset softcore values
+            $.ajax({
+                url: 'reset_softcore.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { 'courseName': courseName },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                        // Perform any additional actions on success
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('An error occurred while resetting softcore values.');
+                }
+            });
+        }
+
 
     </script>
     <!-- Include jQuery -->

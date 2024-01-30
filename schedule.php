@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="./assets/styles.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
@@ -24,6 +23,7 @@
                 <option value="select" selected id="SelectCourseDrop">Select</option>
                 <script>
                     let count = 1
+
                     function hideselect() {
                         count++;
                         // console.log(count);
@@ -32,7 +32,6 @@
                             document.getElementById("listcourse").removeAttribute("onclick");
                         }
                     }
-
                 </script>
                 <?php
                 include 'db_connection.php';
@@ -65,35 +64,40 @@
         </div>
     </div>
     <script>
-        document.getElementById('listcourse').addEventListener('change', function () {
+        document.getElementById('listcourse').addEventListener('change', function() {
             var selectedCourse = this.value;
             // Make an AJAX request to fetch the table structure for the selected course
             $.ajax({
                 type: "POST",
                 url: "fetch_table_data.php",
-                data: { course: selectedCourse },
-                success: function (response) {
+                data: {
+                    course: selectedCourse
+                },
+                success: function(response) {
                     // Update the assigningtable div with the received table data
                     document.getElementById('assigningtable').innerHTML = response;
                     // Make another AJAX request to fetch subject names and staff names
                     $.ajax({
                         type: "POST",
                         url: "fetch_subject_staff.php",
-                        data: { course: selectedCourse },
-                        success: function (subjectStaffTable) {
+                        data: {
+                            course: selectedCourse
+                        },
+                        success: function(subjectStaffTable) {
                             // Update the subjectStaffTable div with the received table data
                             document.getElementById('subjectStaffTable').innerHTML = subjectStaffTable;
                         },
-                        error: function (error) {
+                        error: function(error) {
                             console.log("Error: " + error.responseText);
                         }
                     });
                 },
-                error: function (error) {
+                error: function(error) {
                     console.log("Error: " + error.responseText);
                 }
             });
         });
+
         function check() {
             console.log("H");
             return false;
@@ -101,31 +105,27 @@
     </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         // Add an event listener to the select element
-        document.getElementById('listcourse').addEventListener('change', function () {
+        document.getElementById('listcourse').addEventListener('change', function() {
             var selectedCourse = this.value;
             // alert(selectedCourse);
             // Make an AJAX request to fetch the table structure for the selected course
             $.ajax({
                 type: "POST",
                 url: "fetch_table_data.php", // Adjust the path to match your file structure
-                data: { course: selectedCourse },
-                success: function (response) {
+                data: {
+                    course: selectedCourse
+                },
+                success: function(response) {
                     // Update the assigningtable div with the received table data
                     document.getElementById('assigningtable').innerHTML = response;
                 },
-                error: function (error) {
+                error: function(error) {
                     console.log("Error: " + error.responseText);
                 }
             });
@@ -204,18 +204,17 @@
                             let valuesArray = [];
                             let labArray = [];
                             // Iterate over the NodeList and push values into the array
-                            elements1.forEach(function (elementpara) {
+                            elements1.forEach(function(elementpara) {
                                 valuesArray.push(elementpara.innerText);
                             });
-                            elements2.forEach(function (elementpara) {
+                            elements2.forEach(function(elementpara) {
                                 labArray.push(elementpara.innerText);
                             });
                             if (valuesArray.includes(eval(clsvar))) {
                                 console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                                 // console.log(eval(clsvar),valuesArray);
-                            }
-                            else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
+                            } else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             }
@@ -260,7 +259,10 @@
         // Create a MutationObserver to observe changes in the content of "assign-schedule"
         var observer = new MutationObserver(resetFunctionExecutionFlag);
         // Define the configuration for the observer
-        var config = { childList: true, subtree: true };
+        var config = {
+            childList: true,
+            subtree: true
+        };
         // Start observing the "assign-schedule" element
         observer.observe(document.getElementById("assign-schedule"), config);
 
@@ -286,11 +288,20 @@
                 }
             }
         }
-        function alertstaffupdate(){
- 
-            alert("Make Sure to click the Update Staff Button!");
+
+        var staffUpdateAlertDisplayed = false; // Flag variable to track if the alert has been displayed
+        function alertstaffupdate() {
+            staffUpdateAlertDisplayed = true; // Set flag to true when alert is displayed
         }
 
+        $(document).ready(function() {
+            $("#subjectStaffTable").on("mouseleave", function() {
+                if (staffUpdateAlertDisplayed) {
+                    alert("Make Sure to click the Update Staff Button!");
+                    staffUpdateAlertDisplayed = false; // Reset flag after displaying alert
+                }
+            });
+        });
     </script>
 </body>
 
