@@ -104,7 +104,6 @@ include 'db_connection.php';
         </table>
     </div>
 
-<<<<<<< HEAD
     <!-- Display tables based on names obtained from $adminTable -->
     <div class="container mt-5">
         <?php
@@ -154,57 +153,6 @@ include 'db_connection.php';
         }
         ?>
     </div>
-=======
-<!-- Display tables based on names obtained from $adminTable -->
-<div class="container mt-5">
-    <?php
-    // Fetch table names from $adminTable
-    $sqlGetTableNamesFromAdmin = "SELECT course AS tableName FROM $adminTable";
-    $resultTableNames = $conn->query($sqlGetTableNamesFromAdmin);
-
-    if ($resultTableNames->num_rows > 0) {
-        while ($tableRow = $resultTableNames->fetch_assoc()) {
-            $tableName = $tableRow['tableName'];
-
-            // Display the table name
-            echo "<h4>Table: " . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . "</h4>";
-
-            // Fetch and display data for each table
-            $sqlGetData = "SELECT * FROM $tableName";
-            $resultData = $conn->query($sqlGetData);
-
-            if ($resultData && $resultData->num_rows > 0) {
-                echo "<table class='table table-bordered'><thead><tr>";
-
-                // Fetching column names for headers
-                $columns = array_keys($resultData->fetch_assoc());
-                foreach ($columns as $column) {
-                    echo "<th>" . $column . "</th>";
-                }
-                echo "</tr></thead><tbody>";
-
-                // Reset pointer to the first row
-                $resultData->data_seek(0);
-
-                // Output data of each row
-                while ($row = $resultData->fetch_assoc()) {
-                    echo "<tr>";
-                    foreach ($row as $rowData) {
-                        echo "<td>" . $rowData . "</td>";
-                    }
-                    echo "</tr>";
-                }
-                echo "</tbody></table> <br>";
-            } else {
-                echo "No data available for table " . $tableName . "<br>";
-            }
-        }
-    } else {
-        echo "No table names found in $adminTable.";
-    }
-    ?>
-</div>
->>>>>>> de2e0bc58c60c6c80a0f1233e500feda009a0c38
 
 
     <!-- Include Bootstrap JS and jQuery -->
