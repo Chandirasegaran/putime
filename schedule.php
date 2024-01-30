@@ -176,6 +176,19 @@
                             let elements1 = document.querySelectorAll('.table' + i.toString() + j.toString());
                             let elements2 = document.querySelectorAll('.lab' + i.toString() + j.toString());
                             // Create an array to store the values
+
+                            let hcheckarray = [];
+                            // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
+                            for (let j = 1; j <= 7; j++) {
+                                // Select elements with class name based on 'i' and 'j'
+                                let h_elements = document.querySelectorAll('.table' + i.toString() + j.toString());
+                                
+                                // Iterate over the NodeList and push innerText into hcheckarray
+                                h_elements.forEach(function(element) {
+                                    hcheckarray.push(element.innerText);
+                                });
+                            }
+
                             let valuesArray = [];
                             let labArray = [];
                             // Iterate over the NodeList and push values into the array
@@ -193,6 +206,10 @@
                             else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                            }
+                            else if(hcheckarray.filter(element => element === eval(clsvar)).length>=2)
+                            {
+                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                             }
                         }
                     }
