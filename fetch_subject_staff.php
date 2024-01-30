@@ -1,6 +1,24 @@
 <?php
 include 'db_connection.php';
-
+$colorArray = [
+    '#24d7a3',
+    '#bed7ea',
+    '#f5db5c',
+    '#f5d6b1',
+    '#e2f5c6',
+    '#29ffe3',
+    '#97c8c3',
+    '#8db365',
+    '#4aafaa',
+    '#516d14',
+    '#f89a9b',
+    '#c8c8ab',
+    '#1abc9c',
+    '#9b59b6',
+    '#d35400',
+    '#27ae60',
+    '#c0392b'
+];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $course = $conn->real_escape_string($_POST['course']);
 
@@ -18,9 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Hours Required</th><th>Lab</th></tr></thead>';
     $tableHtml .= '<tbody>';
     $si = 0;
+    $colorarr=0;
     while ($subjectRow = $subjectResult->fetch_assoc()) {
         $si++;
-        $tableHtml .= '<tr>';
+        $tableHtml .= '<tr style="background-color:'.$colorArray[$colorarr++].'">';
         $tableHtml .= '<td id="s' . $si . '1">' . $subjectRow['subjectCode'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '2">' . $subjectRow['subjectName'] . '</td>';
         $tableHtml .= '<td "><select id="s' . $si . '3" class="custom-select" name="staffName[' . $subjectRow['subjectCode'] . ']" >';
