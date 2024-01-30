@@ -60,7 +60,7 @@ include 'db_connection.php';
         <!-- Display the merged_table data in a Bootstrap table with rowspan and sorted by faculty name -->
         <h2>PONDICHERRY UNIVERSITY</h2>
         <h3>COMPUTER SCIENCE DEPARTMENT</h3>
-        <h4>MERGED TABLE</h4>
+        <br>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -101,6 +101,57 @@ include 'db_connection.php';
             </tbody>
         </table>
     </div>
+
+<!-- Display tables based on names obtained from $adminTable -->
+<div class="container mt-5">
+    <?php
+    // Fetch table names from $adminTable
+    $sqlGetTableNamesFromAdmin = "SELECT course AS tableName FROM $adminTable";
+    $resultTableNames = $conn->query($sqlGetTableNamesFromAdmin);
+
+    if ($resultTableNames->num_rows > 0) {
+        while ($tableRow = $resultTableNames->fetch_assoc()) {
+            $tableName = $tableRow['tableName'];
+
+            // Display the table name
+            echo "<h4>Table: " . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . "</h4>";
+
+            // Fetch and display data for each table
+            $sqlGetData = "SELECT * FROM $tableName";
+            $resultData = $conn->query($sqlGetData);
+
+            if ($resultData && $resultData->num_rows > 0) {
+                echo "<table class='table table-bordered'><thead><tr>";
+
+                // Fetching column names for headers
+                $columns = array_keys($resultData->fetch_assoc());
+                foreach ($columns as $column) {
+                    echo "<th>" . $column . "</th>";
+                }
+                echo "</tr></thead><tbody>";
+
+                // Reset pointer to the first row
+                $resultData->data_seek(0);
+
+                // Output data of each row
+                while ($row = $resultData->fetch_assoc()) {
+                    echo "<tr>";
+                    foreach ($row as $rowData) {
+                        echo "<td>" . $rowData . "</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</tbody></table> <br>";
+            } else {
+                echo "No data available for table " . $tableName . "<br>";
+            }
+        }
+    } else {
+        echo "No table names found in $adminTable.";
+    }
+    ?>
+</div>
+
 
     <!-- Include Bootstrap JS and jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
