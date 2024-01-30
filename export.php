@@ -34,6 +34,7 @@ include 'db_connection.php';
         $sqlCreateTable = "CREATE TABLE $mergedTable (
             serialNo INT AUTO_INCREMENT PRIMARY KEY,
             facultyName VARCHAR(255),
+            stype VARCHAR(255),
             theory VARCHAR(255)
         )";
         $conn->query($sqlCreateTable);
@@ -48,8 +49,8 @@ include 'db_connection.php';
                 $coursenamewithtrim = str_replace(['odd', 'even', '_subjects'], '', trim($subjectTableWithSuffix));
                
                 // Merge data from individual subject tables into 'merged_table'
-                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, theory)
-                                 SELECT staffName, CONCAT(subjectCode, ' - ', subjectName, ' - ', stype) AS theory
+                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
+                                 SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
                                  FROM $subjectTableWithSuffix" ;
                 $conn->query($sqlMergeData);
             }
@@ -63,15 +64,16 @@ include 'db_connection.php';
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>S. #</th>
-                    <th>Faculty Name</th>
-                    <th>Theory</th>
+                    <th class="col-1">S.no</th> <!-- Adjust column width here -->
+                    <th class="col-2">Faculty Name</th>
+                    <th class="col-2">Hardcore/Softcore</th> <!-- Adjust column width here -->
+                    <th class="col-4">Theory</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 // Query the merged_table to retrieve data sorted by faculty name
-                $sqlGetData = "SELECT facultyName, theory FROM $mergedTable ORDER BY facultyName ASC";
+                $sqlGetData = "SELECT facultyName, stype, theory FROM $mergedTable ORDER BY facultyName ASC";
                 $resultGetData = $conn->query($sqlGetData);
                 
                 if ($resultGetData->num_rows > 0) {
@@ -82,8 +84,10 @@ include 'db_connection.php';
                         if ($prevFacultyName != $row["facultyName"]) {
                             echo "<td rowspan='1'>" . $serial++ . "</td>";
                             echo "<td rowspan='1'>" . $row["facultyName"] . "</td>";
+                            echo "<td rowspan='1'>" . ($row["stype"] === 'hc' ? 'Hardcore' : 'Softcore') . "</td>";
                             $prevFacultyName = $row["facultyName"];
                         } else {
+                            echo "<td rowspan='1'></td>";
                             echo "<td rowspan='1'></td>";
                             echo "<td rowspan='1'></td>";
                         }
@@ -91,7 +95,7 @@ include 'db_connection.php';
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='3'>No data available</td></tr>";
+                    echo "<tr><td colspan='4'>No data available</td></tr>";
                 }
                 ?>
             </tbody>
