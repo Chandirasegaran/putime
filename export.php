@@ -254,11 +254,9 @@
                 staffnamearr2.forEach(function(element) {
                     staffnamearr1.push(element.innerText);
                 });
-                var index = staffnamearr1.indexOf(staffname);
-                if(index!=-1)
+                if(staffnamearr1.includes(staffname))
                 {
-                    document.getElementById(staffname+i+j).innerText=document.getElementsByClassName("lab"+i+j)[0].innerHTML;
-                    console.log(document.getElementsByClassName("lab"+i+j)[0]);
+                    document.getElementById(staffname+i+j).innerText=staffname;
                 }
             }
         }
@@ -294,7 +292,7 @@
                             echo '<tbody>';
 
                             $rowNumber = 1; // Counter for row numbers
-                            $i = 1;
+                            $i = 0;
                             while ($row = $result->fetch_assoc()) {
                                 echo '<tr>';
                                 $i++;
@@ -352,7 +350,7 @@ if ($resultStaff->num_rows > 0) {
     while ($staffRow = $resultStaff->fetch_assoc()) {
         $staffName = $staffRow['name'];
 
-        echo "br><h4>Timetable for $staffName</h4>";
+        echo "<h4>Timetable for $staffName</h4>";
         echo "<table class='table table-bordered'>";
         echo "<thead>";
         echo "<tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr>";
