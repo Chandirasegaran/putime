@@ -39,7 +39,7 @@ if ($conn->query($sql) !== TRUE) {
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     if (${"subjectCode{$i}"} !== null) {
         $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName,hoursRequiredDup,hoursRequired, lab ,stype)
-                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}',' ${"type{$i}"}')";
+                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}','${"type{$i}"}')";
         if ($conn->query($sql) !== TRUE) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
         }
