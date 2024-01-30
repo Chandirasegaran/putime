@@ -812,42 +812,15 @@ include("db_connection_close.php");
             });
         }
 
-        
-      
-        // function addSkillRow() {
-        //     // Function to add a new row for a subject in the edit modal
-        //     var newRow = '<tr>' +
-        //         '<td><input type="text" class="form-control" name="subjectCode' + editcount + '" maxlength="8" Required></td>' +
-        //         '<td><input type="text" class="form-control" name="subjectName' + editcount + '" maxlength="50" Required></td>' +
-        //         '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" Required></td>' +
-        //         '<td>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
-        //         '</div>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1"> 1' +
-        //         '</div>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
-        //         '</div>' +
-        //         '</td>' +
-        //         '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
-        //         '</tr>';
-        //     document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
-        //     editcount++;
-        //     // edsubname_count++;
-        //     // edsubcode_count++;
-        //     // edhoursRequiredcount++;
-        // }
 
         function addSkillRow() {
             // Function to add a new row for a subject in the edit modal
             var newRow = '<tr>' +
-                '<td><input list="softcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchSubjectDetails(this)" required>' +
-                '<datalist id="softcoreCodes">';
+                '<td><input list="seCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchseSubjectDetails(this)" required>' +
+                '<datalist id="seCodes">';
 
             // Add options for each softcore code
-            <?php foreach ($softcoreCodes as $code) { ?>
+            <?php foreach ($seCodes as $code) { ?>
                 newRow += '<option value="<?= $code ?>">';
             <?php } ?>
 
@@ -867,18 +840,18 @@ include("db_connection_close.php");
                 '</td>' +
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
-            document.querySelector('#addSoftcoreTableId tbody').insertAdjacentHTML('beforeend', newRow);
+            document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
             editcount++;
         }
 
-        function fetchSubjectDetails(input) {
-            // console.log(input.value );
+        function fetchseSubjectDetails(input) {
+            console.log(input.value );
             var subjectCode = input.value;
             var row = input.closest('tr');
 
             // Make an AJAX request to fetch subject details
             jQuery.ajax({
-                url: 'get_sc_details_edit.php',
+                url: 'get_se_details_edit.php',
                 type: 'POST',
                 dataType: 'json',
                 data: { 'subjectCode': subjectCode },
