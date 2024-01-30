@@ -320,6 +320,55 @@
                         }
                     }
                 }
+
+                // Fetch all staff names
+$sqlGetStaff = "SELECT DISTINCT name FROM staff";
+$resultStaff = $conn->query($sqlGetStaff);
+
+if ($resultStaff->num_rows > 0) {
+    while ($staffRow = $resultStaff->fetch_assoc()) {
+        $staffName = $staffRow['name'];
+
+        echo "<h4>Timetable for $staffName</h4>";
+        echo "<table class='table table-bordered'>";
+        echo "<thead>";
+        echo "<tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr>";
+        echo "</thead>";
+        echo "<tbody>";
+
+        $days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
+        foreach ($days as $index => $day) {
+            echo "<tr>";
+            echo "<td>" . ($index + 1) . "</td>"; // SL.NO.
+            echo "<td>$day</td>";
+
+            // Loop through each time slot, assuming 9.30 as start and using 10 slots as an example
+            for ($slotIndex = 0; $slotIndex < 10; $slotIndex++) {
+                $startHour = 9 + intdiv($slotIndex, 2); // Integer division to increment hour every 2 slots
+                $startMinute = ($slotIndex % 2) * 30; // Alternate between 0 and 30 minutes
+                $endHour = $startHour + ($startMinute + 30 >= 60 ? 1 : 0); // Increment hour if end time is on the next hour
+                $endMinute = ($startMinute + 30) % 60; // Cycle minutes between 0 and 30
+
+                // Format time slots for display
+                $startTime = sprintf("%d.%02d", $startHour, $startMinute);
+                $endTime = sprintf("%d.%02d", $endHour, $endMinute);
+
+                // Here, you would fetch and display the actual schedule for $staffName, $day, and the current time slot
+                echo "<td id=>"; // Start table cell
+                // Your code to fetch and display schedule data goes here
+                echo "</td>"; // End table cell
+            }
+
+            echo "</tr>";
+        }
+
+        echo "</tbody>";
+        echo "</table>";
+    }
+    }
+else {
+    echo "No staff found.";
+}
                 ?>
 
             </div>
