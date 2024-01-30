@@ -388,3 +388,4 @@ else {
     <?php
     include 'db_connection_close.php';
     ?>
+

@@ -19,7 +19,9 @@
 
 
             <label for="listcourse">Select Your Course for Scheduling </label>
-            <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()">
+
+            <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()" onchange="checkHour()">
+
                 <option value="select" selected id="SelectCourseDrop">Select</option>
                 <script>
                     let count = 1
@@ -32,6 +34,12 @@
                             document.getElementById("listcourse").removeAttribute("onclick");
                         }
                     }
+
+                    function checkHour() {
+                        checkHoursReq();
+                        hourCheck();
+                    }
+
                 </script>
                 <?php
                 include 'db_connection.php';
@@ -59,7 +67,6 @@
                     <!-- Displaying Table -->
                 </div>
 
-
             </form>
         </div>
     </div>
@@ -86,6 +93,11 @@
                         success: function(subjectStaffTable) {
                             // Update the subjectStaffTable div with the received table data
                             document.getElementById('subjectStaffTable').innerHTML = subjectStaffTable;
+
+
+                            checkHoursReq();
+
+
                         },
                         error: function(error) {
                             console.log("Error: " + error.responseText);
@@ -179,26 +191,27 @@
                             for (let j1 = 1; j1 <= 7; j1++) {
                                 // Select elements with class name based on 'i' and 'j'
                                 let h_elements = document.querySelectorAll('.table' + i.toString() + j1.toString());
-                                
+
                                 // Iterate over the NodeList and push innerText into hcheckarray
                                 h_elements.forEach(function(element) {
                                     hcheckarray.push(element.innerText);
                                 });
                             }
                             let vcheckarray = [];
-                            if(j==1)
-                            {
-                            // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
-                            for (let i1 = 1; i1 <= 7; i1++){
-                                // Select elements with class name based on 'i' and 'j'
-                                let v_elements = document.querySelectorAll('.table' + i1.toString() + j.toString());
-                                
-                                // Iterate over the NodeList and push innerText into hcheckarray
-                                v_elements.forEach(function(element) {
-                                    vcheckarray.push(element.innerText);
-                                });
-                            }
-                            console.log(vcheckarray);
+
+                            if (j == 1) {
+                                // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
+                                for (let i1 = 1; i1 <= 7; i1++) {
+                                    // Select elements with class name based on 'i' and 'j'
+                                    let v_elements = document.querySelectorAll('.table' + i1.toString() + j.toString());
+
+                                    // Iterate over the NodeList and push innerText into hcheckarray
+                                    v_elements.forEach(function(element) {
+                                        vcheckarray.push(element.innerText);
+                                    });
+                                }
+                                // console.log(vcheckarray);
+
                             }
 
                             let valuesArray = [];
@@ -211,19 +224,17 @@
                                 labArray.push(elementpara.innerText);
                             });
                             if (valuesArray.includes(eval(clsvar))) {
-                                console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
+
+                                // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                                 // console.log(eval(clsvar),valuesArray);
                             } else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
-                                console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
+                                // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                            }
-                            else if(hcheckarray.filter(element => element === eval(clsvar)).length>=2)
-                            {
+                            } else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
-                            }
-                            else if(vcheckarray.filter(element => element === eval(clsvar)).length>=2)
-                            {
+                            } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
+
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                             }
                         }
@@ -238,7 +249,9 @@
 
                         // Get the dropdown element
                         let dropdown = document.getElementsByClassName(className);
-                        console.log(dropdown);
+
+                        // console.log(dropdown);
+
                         // Check if the dropdown exists
                         if (dropdown.length > 0) {
                             let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
@@ -255,7 +268,12 @@
                 // Set the flag to true to indicate that the function has been executed
                 hasFunctionExecuted = true;
             }
+
+
         }
+
+
+
         // Function to reset hasFunctionExecuted to false when the content of "assign-schedule" is modified
         function resetFunctionExecutionFlag() {
             hasFunctionExecuted = false;
@@ -270,7 +288,12 @@
         // Start observing the "assign-schedule" element
         observer.observe(document.getElementById("assign-schedule"), config);
 
+
+        //change the drop dop color when a option is selected
         function mycheck() {
+            hourCheck();
+
+
             for (let i = 1; i <= 5; i++) {
                 // Iterate through the second digit (1 to 8)
                 for (let j = 1; j <= 8; j++) {
@@ -279,7 +302,8 @@
 
                     // Get the dropdown element
                     let dropdown = document.getElementsByClassName(className);
-                    console.log(dropdown);
+                    // console.log(dropdown);
+
                     // Check if the dropdown exists
                     if (dropdown.length > 0) {
                         let selectedOption = dropdown[0].options[dropdown[0].selectedIndex];
@@ -291,6 +315,7 @@
                     }
                 }
             }
+
         }
 
         var staffUpdateAlertDisplayed = false; // Flag variable to track if the alert has been displayed
@@ -307,6 +332,138 @@
             });
         });
     </script>
+
+    <script>
+        //s11 s21 course code
+        //s14 s24 hourse required
+        //current course
+        // Assuming the id of the h1 element is "currentcourse"
+        var values = [];
+        var valuesc = [];
+
+        function checkHoursReq() {
+            var currentCourseText = document.getElementById("currentcourse").innerText;
+            // console.log(currentCourseText);
+            var counter = 1; // Start counter from 12
+            while (true) {
+                var id = "s" + counter + "4";
+                var idc = "s" + counter + "1";
+
+                // console.log(id);
+                var element = document.getElementById(id);
+                var element1 = document.getElementById(idc);
+
+                // console.log(element.innerText);
+                if (!element) {
+                    break; // Exit the loop if no element is found
+                }
+
+                values.push(element.innerText || element.textContent);
+                valuesc.push(element1.innerText || element1.textContent);
+
+                counter++;
+            }
+
+            // var idsToDisable = ["110", "120", "130", "140"];
+
+            // idsToDisable.forEach(function(id) {
+            //     var element = document.getElementById(id);
+            //     if (element) {
+            //         element.disabled = true;
+            //     }
+            // });
+
+        }
+
+        function hourCheck() {
+            var arrDisable = [];
+            var arr1 = [];
+
+            // console.log(values);
+            // console.log(valuesc);
+
+            var result = {};
+
+            for (var i = 0; i < valuesc.length; i++) {
+                var key = valuesc[i];
+                var value = values[i];
+                result[key] = value;
+            }
+            // console.log(result);
+
+            // console.log(result["cssc1"]);
+
+            for (let i = 1; i < 6; i++) {
+                for (let j = 1; j < 9; j++) {
+                    let checkId = "select" + i.toString() + j.toString();
+                    var element = document.getElementById(checkId);
+                    arr1.push(element.value);
+                    arr1 = removeEmptyValues(arr1);
+
+                    // You can use the id to do whatever you need here
+                    // For example, uncomment the following lines to retrieve an element by its id
+                    // let element = document.getElementById(id);
+                    // console.log(element.value);
+                }
+            }
+
+            for (var k = 0; k < arr1.length; k++) {
+
+                if (result[arr1[k]] > 0) {
+                    result[arr1[k]] = result[arr1[k]] - 1;
+                }
+                if (result[arr1[k]] == 0) {
+                    arrDisable.push(arr1[k]);
+                    // alert(arr1[k]);
+                }
+
+                // console.log(result);
+
+            }
+            // console.log(valuesc);
+            // console.log(arrDisable);
+
+            var indices = findIndicesOfElements(valuesc, arrDisable);
+            // console.log(indices); // Output: [1, 3, 4]
+            disele = "";
+            for (let r = 0; r < indices.length; r++) {
+                for (let p = 1; p < 6; p++) {
+                    for (let q = 1; q <= (document.getElementById("hidval").innerText - 1); q++) {
+                        disele = p.toString() + q.toString() + indices[r];
+                        // console.log(disele);
+                        var option = document.getElementById(disele);
+                        if (option) {
+                            var selectValue = document.getElementById("select" + p.toString() + q.toString()).value;
+                            if (!selectValue) {
+                                option.remove();
+                            }
+
+
+                        }
+                    }
+                }
+
+            }
+        }
+
+        function findIndicesOfElements(array, elements) {
+            var indices = [];
+            for (var i = 0; i < array.length; i++) {
+                if (elements.includes(array[i])) {
+                    indices.push(i);
+                }
+            }
+            return indices;
+        }
+
+
+        function removeEmptyValues(arr) {
+            return arr.filter(function(value) {
+                return value !== null && value !== undefined && value !== "" && value !== 0 && value !== false;
+            });
+        }
+    </script>
+
 </body>
 
 </html>

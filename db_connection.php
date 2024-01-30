@@ -1,4 +1,5 @@
 <?php
+
 $currsem=null;
 if(isset($_COOKIE['whichsem'])){
     $currsem=$_COOKIE['whichsem'];
@@ -82,5 +83,5 @@ $sql = 'CREATE TABLE IF NOT EXISTS STAFF (
 if ($conn->query($sql) !== TRUE) {
     echo 'Error creating Staff table: ' . $conn->error;
 }
-
 ?>
+
