@@ -9,6 +9,7 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
     ${"subjectName{$i}"} = isset($_POST["subjectName{$i}"]) ? $_POST["subjectName{$i}"] : null;
     ${"hoursRequired{$i}"} = isset($_POST["hoursRequired{$i}"]) ? $_POST["hoursRequired{$i}"] : null;
     ${"lab{$i}"} = isset($_POST["lab{$i}"]) ? $_POST["lab{$i}"] : null;
+    ${"type{$i}"} = isset($_POST["type{$i}"]) ? $_POST["type{$i}"] : "nill";
 
 }
 
@@ -24,7 +25,8 @@ $sql = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
     hoursRequired INT,
     hoursRequiredDup INT,
     lab VARCHAR(10),
-    staffName VARCHAR(255)
+    staffName VARCHAR(255),
+    stype VARCHAR(10)
 )';
 
 
@@ -36,8 +38,8 @@ if ($conn->query($sql) !== TRUE) {
 // Example: Insert data into a table
 for ($i = 1; $i <= $numberOfSubjects; $i++) {
     if (${"subjectCode{$i}"} !== null) {
-        $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName,hoursRequiredDup,hoursRequired, lab)
-                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}')";
+        $sql = "INSERT INTO {$courseName}_Subjects (subjectCode, subjectName,hoursRequiredDup,hoursRequired, lab ,stype)
+                VALUES ('${"subjectCode{$i}"}', '${"subjectName{$i}"}', '${"hoursRequired{$i}"}', '${"hoursRequired{$i}"}', '${"lab{$i}"}','${"type{$i}"}')";
         if ($conn->query($sql) !== TRUE) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
         }
