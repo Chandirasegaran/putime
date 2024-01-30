@@ -254,9 +254,11 @@
                 staffnamearr2.forEach(function(element) {
                     staffnamearr1.push(element.innerText);
                 });
-                if(staffnamearr1.includes(staffname))
+                var index = staffnamearr1.indexOf(staffname);
+                if(index!=-1)
                 {
-                    document.getElementById(staffname+i+j).innerText=staffname;
+                    document.getElementById(staffname+i+j).innerText=document.getElementsByClassName("lab"+i+j)[0].innerHTML;
+                    console.log(document.getElementsByClassName("lab"+i+j)[0]);
                 }
             }
         }
@@ -364,7 +366,7 @@ if ($resultStaff->num_rows > 0) {
             echo "<td>$day</td>";
 
             // Loop through each time slot, assuming 9.30 as start and using 10 slots as an example
-            for ($slotIndex = 0; $slotIndex < 10; $slotIndex++) {
+            for ($slotIndex = 1; $slotIndex < 9; $slotIndex++) {
                 $startHour = 9 + intdiv($slotIndex, 2); // Integer division to increment hour every 2 slots
                 $startMinute = ($slotIndex % 2) * 30; // Alternate between 0 and 30 minutes
                 $endHour = $startHour + ($startMinute + 30 >= 60 ? 1 : 0); // Increment hour if end time is on the next hour
