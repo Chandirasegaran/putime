@@ -163,9 +163,6 @@
                     //     row.push(document.getElementById('s' + i + '5').innerText);
                     // matrix.push(row);
                 }
-
-
-                console.log("class created");
                 for (let i = 1; i <= 5; i++) {
                     for (let j = 1; j <= 8; j++) {
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
@@ -179,14 +176,29 @@
 
                             let hcheckarray = [];
                             // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
-                            for (let j = 1; j <= 7; j++) {
+                            for (let j1 = 1; j1 <= 7; j1++) {
                                 // Select elements with class name based on 'i' and 'j'
-                                let h_elements = document.querySelectorAll('.table' + i.toString() + j.toString());
+                                let h_elements = document.querySelectorAll('.table' + i.toString() + j1.toString());
                                 
                                 // Iterate over the NodeList and push innerText into hcheckarray
                                 h_elements.forEach(function(element) {
                                     hcheckarray.push(element.innerText);
                                 });
+                            }
+                            if(j==1)
+                            {
+                            let vcheckarray = [];
+                            // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
+                            for (let i1 = 1; i1 <= 7; i1++){
+                                // Select elements with class name based on 'i' and 'j'
+                                let v_elements = document.querySelectorAll('.table' + i1.toString() + j.toString());
+                                
+                                // Iterate over the NodeList and push innerText into hcheckarray
+                                v_elements.forEach(function(element) {
+                                    vcheckarray.push(element.innerText);
+                                });
+                                console.log(vcheckarray);
+                            }
                             }
 
                             let valuesArray = [];
