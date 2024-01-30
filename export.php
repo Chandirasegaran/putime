@@ -241,14 +241,37 @@
                     echo "No staff found.<br>";
                 }
                 ?>
+                <script>
+    function staffmat(staffname)
+    {
+        for(let i=0;i<5;i++)
+        {
+            for(let j=0;j<8;j++)
+            {
+                //document.getElementById(staffname+i+j)
+                let staffnamearr1=[]
+                let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
+                staffnamearr2.forEach(function(element) {
+                    staffnamearr1.push(element.innerText);
+                });
+                var index = staffnamearr1.indexOf(staffname);
+                if(index!=-1)
+                {
+                    document.getElementById(staffname+i+j).innerText=document.getElementsByClassName("lab"+i+j)[0].innerHTML;
+                    console.log(document.getElementsByClassName("lab"+i+j)[0]);
+                }
+            }
+        }
+    }
+</script>
             </div>
             <div class="stb">
                 <?php
                 include 'db_connection.php';
                 $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
 
-                echo '<H1 class="mt-5">Final Schedule</H1>
-                        <h2>Class Schedule</h2>';
+                // echo '<H1 class="mt-5">Final Schedule</H1>
+                //         <h2>Class Schedule</h2>';
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
 
@@ -257,9 +280,9 @@
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
-                            echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
+                            // echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
 
-                            echo '<table class="table table-bordered">';
+                            echo '<table class="table table-bordered" style="display:none">';
                             $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
                             echo '<thead>';
                             echo '<tr>';
@@ -295,10 +318,10 @@
                                         echo '</div>';
                                         $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
                                         $labResult = $conn->query($labQuery);
-                                        echo '<div class="lab' . $i . $j . '" style="display:none">';
+                                        echo '<div class="lab' . $i . $j . '">';
                                         if ($labResult->num_rows > 0) {
                                             while ($labRow = $labResult->fetch_assoc()) {
-                                                echo $labRow['lab'];
+                                                echo $columnValue;
                                             }
                                         } else {
                                             echo '';
@@ -329,7 +352,7 @@ if ($resultStaff->num_rows > 0) {
     while ($staffRow = $resultStaff->fetch_assoc()) {
         $staffName = $staffRow['name'];
 
-        echo "<h4>Timetable for $staffName</h4>";
+        echo "<br><h4>Timetable for $staffName</h4>";
         echo "<table class='table table-bordered'>";
         echo "<thead>";
         echo "<tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr>";
@@ -353,15 +376,29 @@ if ($resultStaff->num_rows > 0) {
                 $startTime = sprintf("%d.%02d", $startHour, $startMinute);
                 $endTime = sprintf("%d.%02d", $endHour, $endMinute);
 
-                // Here, you would fetch and display the actual schedule for $staffName, $day, and the current time slot
-                echo "<td id=>"; // Start table cell
-                // Your code to fetch and display schedule data goes here
-                echo "</td>"; // End table cell
-            }
+     
+                
+                echo "<td id=".$staffName.($index+1).$slotIndex.">"; 
+                
+                echo "</td>"; 
+                
 
+
+                // $staffQuery = "SELECT staffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                //                         $staffResult = $conn->query($staffQuery);
+                //                         echo '<td ><div class="table' . $i . $j . '">';
+                //                         if ($staffResult->num_rows > 0) {
+                //                             while ($staffRow = $staffResult->fetch_assoc()) {
+                //                                 echo $staffRow['staffName'];
+                //                             }
+                //                         } else {
+                //                             echo '';
+                //                         }
+            }
+            
             echo "</tr>";
         }
-
+        echo "<script>staffmat('".$staffName."')</script>";
         echo "</tbody>";
         echo "</table>";
     }
