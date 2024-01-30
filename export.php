@@ -84,13 +84,13 @@ include 'db_connection.php';
                         if ($prevFacultyName != $row["facultyName"]) {
                             echo "<td rowspan='1'>" . $serial++ . "</td>";
                             echo "<td rowspan='1'>" . $row["facultyName"] . "</td>";
-                            echo "<td rowspan='1'>" . ($row["stype"] === 'hc' ? 'Hardcore' : 'Softcore') . "</td>";
                             $prevFacultyName = $row["facultyName"];
                         } else {
                             echo "<td rowspan='1'></td>";
                             echo "<td rowspan='1'></td>";
-                            echo "<td rowspan='1'></td>";
                         }
+                        // echo "<td rowspan='1'></td>";
+                        echo "<td rowspan='1'>" . ($row["stype"] === 'hc' ? 'Hardcore' : 'Softcore') . "</td>";
                         echo "<td>" . $row["theory"] . "</td>";
                         echo "</tr>";
                     }
@@ -144,21 +144,19 @@ include 'db_connection.php';
                 echo "</tbody></table> <br>";
 
             // Fetch and display data for each table
-            $sqlGetData = "SELECT * FROM $tableName". "_subjects";
+            $sqlGetData = "SELECT subjectCode, subjectName, lab, stype, staffName FROM $tableName" . "_subjects";
             $resultData = $conn->query($sqlGetData);
 
             if ($resultData && $resultData->num_rows > 0) {
                 echo "<table class='table table-bordered'><thead><tr>";
 
                 // Fetching column names for headers
-                $columns = array_keys($resultData->fetch_assoc());
+                // $columns = ["Subject Code", "Subject Name", "Lab", "Type", "Staff Name"];
+                $columns = ["CODE ", "COURSE TITLE","LAB", "H/S", "FACULTY"];
                 foreach ($columns as $column) {
                     echo "<th>" . $column . "</th>";
                 }
                 echo "</tr></thead><tbody>";
-
-                // Reset pointer to the first row
-                $resultData->data_seek(0);
 
                 // Output data of each row
                 while ($row = $resultData->fetch_assoc()) {
@@ -169,8 +167,6 @@ include 'db_connection.php';
                     echo "</tr>";
                 }
                 echo "</tbody></table> <br>";
-
-                
             } else {
                 echo "No data available for table " . $tableName . "<br>";
             }
