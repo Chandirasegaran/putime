@@ -176,6 +176,72 @@ include 'db_connection.php';
             }
         }
         ?>
+  <div class="facultyTimetable">
+    <h2>PONDICHERRY UNIVERSITY</h2>
+    <h3>COMPUTER SCIENCE DEPARTMENT</h3>
+    <br>
+
+    <?php
+    // Fetch staff names
+    $sqlGetStaffNames = "SELECT NAME FROM staff";
+    $resultStaffNames = $conn->query($sqlGetStaffNames);
+
+    if ($resultStaffNames->num_rows > 0) {
+        while ($staffRow = $resultStaffNames->fetch_assoc()) {
+            $staffName = $staffRow['NAME'];
+            echo "<h4>Staff: $staffName</h4>";
+
+            // Initialize an array to store the staff timetable
+            $staffTimetable = array();
+
+            // Iterate over all tables with the suffix "_subjects" to find staff's courses
+            $sqlGetCourses = "SHOW TABLES LIKE '%_subjects'";
+            $resultCourses = $conn->query($sqlGetCourses);
+
+            while ($tableRow = $resultCourses->fetch_assoc()) {
+                $subjectTableName = $tableRow['Tables_in_putimetbdb (%_subjects)'];
+
+                // Fetch the staff's courses from the subject table using a partial match
+                $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
+                $resultStaffCourses = $conn->query($sqlGetStaffCourses);
+
+                // Merge the timetable data
+                while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
+                    $staffTimetable[] = $timetableRow;
+                }
+            }
+
+            // Display the staff timetable in a table
+            if (!empty($staffTimetable)) {
+                echo "<table class='table table-bordered'>";
+                // Add table header
+                echo "<thead><tr>";
+                foreach (array_keys($staffTimetable[0]) as $columnName) {
+                    echo "<th>$columnName</th>";
+                }
+                echo "</tr></thead>";
+
+                // Add table body
+                echo "<tbody>";
+                foreach ($staffTimetable as $timetableRow) {
+                    echo "<tr>";
+                    foreach ($timetableRow as $value) {
+                        echo "<td>$value</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</tbody>";
+
+                echo "</table><br>";
+            } else {
+                echo "No courses found for $staffName.<br>";
+            }
+        }
+    } else {
+        echo "No staff found.<br>";
+    }
+    ?>
+</div>
 
     </div>
 
