@@ -185,9 +185,9 @@
                                     hcheckarray.push(element.innerText);
                                 });
                             }
+                            let vcheckarray = [];
                             if(j==1)
                             {
-                            let vcheckarray = [];
                             // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
                             for (let i1 = 1; i1 <= 7; i1++){
                                 // Select elements with class name based on 'i' and 'j'
@@ -197,8 +197,8 @@
                                 v_elements.forEach(function(element) {
                                     vcheckarray.push(element.innerText);
                                 });
-                                console.log(vcheckarray);
                             }
+                            console.log(vcheckarray);
                             }
 
                             let valuesArray = [];
@@ -219,6 +219,10 @@
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             }
                             else if(hcheckarray.filter(element => element === eval(clsvar)).length>=2)
+                            {
+                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
+                            }
+                            else if(vcheckarray.filter(element => element === eval(clsvar)).length>=2)
                             {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                             }
