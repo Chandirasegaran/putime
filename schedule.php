@@ -39,7 +39,6 @@
                         checkHoursReq();
                         hourCheck();
                     }
-
                 </script>
                 <?php
                 include 'db_connection.php';
@@ -178,8 +177,25 @@
                 for (let i = 1; i <= 5; i++) {
                     for (let j = 1; j <= 8; j++) {
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
-                            let clsvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".staff";
-                            let labvar = (document.getElementById(i.toString() + j.toString() + k.toString())).value + ".lab";
+                            let element = document.getElementById(i.toString() + j.toString() + k.toString());
+                            let clsvar = null;
+
+                            if (element && element.value !== null) {
+                                let staffValue = element.value + ".staff";
+                                if (staffValue !== ".staff") {
+                                    clsvar = staffValue;
+                                }
+                            }
+
+                            // Now you can use clsvar, which will either be the value followed by ".staff" or null if conditions are not met.
+                            let element1 = document.getElementById(i.toString() + j.toString() + k.toString());
+                            let labvar = null;
+
+                            if (element1 !== null && element1.value !== null) {
+                                labvar = element1.value + ".lab";
+                            }
+
+                            // Now you can use labvar, which will either be the value followed by ".lab" or null if the element or its value is null.
                             // console.log(eval(clsvar));
 
                             let elements1 = document.querySelectorAll('.table' + i.toString() + j.toString());
@@ -338,11 +354,21 @@
         //s14 s24 hourse required
         //current course
         // Assuming the id of the h1 element is "currentcourse"
-        var values = [];
-        var valuesc = [];
+        let values = [];
+        let valuesc = [];
 
         function checkHoursReq() {
-            var currentCourseText = document.getElementById("currentcourse").innerText;
+
+            var currentCourseElement = document.getElementById("currentcourse");
+            var currentCourseText = null;
+
+            if (currentCourseElement !== null) {
+                currentCourseText = currentCourseElement.innerText;
+                // Now you can use currentCourseText safely.
+            } else {
+                // Handle the case when the element is not found.
+                console.error("Element with ID 'currentcourse' not found.");
+            }
             // console.log(currentCourseText);
             var counter = 1; // Start counter from 12
             while (true) {
@@ -360,7 +386,6 @@
 
                 values.push(element.innerText || element.textContent);
                 valuesc.push(element1.innerText || element1.textContent);
-
                 counter++;
             }
 
@@ -379,8 +404,8 @@
             var arrDisable = [];
             var arr1 = [];
 
-            // console.log(values);
-            // console.log(valuesc);
+            console.log(values);
+            console.log(valuesc);
 
             var result = {};
 
@@ -397,7 +422,12 @@
                 for (let j = 1; j < 9; j++) {
                     let checkId = "select" + i.toString() + j.toString();
                     var element = document.getElementById(checkId);
-                    arr1.push(element.value);
+                    if (element !== null) {
+                        arr1.push(element.value);
+                    } else {
+                        // Handle the case when the element is not found.
+                        console.error("Element not found.");
+                    }
                     arr1 = removeEmptyValues(arr1);
 
                     // You can use the id to do whatever you need here
@@ -414,36 +444,39 @@
                 }
                 if (result[arr1[k]] == 0) {
                     arrDisable.push(arr1[k]);
+                    disop();
                     // alert(arr1[k]);
                 }
 
-                // console.log(result);
+                console.log(result);
 
             }
             // console.log(valuesc);
             // console.log(arrDisable);
+            function disop() {
+                var indices = findIndicesOfElements(valuesc, arrDisable);
+                console.log(indices); // Output: [1, 3, 4]
+                disele = "";
+                for (let r = 0; r < indices.length; r++) {
+                    for (let p = 1; p < 6; p++) {
+                        for (let q = 1; q < 9; q++) {
+                            disele = p.toString() + q.toString() + indices[r];
+                            // console.log(disele);
+                            var option = document.getElementById(disele);
+                            if (option) {
+                                var selectValue = document.getElementById("select" + p.toString() + q.toString()).value;
+                                if (!selectValue) {
+                                    option.remove();
+                                }
 
-            var indices = findIndicesOfElements(valuesc, arrDisable);
-            // console.log(indices); // Output: [1, 3, 4]
-            disele = "";
-            for (let r = 0; r < indices.length; r++) {
-                for (let p = 1; p < 6; p++) {
-                    for (let q = 1; q <= (document.getElementById("hidval").innerText - 1); q++) {
-                        disele = p.toString() + q.toString() + indices[r];
-                        // console.log(disele);
-                        var option = document.getElementById(disele);
-                        if (option) {
-                            var selectValue = document.getElementById("select" + p.toString() + q.toString()).value;
-                            if (!selectValue) {
-                                option.remove();
+
                             }
-
-
                         }
                     }
-                }
 
+                }
             }
+
         }
 
         function findIndicesOfElements(array, elements) {
@@ -455,7 +488,6 @@
             }
             return indices;
         }
-
 
         function removeEmptyValues(arr) {
             return arr.filter(function(value) {
