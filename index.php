@@ -548,6 +548,9 @@ include("db_connection_close.php");
                 '</div>' +
                 '</td>' +
 
+                '<td><input type="text" class="form-control" value="hc" name="type' + subname_count + '" ></td>' +
+
+
                 '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#exampleModal table tbody').insertAdjacentHTML('beforeend', newRow);

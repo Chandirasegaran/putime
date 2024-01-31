@@ -34,8 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     if ($result->num_rows > 0) {
         // Display the fetched data in a table format with dropdowns
-        echo '<h1 id="currentcourse">' . $course . '</h1>';
-
+        echo '<h1 id="currentcourse" onmouseover="checkHour()">' . $course . '</h1>';
         echo '<table class="table table-bordered">';
         $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
         echo '<thead>';
@@ -58,7 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             foreach ($row as $columnName => $columnValue) {
                 if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
                     echo '<td>';
+
                     echo '<select id="' . "select" . $row["ORDER"] . $i . '" class="form-control ' . "sel" . $row["ORDER"] . $i . '" name="' . $course . $row["ORDER"] . $i . '" onchange="mycheck()">';
+
                     //onclick="removesel('.$row["ORDER"] . $i.')"
 
                     // Add an initial option with value "Select"
@@ -88,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         echo '</table>';
 
         echo ' <input class="btn btn-primary mt-5" type="submit" value="Store it to Database">';
-
     } else {
         echo 'No data found for the selected course.';
     }
@@ -113,7 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
             if ($result->num_rows > 0) {
                 // Display the fetched data in a table format without dropdowns
+
                 echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
+
 
                 echo '<table class="table table-bordered">';
                 $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
@@ -171,7 +173,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                 echo '</tbody>';
                 echo '</table>';
                 $i = 0;
-
             } else {
                 echo 'No data found for the selected course.';
             }
@@ -179,4 +180,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     }
     $conn->close();
 }
-?>

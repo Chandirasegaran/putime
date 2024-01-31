@@ -492,6 +492,8 @@ include 'db_connection.php';
 
 </html>
 
+
 <?php
 include 'db_connection_close.php';
 ?>
+
