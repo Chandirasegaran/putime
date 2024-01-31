@@ -34,7 +34,7 @@
                                 <label for="staffName">Staff Name:</label>
 
                                 <input type="text" class="form-control" id="staffName" name="staffName" required oninput="replacespace(this)">
-
+                            </div>
                                 <script>
                                     function replacespace(inputElement) {
                                         // Get the current input value
