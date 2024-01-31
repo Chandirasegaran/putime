@@ -89,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         echo '</table>';
 
         echo ' <input class="btn btn-primary mt-5" type="submit" value="Store it to Database">';
-
     } else {
         echo 'No data found for the selected course.';
     }
@@ -174,7 +173,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                 echo '</tbody>';
                 echo '</table>';
                 $i = 0;
-
             } else {
                 echo 'No data found for the selected course.';
             }
@@ -182,5 +180,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     }
     $conn->close();
 }
-
-?>

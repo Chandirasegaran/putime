@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $staffResult = $conn->query($staffQuery);
 
     // Build HTML for the subject details, staff names, hoursRequired, and lab table
-    $tableHtml = '<form method="post" action="update_staff.php">'; // Assuming the update script is named update_staff.php
+    $tableHtml = '<form method="post" action="update_staff.php" onmouseover="checkHour()">'; // Assuming the update script is named update_staff.php
     $tableHtml .= '<table class="table table-bordered" id="stab" onchange="alertstaffupdate()">';
     $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Hours Required</th><th>Lab</th></tr></thead>';
     $tableHtml .= '<tbody>';
