@@ -34,15 +34,19 @@
                                 <label for="staffName">Staff Name:</label>
 
                                 <input type="text" class="form-control" id="staffName" name="staffName" required oninput="replacespace(this)">
-                                <!-- <input type="text" class="form-control" id="staffName" name="staffName" required oninput="replacespace(this)"> -->
                             </div>
-                            <script>
-                                function replacespace(inputValue){
-                                    // inputValue.value=inputValue.value.replace(/ /g, "_");
-                                }
-                            </script>
+                                <script>
+                                    function replacespace(inputElement) {
+                                        // Get the current input value
+                                        let inputValue = inputElement.value;
 
+                                        // Replace dots with underscores
+                                        let replacedValue = inputValue.replace(/\./g, '_').replace(/ /g, '_');
 
+                                        // Update the input value
+                                        inputElement.value = replacedValue;
+                                    }
+                                </script>
                             <button type="submit" class="btn btn-primary">Add Record</button>
                         </form>
                     </div>
