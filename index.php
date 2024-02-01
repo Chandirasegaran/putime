@@ -15,8 +15,7 @@ include("db_connection_close.php");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="./assets/styles.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 
@@ -24,8 +23,7 @@ include("db_connection_close.php");
 
     <?php include 'navbar.php' ?>
     <!-- Modal -->
-    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -37,8 +35,7 @@ include("db_connection_close.php");
                 <div class="modal-body">
                     <form action="set_semester.php" method="post">
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="semester" value="odd" id="oddRadio"
-                                checked>
+                            <input type="radio" class="form-check-input" name="semester" value="odd" id="oddRadio" checked>
                             <label class="form-check-label" for="oddRadio">Odd Semester</label>
                         </div>
 
@@ -69,8 +66,7 @@ include("db_connection_close.php");
         </button>
         <br>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
@@ -90,8 +86,7 @@ include("db_connection_close.php");
                                     <label class="form-check-label" for="batches">Has Batches</label>
                                 </div>
                                 <br>
-                                <input type="text" name="coursename" class="form-control" id="CourseName"
-                                    placeholder="Enter class name" required oninput="allowTextOnly(this)">
+                                <input type="text" name="coursename" class="form-control" id="CourseName" placeholder="Enter class name" required oninput="allowTextOnly(this)">
                             </div>
 
                             <!-- Table -->
@@ -107,16 +102,13 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8"
-                                                Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50"
-                                                Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="no"
-                                                    checked> No
+                                                <input type="radio" class="form-check-input" name="lab1" value="no" checked> No
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="1"> 1
@@ -124,9 +116,14 @@ include("db_connection_close.php");
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="2"> 2
                                             </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="3"> 3
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="4"> 4
+                                            </div>
                                         </td>
-                                        <td><button id="c_delete_row_btn" class="btn btn-danger"
-                                                onclick="deleteRow(this)">Delete</button></td>
+                                        <td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -183,14 +180,12 @@ include("db_connection_close.php");
         <hr noshade>
 
         <!-- Edit Class Modal -->
-        <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editClassModalLabel">Edit Class</h5>
-                        <button type="button" onclick="refreshpage()" class="close" data-dismiss="modal"
-                            aria-label="Close">
+                        <button type="button" onclick="refreshpage()" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -218,8 +213,7 @@ include("db_connection_close.php");
                                     <!-- Rows will be added dynamically -->
                                 </tbody>
                             </table>
-                            <button type="button" id="ed_add_row_btn" class="btn btn-success float-right"
-                                onclick="addSubjectRow()">Add Subject</button>
+                            <button type="button" id="ed_add_row_btn" class="btn btn-success float-right" onclick="addSubjectRow()">Add Subject</button>
 
                             <!-- Button to add a new row -->
                             <!-- </div> -->
@@ -263,8 +257,7 @@ include("db_connection_close.php");
                                             <!-- Rows will be added dynamically -->
                                         </tbody>
                                     </table>
-                                    <button type="button" id="ed_add_sc_row_btn" class="btn btn-success float-right"
-                                        onclick="addSoftcoreRow()">Add Softcore</button>
+                                    <button type="button" id="ed_add_sc_row_btn" class="btn btn-success float-right" onclick="addSoftcoreRow()">Add Softcore</button>
                                 </div>
                             </div>
 
@@ -298,15 +291,13 @@ include("db_connection_close.php");
                                             <!-- Rows will be added dynamically -->
                                         </tbody>
                                     </table>
-                                    <button type="button" id="ed_add_se_row_btn" class="btn btn-success float-right"
-                                        onclick="addSkillRow()">Add Skill Enhancement</button>
+                                    <button type="button" id="ed_add_se_row_btn" class="btn btn-success float-right" onclick="addSkillRow()">Add Skill Enhancement</button>
                                 </div>
                             </div>
 
                             <!-- Modal Footer -->
                             <div class="modal-footer mt-5">
-                                <button type="button" class="btn btn-secondary" onclick="refreshpage()"
-                                    data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" onclick="refreshpage()" data-dismiss="modal">Close</button>
                                 <input class="btn btn-primary" type="submit" value="Save Changes">
                             </div>
                     </div>
@@ -323,8 +314,7 @@ include("db_connection_close.php");
             </button>
         </div>
         <br>
-        <div class="modal fade" id="softcoreModal" tabindex="-1" role="dialog" aria-labelledby="softcoreModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="softcoreModal" tabindex="-1" role="dialog" aria-labelledby="softcoreModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
@@ -351,16 +341,13 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8"
-                                                Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50"
-                                                Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="no"
-                                                    checked> No
+                                                <input type="radio" class="form-check-input" name="lab1" value="no" checked> No
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="1"> 1
@@ -368,9 +355,14 @@ include("db_connection_close.php");
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="2"> 2
                                             </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="3"> 3
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="4"> 4
+                                            </div>
                                         </td>
-                                        <td><button id="c_delete_row_btn" class="btn btn-danger"
-                                                onclick="deleteRow(this)">Delete</button></td>
+                                        <td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -427,8 +419,7 @@ include("db_connection_close.php");
             </button>
         </div>
         <br>
-        <div class="modal fade" id="seModal" tabindex="-1" role="dialog" aria-labelledby="seModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="seModal" tabindex="-1" role="dialog" aria-labelledby="seModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
@@ -455,16 +446,13 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8"
-                                                Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50"
-                                                Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
                                         <td>
                                             <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="no"
-                                                    checked> No
+                                                <input type="radio" class="form-check-input" name="lab1" value="no" checked> No
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="1"> 1
@@ -472,9 +460,15 @@ include("db_connection_close.php");
                                             <div class="form-check form-check-inline">
                                                 <input type="radio" class="form-check-input" name="lab1" value="2"> 2
                                             </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="3"> 3
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="4"> 4
+                                            </div>
+
                                         </td>
-                                        <td><button id="c_delete_row_btn" class="btn btn-danger"
-                                                onclick="deleteRow(this)">Delete</button></td>
+                                        <td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -546,6 +540,12 @@ include("db_connection_close.php");
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="2"> 2' +
                 '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="3"> 3' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="4"> 4' +
+                '</div>' +
                 '</td>' +
 
                 '<td><input type="text" class="form-control" value="hc" name="type' + subname_count + '" ></td>' +
@@ -584,6 +584,12 @@ include("db_connection_close.php");
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + sclab_count + '" value="2"> 2' +
                 '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + sclab_count + '" value="3"> 3' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + sclab_count + '" value="4"> 4' +
+                '</div>' +
                 '</td>' +
                 '<td><input type="text" class="form-control" value="sc" name="type' + scsubcode_count + '" ></td>' +
 
@@ -618,6 +624,12 @@ include("db_connection_close.php");
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + selab_count + '" value="2"> 2' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + selab_count + '" value="3"> 3' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + selab_count + '" value="4"> 4' +
                 '</div>' +
                 '</td>' +
                 '<td><input type="text" class="form-control" value="se" name="type' + sesubcode_count + '" ></td>' +
@@ -655,6 +667,7 @@ include("db_connection_close.php");
                 window.location.href = 'delete_course.php?coursename=' + courseName;
             }
         }
+
         function deleteScCourse(courseName) {
             console.log('Delete Course called with courseName:', courseName);
             var confirmation = confirm("Are you sure you want to delete this Course record?");
@@ -682,11 +695,12 @@ include("db_connection_close.php");
         }
 
         // Call the function when the page is loaded
-        $(document).ready(function () {
+        $(document).ready(function() {
             showSemesterModal();
         });
 
         let editcount = 1;
+
         function editCourse(courseName) {
             console.log(courseName)
             // Use AJAX to fetch course details
@@ -694,8 +708,10 @@ include("db_connection_close.php");
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
-                data: { 'courseName': courseName },
-                success: function (response) {
+                data: {
+                    'courseName': courseName
+                },
+                success: function(response) {
                     if (response.status === 'success') {
                         // Populate the course name
                         $('#editCourseName').val(response.data.course_name);
@@ -704,7 +720,7 @@ include("db_connection_close.php");
                         var $tableBody = $('#editSubjectsTable tbody');
                         $tableBody.empty();
                         // Assuming 'subjects' is an array of subject objects associated with the course
-                        response.data.subjects.forEach(function (subject) {
+                        response.data.subjects.forEach(function(subject) {
                             let a = subject.type;
                             if (a == ' hc' || a == 'hc') {
                                 var row = '<tr>' +
@@ -721,6 +737,12 @@ include("db_connection_close.php");
                                     '<div class="form-check form-check-inline">' +
                                     '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
                                     '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3" ' + (subject.lab === '3' ? 'checked' : '') + '> 3' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4" ' + (subject.lab === '4' ? 'checked' : '') + '> 4' +
+                                    '</div>' +
                                     '</td>' +
                                     '<td><input type="text" class="form-control" value="' + subject.type + '" name="type' + editcount + '" ></td>' +
 
@@ -738,7 +760,7 @@ include("db_connection_close.php");
                         alert('Error: ' + response.message);
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     alert('An error occurred while fetching the class details.');
                 }
             });
@@ -749,8 +771,10 @@ include("db_connection_close.php");
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
-                data: { 'courseName': courseName },
-                success: function (response) {
+                data: {
+                    'courseName': courseName
+                },
+                success: function(response) {
                     if (response.status === 'success') {
                         // Populate the course name
                         $('#editCourseName').val(response.data.course_name);
@@ -759,7 +783,7 @@ include("db_connection_close.php");
                         var $tableBody = $('#addSoftcoreTableId tbody');
                         $tableBody.empty();
                         // Assuming 'subjects' is an array of subject objects associated with the course
-                        response.data.subjects.forEach(function (subject) {
+                        response.data.subjects.forEach(function(subject) {
                             let a = subject.type;
                             if (a == ' sc' || a == 'sc') {
                                 var row = '<tr>' +
@@ -776,6 +800,12 @@ include("db_connection_close.php");
                                     '<div class="form-check form-check-inline">' +
                                     '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
                                     '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3" ' + (subject.lab === '3' ? 'checked' : '') + '> 3' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4" ' + (subject.lab === '4' ? 'checked' : '') + '> 4' +
+                                    '</div>' +
                                     '</td>' +
                                     '<td><input type="text" class="form-control" value="' + subject.type + '" name="type' + editcount + '" ></td>' +
 
@@ -793,7 +823,7 @@ include("db_connection_close.php");
                         alert('Error: ' + response.message);
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     alert('An error occurred while fetching the class details.');
                 }
             });
@@ -803,8 +833,10 @@ include("db_connection_close.php");
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
-                data: { 'courseName': courseName },
-                success: function (response) {
+                data: {
+                    'courseName': courseName
+                },
+                success: function(response) {
                     if (response.status === 'success') {
                         // Populate the course name
                         $('#editCourseName').val(response.data.course_name);
@@ -813,7 +845,7 @@ include("db_connection_close.php");
                         var $tableBody = $('#addSkillTableId tbody');
                         $tableBody.empty();
                         // Assuming 'subjects' is an array of subject objects associated with the course
-                        response.data.subjects.forEach(function (subject) {
+                        response.data.subjects.forEach(function(subject) {
                             let a = subject.type;
                             if (a == ' se' || a == 'se') {
                                 var row = '<tr>' +
@@ -830,6 +862,12 @@ include("db_connection_close.php");
                                     '<div class="form-check form-check-inline">' +
                                     '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2" ' + (subject.lab === '2' ? 'checked' : '') + '> 2' +
                                     '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3" ' + (subject.lab === '3' ? 'checked' : '') + '> 3' +
+                                    '</div>' +
+                                    '<div class="form-check form-check-inline">' +
+                                    '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4" ' + (subject.lab === '4' ? 'checked' : '') + '> 4' +
+                                    '</div>' +
                                     '</td>' +
                                     '<td><input type="text" class="form-control" value="' + subject.type + '" name="type' + editcount + '" ></td>' +
 
@@ -847,7 +885,7 @@ include("db_connection_close.php");
                         alert('Error: ' + response.message);
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     alert('An error occurred while fetching the class details.');
                 }
             });
@@ -872,6 +910,12 @@ include("db_connection_close.php");
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3"> 3' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4"> 4' +
+                '</div>' +
                 '</td>' +
                 '<td><input type="text" class="form-control" value="hc" name="type' + editcount + '" ></td>' +
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
@@ -882,6 +926,7 @@ include("db_connection_close.php");
             // edsubcode_count++;
             // edhoursRequiredcount++;
         }
+
         function addSoftcoreRow() {
             // Function to add a new row for a subject in the edit modal
             var newRow = '<tr>' +
@@ -906,6 +951,12 @@ include("db_connection_close.php");
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3"> 3' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4"> 4' +
+                '</div>' +
                 '</td>' +
                 '<td><input type="text" class="form-control" value="sc" name="type' + editcount + '" ></td>' +
 
@@ -925,8 +976,10 @@ include("db_connection_close.php");
                 url: 'get_sc_details_edit.php',
                 type: 'POST',
                 dataType: 'json',
-                data: { 'subjectCode': subjectCode },
-                success: function (response) {
+                data: {
+                    'subjectCode': subjectCode
+                },
+                success: function(response) {
                     if (response.error) {
                         console.error(response.error);
                         return;
@@ -940,7 +993,7 @@ include("db_connection_close.php");
 
                     row.querySelector('[name^="type"]').value = "sc";
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error('An error occurred while fetching subject details.');
                 }
             });
@@ -971,6 +1024,12 @@ include("db_connection_close.php");
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3"> 3' +
+                '</div>' +
+                '<div class="form-check form-check-inline">' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4"> 4' +
+                '</div>' +
                 '</td>' +
                 '<td><input type="text" class="form-control" value="se" name="type' + editcount + '" ></td>' +
 
@@ -990,8 +1049,10 @@ include("db_connection_close.php");
                 url: 'get_se_details_edit.php',
                 type: 'POST',
                 dataType: 'json',
-                data: { 'subjectCode': subjectCode },
-                success: function (response) {
+                data: {
+                    'subjectCode': subjectCode
+                },
+                success: function(response) {
                     if (response.error) {
                         console.error(response.error);
                         return;
@@ -1005,7 +1066,7 @@ include("db_connection_close.php");
                     row.querySelector('[name^="type"]').value = "se";
 
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error('An error occurred while fetching subject details.');
                 }
             });
@@ -1027,8 +1088,10 @@ include("db_connection_close.php");
                 url: 'reset_softcore.php',
                 type: 'POST',
                 dataType: 'json',
-                data: { 'courseName': courseName },
-                success: function (response) {
+                data: {
+                    'courseName': courseName
+                },
+                success: function(response) {
                     if (response.status === 'success') {
                         alert(response.message);
                         // Perform any additional actions on success
@@ -1036,13 +1099,11 @@ include("db_connection_close.php");
                         alert('Error: ' + response.message);
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     alert('An error occurred while resetting softcore values.');
                 }
             });
         }
-
-
     </script>
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
