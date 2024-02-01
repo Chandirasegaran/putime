@@ -23,7 +23,7 @@ include 'db_connection.php';
 
         // Define the new name of the merged table
         $mergedTable = 'merged_table'; // Updated table name
-        
+
         // Check if 'merged_table' already exists and delete it if it does
         $sqlCheckTable = "SHOW TABLES LIKE '$mergedTable'";
         $resultCheckTable = $conn->query($sqlCheckTable);
@@ -248,7 +248,7 @@ include 'db_connection.php';
                             //document.getElementById(staffname+i+j)
                             let staffnamearr1 = []
                             let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
-                            staffnamearr2.forEach(function (element) {
+                            staffnamearr2.forEach(function(element) {
                                 staffnamearr1.push(element.innerText);
                             });
                             var index = staffnamearr1.indexOf(staffname);
@@ -298,7 +298,7 @@ include 'db_connection.php';
                             $i++;
                             echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
                             echo '<td>' . $row["DAY"] . '</td>'; // DAYS
-            
+
                             $j = 1;
                             foreach ($row as $columnName => $columnValue) {
                                 if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
@@ -335,7 +335,6 @@ include 'db_connection.php';
                         echo '</tbody>';
                         echo '</table>';
                         $i = 0;
-
                     } else {
                         echo 'No data found for the selected course.';
                     }
@@ -369,7 +368,7 @@ include 'db_connection.php';
                             $startMinute = ($slotIndex % 2) * 30; // Alternate between 0 and 30 minutes
                             $endHour = $startHour + ($startMinute + 30 >= 60 ? 1 : 0); // Increment hour if end time is on the next hour
                             $endMinute = ($startMinute + 30) % 60; // Cycle minutes between 0 and 30
-            
+
                             // Format time slots for display
                             $startTime = sprintf("%d.%02d", $startHour, $startMinute);
                             $endTime = sprintf("%d.%02d", $endHour, $endMinute);
@@ -404,7 +403,7 @@ include 'db_connection.php';
 
                     // Faculty Time Table
 
-                   
+
 
                     $staffName = $staffRow['name'];
                     // echo "<h4>Staff: $staffName</h4>";
@@ -469,18 +468,17 @@ include 'db_connection.php';
         </div>
 
         <div class="d-flex justify-content-center">
-                <script>
-                    function prt()
-                    {
-                        document.getElementById('btnhid').style.display = 'none';
-                        window.print();
-                        location.reload();
-                    }
-                </script>
-    <button type="button" id="btnhid" class="btn btn-primary col-3" onclick="prt()">Print</button>
-</div>
-<pre><br></pre>
+            <script>
+                function prt() {
+                    document.getElementById('btnhid').style.display = 'none';
+                    window.print();
+                    location.reload();
+                }
+            </script>
+            <button type="button" id="btnhid" class="btn btn-primary col-3" onclick="prt()">Print</button>
         </div>
+        <pre><br></pre>
+    </div>
     </div>
 
     <!-- Include Bootstrap JS and jQuery -->
@@ -496,4 +494,3 @@ include 'db_connection.php';
 <?php
 include 'db_connection_close.php';
 ?>
-

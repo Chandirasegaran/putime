@@ -20,7 +20,7 @@
 
             <label for="listcourse">Select Your Course for Scheduling </label>
 
-            <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()" onchange="checkHour()">
+            <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()" onchange="hourCheck()">
 
                 <option value="select" selected id="SelectCourseDrop">Select</option>
                 <script>
@@ -35,10 +35,10 @@
                         }
                     }
 
-                    function checkHour() {
-                        checkHoursReq();
-                        hourCheck();
-                    }
+                    // function checkHour() {
+                    //     checkHoursReq();
+                    //     hourCheck();
+                    // }
                 </script>
                 <?php
                 include 'db_connection.php';
@@ -94,7 +94,7 @@
                             document.getElementById('subjectStaffTable').innerHTML = subjectStaffTable;
 
 
-                            checkHoursReq();
+                            // checkHoursReq();
 
 
                         },
@@ -249,9 +249,16 @@
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
+                                element.setAttribute('data-toggle', 'tooltip');
+                                element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                element.setAttribute('title', 'horizontally more than 2');
                             } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
 
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
+                                element.setAttribute('data-toggle', 'tooltip');
+                                element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                element.setAttribute('title', 'Vertically more than 2'); // Replace 'Your Tooltip Content' with your actual tooltip text
+
                             }
                         }
                     }
@@ -307,7 +314,6 @@
 
         //change the drop dop color when a option is selected
         function mycheck() {
-            hourCheck();
 
 
             for (let i = 1; i <= 5; i++) {
@@ -354,11 +360,47 @@
         //s14 s24 hourse required
         //current course
         // Assuming the id of the h1 element is "currentcourse"
-        let values = [];
-        let valuesc = [];
+        // let values = [];
+        // let valuesc = [];
 
-        function checkHoursReq() {
+        // function checkHoursReq() {
+        //     var currentCourseElement = document.getElementById("currentcourse");
+        //     var currentCourseText = null;
 
+        //     if (currentCourseElement !== null) {
+        //         currentCourseText = currentCourseElement.innerText;
+        //         // Now you can use currentCourseText safely.
+        //     } else {
+        //         // Handle the case when the element is not found.
+        //         console.error("Element with ID 'currentcourse' not found.");
+        //     }
+        //     // console.log(currentCourseText);
+        //     var counter = 1; // Start counter from 12
+        //     while (true) {
+        //         var id = "s" + counter + "4";
+        //         var idc = "s" + counter + "1";
+
+        //         // console.log(id);
+        //         var element = document.getElementById(id);
+        //         var element1 = document.getElementById(idc);
+
+        //         // console.log(element.innerText);
+        //         if (!element) {
+        //             break; // Exit the loop if no element is found
+        //         }
+
+        //         values.push(element.innerText || element.textContent);
+        //         valuesc.push(element1.innerText || element1.textContent);
+        //         counter++;
+        //     }
+
+
+        // }
+
+        function hourCheck() {
+
+            let values = [];
+            let valuesc = [];
             var currentCourseElement = document.getElementById("currentcourse");
             var currentCourseText = null;
 
@@ -389,32 +431,20 @@
                 counter++;
             }
 
-            // var idsToDisable = ["110", "120", "130", "140"];
 
-            // idsToDisable.forEach(function(id) {
-            //     var element = document.getElementById(id);
-            //     if (element) {
-            //         element.disabled = true;
-            //     }
-            // });
-
-        }
-
-        function hourCheck() {
             var arrDisable = [];
             var arr1 = [];
 
-            console.log(values);
-            console.log(valuesc);
+            // console.log(values);
+            // console.log(valuesc);
 
             var result = {};
-
+            const len = valuesc.length;
             for (var i = 0; i < valuesc.length; i++) {
                 var key = valuesc[i];
                 var value = values[i];
-                result[key] = value;
+                result[key] = value.toString();
             }
-            // console.log(result);
 
             // console.log(result["cssc1"]);
 
@@ -422,12 +452,8 @@
                 for (let j = 1; j < 9; j++) {
                     let checkId = "select" + i.toString() + j.toString();
                     var element = document.getElementById(checkId);
-                    if (element !== null) {
-                        arr1.push(element.value);
-                    } else {
-                        // Handle the case when the element is not found.
-                        console.error("Element not found.");
-                    }
+                    arr1.push(element.value);
+
                     arr1 = removeEmptyValues(arr1);
 
                     // You can use the id to do whatever you need here
@@ -437,55 +463,111 @@
                 }
             }
 
-            for (var k = 0; k < arr1.length; k++) {
+            //enable all options before disabling
+            for (let p = 1; p < 6; p++) {
+                for (let q = 1; q < 9; q++) {
+                    for (let r = 0; r < len; r++) {
+                        count++;
+                        enableOp = p.toString() + q.toString() + r.toString();
+                        // console.log(enableOp);
+                        var option = document.getElementById(enableOp);
+                        if (option) {
+                            // var selectValue = document.getElementById("select" + p.toString() + q.toString()).value;
+                            // if (!selectValue) {
+                            option.style.display = 'inline-block';
+                            // }
+                        }
 
+                    }
+                }
+            }
+
+
+
+
+            for (var k = 0; k < arr1.length; k++) {
                 if (result[arr1[k]] > 0) {
-                    result[arr1[k]] = result[arr1[k]] - 1;
+                    result[arr1[k]] = ((result[arr1[k]] - 1).toString());
                 }
                 if (result[arr1[k]] == 0) {
-                    arrDisable.push(arr1[k]);
-                    disop();
+                    arrDisable.push(arr1[k].toString());
                     // alert(arr1[k]);
                 }
-
-                console.log(result);
-
             }
             // console.log(valuesc);
             // console.log(arrDisable);
-            function disop() {
-                var indices = findIndicesOfElements(valuesc, arrDisable);
-                console.log(indices); // Output: [1, 3, 4]
-                disele = "";
-                for (let r = 0; r < indices.length; r++) {
-                    for (let p = 1; p < 6; p++) {
-                        for (let q = 1; q < 9; q++) {
-                            disele = p.toString() + q.toString() + indices[r];
-                            // console.log(disele);
-                            var option = document.getElementById(disele);
-                            if (option) {
-                                var selectValue = document.getElementById("select" + p.toString() + q.toString()).value;
-                                if (!selectValue) {
-                                    option.remove();
-                                }
-
-
-                            }
+            // function disop() {
+            var indices = findIndicesOfElements(valuesc, arrDisable);
+            disele = "";
+            for (let r = 0; r < indices.length; r++) {
+                for (let p = 1; p < 6; p++) {
+                    for (let q = 1; q < 9; q++) {
+                        disele = p.toString() + q.toString() + indices[r];
+                        // console.log(disele);
+                        var option = document.getElementById(disele);
+                        if (option) {
+                            // var selectValue = document.getElementById("select" + p.toString() + q.toString()).value;
+                            // if (!selectValue) {
+                            option.style.display = 'none';
+                            // }
                         }
                     }
-
                 }
+
             }
 
+            // var newarrN = Array.from(trackIndex.slice(-1));
+            // var oldarrN = Array.from(trackIndex.slice(-2, -1));
+            // var newarr = [];
+            // var newarr = [];
+            // newarr = newarrN[0];
+            // oldarr = oldarrN[0];
+            // console.log(newarr);
+            // console.log("old" + oldarr);
+            // console.log(newarr.length);
+            // oldarr.forEach(element3 => {
+            //     if (!newarr.includes(element3)) {
+            //         console.log("Element present :", element3);
+            //     }
+            // });
+            // const missingNumber = oldarr.filter(number => !newarr.includes(number));
+            // console.log("The missing number from the old array is:", missingNumber[0]);
+
+            //prompt when all courses are assigned
+            var count = 0;
+            for (let r = 0; r < len; r++) {
+                if (result[valuesc[r]] == 0) {
+                    count++;
+                }
+
+            }
+            // let set;
+            // if (count == len && set != 1) {
+
+            //     alert("All course have been assigned required hours");
+            //     set = 1;
+            // }
+            // console.log("count" + count + "" + len);
+            console.log(result);
+
+
         }
+        var trackIndex = [];
 
         function findIndicesOfElements(array, elements) {
             var indices = [];
+            // console.log("preIndeces" + trackIndex);
             for (var i = 0; i < array.length; i++) {
                 if (elements.includes(array[i])) {
                     indices.push(i);
                 }
             }
+
+            // console.log("Elements present in comp1 but not in comp:", elementsOnlyInComp1);
+            // elementsOnlyInComp1.forEach(element2 => {
+            //     console.log("elem" + element2);
+            // });
+            trackIndex.push(indices);
             return indices;
         }
 
@@ -494,6 +576,11 @@
                 return value !== null && value !== undefined && value !== "" && value !== 0 && value !== false;
             });
         }
+
+        function callCheck() {
+            mycheck();
+            hourCheck();
+        };
     </script>
 
 </body>
