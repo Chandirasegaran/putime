@@ -185,7 +185,7 @@ include("db_connection_close.php");
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editClassModalLabel">Edit Class</h5>
-                        <button type="button" onclick="refreshpage()" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -312,7 +312,7 @@ include("db_connection_close.php");
 
                             <!-- Modal Footer -->
                             <div class="modal-footer mt-5">
-                                <button type="button" class="btn btn-secondary" onclick="refreshpage()" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input class="btn btn-primary" type="submit" value="Save Changes">
                             </div>
                     </div>
@@ -719,7 +719,7 @@ include("db_connection_close.php");
         function editCourse(courseName) {
             console.log(courseName)
             // Use AJAX to fetch course details
-            $.ajax({
+            jQuery.ajax({
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
@@ -782,7 +782,7 @@ include("db_connection_close.php");
 
 
             // Softcore
-            $.ajax({
+            jQuery.ajax({
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
@@ -844,7 +844,7 @@ include("db_connection_close.php");
             });
 
             // Skill Enhancement
-            $.ajax({
+            jQuery.ajax({
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
@@ -1179,7 +1179,7 @@ include("db_connection_close.php");
 
         function resetScCourse(courseName) {
             // Use AJAX to reset softcore values
-            $.ajax({
+            jQuery.ajax({
                 url: 'reset_softcore.php',
                 type: 'POST',
                 dataType: 'json',
