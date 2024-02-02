@@ -13,7 +13,7 @@
 
 <body>
     <?php include 'navbar.php' ?>
-    <div class="container mt-5">
+    <div class="contaijner mt-5">
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
 
@@ -160,8 +160,19 @@
                         name: document.getElementById('s' + i + '2').innerText,
                         staff: document.getElementById('s' + i + '3').value,
                         hours: document.getElementById('s' + i + '4').innerText,
-                        lab: document.getElementById('s' + i + '5').innerText
                     };
+
+                    // Check if the element 'document.getElementById('st' + i + '3')' exists
+                    if (document.getElementById('st' + i + '3')) {
+                        window[rowName].staff2 = document.getElementById('st' + i + '3').value;
+                    }
+                    else
+                    {
+                        window[rowName].staff2 = null;
+                    }
+
+                    window[rowName].lab = document.getElementById('s' + i + '5').innerText;
+
                     // Accessing class variables
                     // console.log(window[rowName].name);  // s11 name
                     // console.log(window[rowName].staff); // s11 staff
@@ -179,9 +190,10 @@
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
                             let element = document.getElementById(i.toString() + j.toString() + k.toString());
                             let clsvar = null;
-
+                    
                             if (element && element.value !== null) {
                                 let staffValue = element.value + ".staff";
+                                
                                 if (staffValue !== ".staff") {
                                     clsvar = staffValue;
                                 }
@@ -194,6 +206,14 @@
                             if (element1 !== null && element1.value !== null) {
                                 labvar = element1.value + ".lab";
                             }
+                            // staff2
+                            let elementst = document.getElementById(i.toString() + j.toString() + k.toString());
+                            let stvar = null;
+
+                            if (elementst !== null && elementst.value !== null) {
+                                stvar = elementst.value + ".staff2";
+                            }
+
 
                             // Now you can use labvar, which will either be the value followed by ".lab" or null if the element or its value is null.
                             // console.log(eval(clsvar));
@@ -244,7 +264,11 @@
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                                 // console.log(eval(clsvar),valuesArray);
-                            } else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
+                            } else if(eval(stvar)!=null && valuesArray.includes(eval(stvar)))
+                            {
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                            }
+                            else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
