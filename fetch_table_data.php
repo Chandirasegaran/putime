@@ -152,6 +152,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                                 echo '';
                             }
                             echo '</div>';
+
+                            $labst2 = "SELECT labStaffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                            $labResultst2 = $conn->query($labst2);
+                            echo '<div class="labStaffName' . $i . $j . '">';
+                            if ($labResultst2->num_rows > 0) {
+                                while ($labRowst2 = $labResultst2->fetch_assoc()) {
+                                    if($labRowst2['labStaffName']!="")
+                                    {
+                                    echo $labRowst2['labStaffName'];
+                                    }
+                                }
+                            } else {
+                                echo '';
+                            }
+                            echo '</div>';
+
                             $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
                             $labResult = $conn->query($labQuery);
                             echo '<div class="lab' . $i . $j . '" style="display:none">';

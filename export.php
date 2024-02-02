@@ -150,7 +150,7 @@ include 'db_connection.php';
                     echo "</tbody></table> <br>";
 
                     // Fetch and display data for each table
-                    $sqlGetData = "SELECT subjectCode, subjectName, lab, stype, staffName FROM $tableName" . "_subjects";
+                    $sqlGetData = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $tableName" . "_subjects";
                     $resultData = $conn->query($sqlGetData);
 
                     if ($resultData && $resultData->num_rows > 0) {
@@ -158,7 +158,7 @@ include 'db_connection.php';
 
                         // Fetching column names for headers
                         // $columns = ["Subject Code", "Subject Name", "Lab", "Type", "Staff Name"];
-                        $columns = ["CODE ", "COURSE TITLE", "LAB", "H/S", "FACULTY"];
+                        $columns = ["CODE ", "COURSE TITLE", "LAB", "H/S", "FACULTY", "FACULTY2"];
                         foreach ($columns as $column) {
                             echo "<th>" . $column . "</th>";
                         }
@@ -431,7 +431,15 @@ include 'db_connection.php';
                         while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
                             $staffTimetable[] = $timetableRow;
                         }
+                        $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE labStaffName LIKE '%$staffName%'";
+                        $resultStaffCourses = $conn->query($sqlGetStaffCourses);
+
+                        // Merge the timetable data
+                        while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
+                            $staffTimetable[] = $timetableRow;
+                        }
                     }
+
 
                     // Display the staff timetable in a table
                     if (!empty($staffTimetable)) {
