@@ -35,7 +35,7 @@ include 'db_connection.php';
         // Create the 'merged_table' with a serial number field
         $sqlCreateTable = "CREATE TABLE $mergedTable (
                 serialNo INT AUTO_INCREMENT PRIMARY KEY,
-                facultyName VARCHAR(255),
+                facultyName VARCHAR(255),   
                 stype VARCHAR(255),
                 theory VARCHAR(255)
             )";
@@ -53,6 +53,10 @@ include 'db_connection.php';
                 // Merge data from individual subject tables into 'merged_table'
                 $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
                                     SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
+                                    FROM $subjectTableWithSuffix";
+                $conn->query($sqlMergeData);
+                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
+                                    SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
             }

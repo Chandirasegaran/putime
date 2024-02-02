@@ -93,7 +93,9 @@ $sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . $batch . '_Subje
     hoursRequiredDup INT,
     lab VARCHAR(10),
     staffName VARCHAR(255),
+    labStaffName VARCHAR(255),
     stype VARCHAR(10)
+
 )';
 
 
@@ -172,6 +174,7 @@ if ($bat == true) {
     hoursRequiredDup INT,
     lab VARCHAR(10),
     staffName VARCHAR(255),
+    labStaffName VARCHAR(255),
     stype VARCHAR(10)
 )';
 
@@ -199,4 +202,3 @@ if ($bat == true) {
 
 include 'db_connection_close.php';
 header("Location: index.php");
-?>

@@ -9,7 +9,7 @@ if (isset($_COOKIE['whichsem'])) {
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "semEIGHT*8";
 $conn = new mysqli($servername, $username, $password);
 
 $dbname = "putimetbdb";

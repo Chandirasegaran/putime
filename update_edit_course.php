@@ -10,8 +10,7 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
     ${"subjectName{$i}"} = isset($_POST["subjectName{$i}"]) ? $_POST["subjectName{$i}"] : null;
     ${"hoursRequired{$i}"} = isset($_POST["hoursRequired{$i}"]) ? $_POST["hoursRequired{$i}"] : null;
     ${"lab{$i}"} = isset($_POST["lab{$i}"]) ? $_POST["lab{$i}"] : null;
-    ${"type{$i}"} = isset($_POST["type{$i}"]) ? $_POST["type{$i}"] : "nill";
-
+    ${"type{$i}"} = isset($_POST["type{$i}"]) ? $_POST["type{$i}"] : null;
 }
 
 // Drop existing Subject table
@@ -27,6 +26,7 @@ $sql = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
     hoursRequiredDup INT,
     lab VARCHAR(10),
     staffName VARCHAR(255),
+    labStaffName VARCHAR(255),
     stype VARCHAR(10)
 )';
 

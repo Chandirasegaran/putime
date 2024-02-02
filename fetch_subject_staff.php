@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $course = $conn->real_escape_string($_POST['course']);
 
     // Fetch subject details based on the selected course
-    $subjectQuery = "SELECT subjectCode, subjectName, hoursRequired, lab, staffName FROM " . $course . "_subjects";
+    $subjectQuery = "SELECT subjectCode, subjectName, hoursRequired, lab, staffName,labStaffName FROM " . $course . "_subjects";
     $subjectResult = $conn->query($subjectQuery);
 
     // Fetch staff names
@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         $tableHtml .= '<tr style="background-color:' . $colorArray[$colorarr++] . '">';
         $tableHtml .= '<td id="s' . $si . '1">' . $subjectRow['subjectCode'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '2">' . $subjectRow['subjectName'] . '</td>';
+
         $tableHtml .= '<td "><select id="s' . $si . '3" class="custom-select" name="staffName[' . $subjectRow['subjectCode'] . ']" >';
 
         // Add an initial option with value "Select"
@@ -56,7 +57,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             $tableHtml .= '<option  value="' . $staffRow['name'] . '" ' . $selected . '>' . $staffRow['name'] . '</option>';
         }
 
-        $tableHtml .= '</select></td>';
+        $tableHtml .= '</select>';
+        if ($subjectRow['lab'] != "no") {
+
+            $tableHtml .= '<select id="st' . $si . '3" class="custom-select" name="labStaffName[' . $subjectRow['subjectCode'] . ']" >';
+
+            // Add an initial option with value "Select"
+            $tableHtml .= '<option value="">Select</option>';
+
+            // Reset the data pointer to the beginning of the staff result set
+            $staffResult->data_seek(0);
+
+            // Populate dropdown with staff names
+            while ($staffRow = $staffResult->fetch_assoc()) {
+                $selected = ($staffRow['name'] == $subjectRow['labStaffName']) ? 'selected' : '';
+                $tableHtml .= '<option  value="' . $staffRow['name'] . '" ' . $selected . '>' . $staffRow['name'] . '</option>';
+            }
+        }
+
+
+        $tableHtml .= '</td>';
+
         $tableHtml .= '<td id="s' . $si . '4" >' . $subjectRow['hoursRequired'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '5" >' . $subjectRow['lab'] . '</td>';
         $tableHtml .= '</tr>';
