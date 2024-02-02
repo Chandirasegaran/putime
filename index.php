@@ -239,6 +239,21 @@ include("db_connection_close.php");
                             $conn->close();
                             ?>
 
+                            <?php
+                            include 'db_connection.php';
+
+                            // Fetch subject names from the database table
+                            $softcoreNamesQuery = $conn->query("SELECT subjectName FROM softcoretb");
+                            $softcoreNames = array();
+
+                            while ($row = $softcoreNamesQuery->fetch_assoc()) {
+                                $softcoreNames[] = $row['subjectName'];
+                            }
+
+                            $conn->close();
+                            ?>
+
+
                             <div class="mt-4">
                                 <h5>Softcores</h5>
                                 <div class="table-responsive">
@@ -929,17 +944,30 @@ include("db_connection_close.php");
 
         function addSoftcoreRow() {
             // Function to add a new row for a subject in the edit modal
-            var newRow = '<tr>' +
+            var newRow =
+                '<tr>' +
                 '<td><input list="softcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchScSubjectDetails(this)" required>' +
                 '<datalist id="softcoreCodes">';
+
+
 
             // Add options for each softcore code
             <?php foreach ($softcoreCodes as $code) { ?>
                 newRow += '<option value="<?= $code ?>">';
             <?php } ?>
-
             newRow += '</datalist></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + editcount + '" required></td>' +
+
+
+
+                '<td><input list="softcoreNames" class="form-control" name="subjectName' + editcount + '" onchange="fetchScSubjectDetails1(this)" required>' +
+                '<datalist id="softcoreNames">';
+
+            <?php foreach ($softcoreNames as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+            newRow += '</datalist></td>' +
+
+
                 '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
@@ -966,10 +994,77 @@ include("db_connection_close.php");
             editcount++;
         }
 
+
+        // function fetchScSubjectDetails1(input) {
+        //     var subjectName = input.value;
+        //     var row = input.closest('tr');
+
+        //     // Make an AJAX request to fetch subject details
+        //     jQuery.ajax({
+        //         url: 'get_sc_details_edit.php',
+        //         // Assuming a PHP script to handle fetching data by subject name
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         data: {
+        //             'subjectName': subjectName
+        //         },
+        //         success: function(response) {
+        //             if (response.error) {
+        //                 console.error(response.error);
+        //                 return;
+        //             }
+
+        //             // Update the corresponding fields in the row
+        //             row.querySelector('[name^="subjectCode"]').value = response.subjectCode;
+        //             row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+        //             // Update radio button based on the lab value
+        //             row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+
+        //             row.querySelector('[name^="type"]').value = "sc";
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error('An error occurred while fetching subject details by name.');
+        //         }
+        //     });
+        // }
+        function fetchScSubjectDetails1(input) {
+            var subjectName = input.value;
+            var row = input.closest('tr'); // Getting the parent <tr> instead of <td>
+            console.log("fa" + row);
+            // Make an AJAX request to fetch subject details
+            jQuery.ajax({
+                url: 'get_sc_details_name_edit.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'subjectName': subjectName
+                },
+                success: function(response) {
+                    if (response.error) {
+                        console.error(response.error);
+                        return;
+                    }
+                    console.log(response);
+                    // Update the corresponding fields in the row
+                    row.querySelector('[name^="subjectCode"]').value = response.subjectCode;
+                    row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+                    // Update radio button based on the lab value
+                    row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+
+                    row.querySelector('[name^="type"]').value = "sc";
+                },
+                error: function(xhr, status, error) {
+                    console.error('An error occurred while fetching subject details by name.');
+                }
+            });
+        }
+
+
         function fetchScSubjectDetails(input) {
             // console.log(input.value );
             var subjectCode = input.value;
             var row = input.closest('tr');
+            console.log("fB" + row);
 
             // Make an AJAX request to fetch subject details
             jQuery.ajax({
