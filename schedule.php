@@ -13,7 +13,7 @@
 
 <body>
     <?php include 'navbar.php' ?>
-    <div class="contaijner mt-5">
+    <div class="container mt-5">
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
 
