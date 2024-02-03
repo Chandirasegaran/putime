@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             $tableHtml .= '<select id="st' . $si . '3" class="custom-select" name="labStaffName[' . $subjectRow['subjectCode'] . ']" >';
 
             // Add an initial option with value "Select"
-            $tableHtml .= '<option value="">Select</option>';
+            $tableHtml .= '<option value="nil">Select</option>';
 
             // Reset the data pointer to the beginning of the staff result set
             $staffResult->data_seek(0);
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             // Populate dropdown with staff names
             while ($staffRow = $staffResult->fetch_assoc()) {
                 $selected = ($staffRow['name'] == $subjectRow['labStaffName']) ? 'selected' : '';
-                $tableHtml .= '<option  value="' . $staffRow['name'] . '" ' . $selected . '>' . $staffRow['name'] . '</option>';
+                $tableHtml .= '<option value="' . $staffRow['name'] . '" ' . ($selected ? 'selected' : '') . '>' . $staffRow['name'] . '</option>';
             }
         }
 

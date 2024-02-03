@@ -13,7 +13,7 @@
 
 <body>
     <?php include 'navbar.php' ?>
-    <div class="contaijner mt-5">
+    <div class="container-fluid mt-5">
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
 
@@ -165,9 +165,7 @@
                     // Check if the element 'document.getElementById('st' + i + '3')' exists
                     if (document.getElementById('st' + i + '3')) {
                         window[rowName].staff2 = document.getElementById('st' + i + '3').value;
-                    }
-                    else
-                    {
+                    } else {
                         window[rowName].staff2 = null;
                     }
 
@@ -190,10 +188,10 @@
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
                             let element = document.getElementById(i.toString() + j.toString() + k.toString());
                             let clsvar = null;
-                    
+
                             if (element && element.value !== null) {
                                 let staffValue = element.value + ".staff";
-                                
+
                                 if (staffValue !== ".staff") {
                                     clsvar = staffValue;
                                 }
@@ -212,6 +210,7 @@
 
                             if (elementst !== null && elementst.value !== null) {
                                 stvar = elementst.value + ".staff2";
+                                console.log(eval(stvar));
                             }
 
 
@@ -252,6 +251,8 @@
 
                             let valuesArray = [];
                             let labArray = [];
+
+
                             // Iterate over the NodeList and push values into the array
                             elements1.forEach(function(elementpara) {
                                 valuesArray.push(elementpara.innerText);
@@ -264,11 +265,13 @@
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                                 // console.log(eval(clsvar),valuesArray);
-                            } else if(eval(stvar)!=null && valuesArray.includes(eval(stvar)))
-                            {
+
+
+                                //currently working feature
+                            } else if (eval(stvar) != null && valuesArray.includes(eval(stvar))) {
+                                // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                            }
-                            else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
+                            } else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
@@ -422,7 +425,6 @@
         // }
 
         function hourCheck() {
-
             let values = [];
             let valuesc = [];
             var currentCourseElement = document.getElementById("currentcourse");
@@ -505,10 +507,6 @@
                     }
                 }
             }
-
-
-
-
             for (var k = 0; k < arr1.length; k++) {
                 if (result[arr1[k]] > 0) {
                     result[arr1[k]] = ((result[arr1[k]] - 1).toString());
@@ -537,9 +535,7 @@
                         }
                     }
                 }
-
             }
-
             // var newarrN = Array.from(trackIndex.slice(-1));
             // var oldarrN = Array.from(trackIndex.slice(-2, -1));
             // var newarr = [];
@@ -565,17 +561,21 @@
                 }
 
             }
-            // let set;
-            // if (count == len && set != 1) {
+            if (count < len) {
+                alertShown = false;
 
-            //     alert("All course have been assigned required hours");
-            //     set = 1;
-            // }
+            }
+            if (count == len && !alertShown) {
+                alert("All courses have been assigned required hours");
+                alertShown = true; // Mark alert as shown
+            }
+
             // console.log("count" + count + "" + len);
-            console.log(result);
-
+            // console.log(result);
 
         }
+        var alertShown = false;
+
         var trackIndex = [];
 
         function findIndicesOfElements(array, elements) {

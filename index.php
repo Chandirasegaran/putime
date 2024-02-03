@@ -46,7 +46,7 @@ include("db_connection_close.php");
 
                         <br>
 
-                        <button type="submit" class="btn btn-primary">Choose!</button>
+                        <button type="submit" class="btn btn-primary">Set</button>
                     </form>
                 </div>
             </div>

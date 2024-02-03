@@ -55,6 +55,7 @@ include 'db_connection.php';
                                     SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
+
                 $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
                                     SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
                                     FROM $subjectTableWithSuffix";
@@ -73,7 +74,7 @@ include 'db_connection.php';
                     <th class="col-1">S.no</th> <!-- Adjust column width here -->
                     <th class="col-2">Faculty Name</th>
                     <th class="col-2">Hardcore/Softcore</th> <!-- Adjust column width here -->
-                    <th class="col-4">Theory</th>
+                    <th class="col-4">Subject</th>
                 </tr>
             </thead>
             <tbody>
