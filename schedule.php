@@ -13,11 +13,7 @@
 
 <body>
     <?php include 'navbar.php' ?>
-<<<<<<< HEAD
     <div class="container-fluid mt-5">
-=======
-    <div class="container mt-5">
->>>>>>> 1ce007d9d867ab5a66dc27265d95538e0dc37934
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
 
