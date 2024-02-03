@@ -477,7 +477,46 @@ include 'db_connection.php';
 
 
             ?>
+<div class="LabTimetable">
+    <!-- Add empty timetable templates for 4 labs -->
+    <!-- Add empty timetable templates for 4 labs -->
+    <?php
+    for ($lab = 1; $lab <= 4; $lab++) {
+        echo "<h4>Lab $lab Timetable</h4>";
+        echo "<table class='table table-bordered'>";
+        echo "<thead><tr><th>SL.NO.</th><th>DAYS</th>";
 
+        // Generate column headers for time slots
+        $timeSlots = ["9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
+        foreach ($timeSlots as $slot) {
+            echo "<th>$slot</th>";
+        }
+
+        echo "</tr></thead>";
+        echo "<tbody>";
+
+        // Generate rows for days (adjust the number of days as needed)
+        $days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
+        foreach ($days as $index => $day) {
+            echo "<tr>";
+            echo "<td>" . ($index + 1) . "</td>"; // SL.NO.
+            echo "<td>$day</td>";
+
+            // Generate empty cells for each day and time slot
+            foreach ($timeSlots as $slotIndex => $slot) {
+                // Create unique id for each cell
+                $cellId = "lab" . $lab . ($index + 1) . ($slotIndex + 1);
+                echo "<td id='$cellId'></td>";
+            }
+
+            echo "</tr>";
+        }
+
+        echo "</tbody>";
+        echo "</table>";
+    }
+    ?>
+</div>
         </div>
 
         <div class="d-flex justify-content-center">
