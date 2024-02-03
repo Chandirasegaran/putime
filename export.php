@@ -259,7 +259,7 @@ include 'db_connection.php';
                             var index = staffnamearr1.indexOf(staffname);
                             if (index != -1) {
                                 document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[0].innerHTML;
-                                console.log(document.getElementsByClassName("lab" + i + j)[0]);
+                                // console.log(document.getElementsByClassName("lab" + i + j)[0]);
                             }
                         }
                     }
@@ -481,6 +481,100 @@ include 'db_connection.php';
     <!-- Add empty timetable templates for 4 labs -->
     <!-- Add empty timetable templates for 4 labs -->
     <?php
+    $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
+    echo '<H1 class="mt-5">Final Schedule</H1>
+    <h2>Class Schedule</h2>';
+    if ($scheduleResult->num_rows > 0) {
+        while ($classRow = $scheduleResult->fetch_assoc()) {
+
+            $discourse = $classRow["COURSE"];
+ 
+            // Fetch the data for the selected course
+            $sql = "SELECT * FROM `$discourse`";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                // Display the fetched data in a table format without dropdowns
+
+                echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
+
+
+                echo '<table class="table table-bordered">';
+                $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
+                echo '<thead>';
+                echo '<tr>';
+                foreach ($timeSlots as $timeSlot) {
+                    echo '<th>' . $timeSlot . '</th>';
+                }
+                echo '</tr>';
+                echo '</thead>';
+                echo '<tbody>';
+
+                $rowNumber = 1; // Counter for row numbers
+                $i = 0;
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    $i++;
+                    echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
+                    echo '<td>' . $row["DAY"] . '</td>'; // DAYS
+
+                    // Loop through the time slots and display values
+                    $j = 1;
+                    foreach ($row as $columnName => $columnValue) {
+                        if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
+                            // Fetch staff name from $discourse."_subjects" table using $columnValue
+                            $staff_Query = "SELECT subjectCode FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                            $staff_Result = $conn->query($staff_Query);
+                            echo '<td ><div class="tablecel' . $i . $j . '">';
+                            if ($staff_Result->num_rows > 0) {
+                                while ($staff_Row = $staff_Result->fetch_assoc()) {
+                                    echo $staff_Row['subjectCode'];
+                                }
+                            } else {
+                                echo '';
+                            }
+                            echo '</div>';
+
+                            $labst2 = "SELECT labStaffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                            $labResultst2 = $conn->query($labst2);
+                            echo '<div class="labStaffName' . $i . $j . '">';
+                            if ($labResultst2->num_rows > 0) {
+                                while ($labRowst2 = $labResultst2->fetch_assoc()) {
+                                    if ($labRowst2['labStaffName'] != "") {
+                                        echo $labRowst2['labStaffName'];
+                                    }
+                                }
+                            } else {
+                                echo '';
+                            }
+                            echo '</div>';
+
+                            $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                            $labResult = $conn->query($labQuery);
+                            echo '<div class="labcel' . $i . $j . '" >';
+                            if ($labResult->num_rows > 0) {
+                                while ($labRow = $labResult->fetch_assoc()) {
+                                    echo $labRow['lab'];
+                                }
+                            } else {
+                                echo '';
+                            }
+                            $j++;
+                            echo '</div></td>';
+                        }
+                    }
+
+                    echo '</tr>';
+                }
+
+                echo '</tbody>';
+                echo '</table>';
+                $i = 0;
+            } else {
+                echo 'No data found for the selected course.';
+            }
+        }
+    }
     for ($lab = 1; $lab <= 4; $lab++) {
         echo "<h4>Lab $lab Timetable</h4>";
         echo "<table class='table table-bordered'>";
@@ -506,7 +600,8 @@ include 'db_connection.php';
             foreach ($timeSlots as $slotIndex => $slot) {
                 // Create unique id for each cell
                 $cellId = "lab" . $lab . ($index + 1) . ($slotIndex + 1);
-                echo "<td id='$cellId'></td>";
+                echo "<td id='$cellId'>";
+                echo"</td>";
             }
 
             echo "</tr>";
@@ -516,6 +611,46 @@ include 'db_connection.php';
         echo "</table>";
     }
     ?>
+    <script>
+        labvalue();
+        function labvalue()
+        {
+            for(let lab=1;lab<4;lab++)
+            {
+                for(let i=1;i<8;i++)
+                {
+                    for(let j=1;j<5;j++)
+                    {
+                        var className = 'labcel' + i + j;
+                        var labcode='tablecel'+i+j;
+                        // Select elements with the constructed class name
+                        var labElements = document.querySelectorAll('.' + className);
+                        var labElements1 = document.querySelectorAll('.' + labcode);
+
+                        // Initialize an empty array to store the innerText values
+                        var labValues = [];
+                        var labValues1 = [];
+                        
+                        // Loop through the NodeList and push innerText values into the array
+                        labElements.forEach(function(element) {
+                            labValues.push(element.innerText);
+                        });
+                        
+                        labElements1.forEach(function(element) {
+                            labValues1.push(element.innerText);
+                        });
+
+                        console.log(labValues); 
+                        if(labValues.includes(lab.toString()))
+                        {
+                            var index = labValues.indexOf(lab.toString());
+                            document.getElementById('lab'+lab.toString()+i.toString()+j.toString()).innerText=labValues1[index];
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </div>
         </div>
 
