@@ -47,7 +47,8 @@
                 $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
-                        echo '<option value="' . $classRow["COURSE"] . '">' . $classRow["COURSE"] . '</option>';
+                        $trimmedCourseName = ltrim($classRow["COURSE"], 'even ');
+                        echo '<option value="' . $classRow["COURSE"] . '">' . $trimmedCourseName . '</option>';
                     }
                 } else {
                     echo 'No class records found.';

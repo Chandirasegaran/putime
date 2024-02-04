@@ -161,7 +161,7 @@ include("db_connection_close.php");
                 echo '<tbody>';
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
-                    echo '<td>' . $classRow["COURSE"] . '</td>';
+                    echo '<td>' . str_replace('even', '', $classRow["COURSE"]) . '</td>';
                     echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
                     <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
