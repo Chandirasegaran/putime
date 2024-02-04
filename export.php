@@ -253,11 +253,19 @@ include 'db_connection.php';
                             //document.getElementById(staffname+i+j)
                             let staffnamearr1 = []
                             let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
+                            let staffnamearrsf1 = []
+                            let staffnamearrsf2 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
+                            
                             staffnamearr2.forEach(function(element) {
                                 staffnamearr1.push(element.innerText);
                             });
+                            staffnamearrsf2.forEach(function(element) {
+                                staffnamearrsf1.push(element.innerText);
+                            });
+                            console.log(staffnamearrsf1);
                             var index = staffnamearr1.indexOf(staffname);
-                            if (index != -1) {
+                            var index1=staffnamearrsf1.indexOf(staffname);
+                            if (index != -1 ||index1 !=-1) {
                                 document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[0].innerHTML;
                                 // console.log(document.getElementsByClassName("lab" + i + j)[0]);
                             }
@@ -319,6 +327,21 @@ include 'db_connection.php';
                                         echo '';
                                     }
                                     echo '</div>';
+
+                                    $labst2 = "SELECT labStaffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                                    $labResultst2 = $conn->query($labst2);
+                                    echo '<div class="labStaffName' . $i . $j . '">';
+                                    if ($labResultst2->num_rows > 0) {
+                                        while ($labRowst2 = $labResultst2->fetch_assoc()) {
+                                            if ($labRowst2['labStaffName'] != "") {
+                                                echo $labRowst2['labStaffName'];
+                                            }
+                                        }
+                                    } else {
+                                        echo '';
+                                    }
+                                    echo '</div>';
+
                                     $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
                                     $labResult = $conn->query($labQuery);
                                     echo '<div class="lab' . $i . $j . '">';
@@ -640,7 +663,7 @@ include 'db_connection.php';
                             labValues1.push(element.innerText);
                         });
 
-                        console.log(labValues); 
+                        // console.log(labValues); 
                         if(labValues.includes(lab.toString()))
                         {
                             var index = labValues.indexOf(lab.toString());
