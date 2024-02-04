@@ -53,6 +53,24 @@ include("db_connection_close.php");
         </div>
     </div>
 
+    <script>
+    // Get the last selected option from localStorage, default to "odd" if not set
+    var lastSelectedSemester = localStorage.getItem('lastSelectedSemester') || 'odd';
+
+    // Set the checked attribute for the corresponding radio button
+    if (lastSelectedSemester === 'even') {
+        document.getElementById('evenRadio').checked = true;
+    } else {
+        document.getElementById('oddRadio').checked = true;
+    }
+
+    // Add event listener to update last selected option in localStorage
+    document.querySelectorAll('input[name="semester"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            localStorage.setItem('lastSelectedSemester', this.value);
+        });
+    });
+</script>
 
     <?php
     if (isset($_COOKIE['whichsem'])) {
@@ -161,8 +179,9 @@ include("db_connection_close.php");
                 echo '<tbody>';
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
-                    echo '<td>' . $classRow["COURSE"] . '</td>';
-                    echo '<td>
+                    $courseName = str_replace(['even', 'odd'], '', $classRow["COURSE"]);
+                    echo '<td>' . $courseName . '</td>';
+                                        echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
                     <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
@@ -356,7 +375,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="10" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
