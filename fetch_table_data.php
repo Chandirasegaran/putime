@@ -34,7 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     if ($result->num_rows > 0) {
         // Display the fetched data in a table format with dropdowns
-        echo '<h1 id="currentcourse" onmouseover="hourCheck()">' . $course . '</h1>';
+        // echo '<h1 id="currentcourse" onmouseover="hourCheck()">' . $course . '</h1>';
+        echo '<h1 id="currentcourse" onmouseover="hourCheck()">' . str_replace(array('even', 'odd'), '', $course) . '</h1>';
+
         echo '<table class="table table-bordered">';
         $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
         echo '<thead>';
@@ -114,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             if ($result->num_rows > 0) {
                 // Display the fetched data in a table format without dropdowns
 
-                echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
+                echo '<h1 id="currentcourse" class="mt-5">' . str_replace(array('even', 'odd'), '', $discourse) .  '</h1>';
 
 
                 echo '<table class="table table-bordered">';

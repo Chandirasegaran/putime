@@ -47,7 +47,7 @@
                 $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
-                        $trimmedCourseName = ltrim($classRow["COURSE"], 'even ');
+                        $trimmedCourseName = preg_replace('/^(even|odd)\s*/', '', $classRow["COURSE"]);
                         echo '<option value="' . $classRow["COURSE"] . '">' . $trimmedCourseName . '</option>';
                     }
                 } else {
@@ -211,7 +211,7 @@
 
                             if (elementst !== null && elementst.value !== null) {
                                 stvar = elementst.value + ".staff2";
-                                console.log(eval(stvar));
+                                // console.log(eval(stvar));
                             }
 
 
@@ -430,7 +430,6 @@
             let valuesc = [];
             var currentCourseElement = document.getElementById("currentcourse");
             var currentCourseText = null;
-
             if (currentCourseElement !== null) {
                 currentCourseText = currentCourseElement.innerText;
                 // Now you can use currentCourseText safely.

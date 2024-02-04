@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             $tableHtml .= '<select id="st' . $si . '3" class="custom-select" name="labStaffName[' . $subjectRow['subjectCode'] . ']" >';
 
             // Add an initial option with value "Select"
-            $tableHtml .= '<option value="nil">Select</option>';
+            $tableHtml .= '<option value="Nil">Select</option>';
 
             // Reset the data pointer to the beginning of the staff result set
             $staffResult->data_seek(0);

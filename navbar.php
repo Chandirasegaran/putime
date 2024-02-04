@@ -2,12 +2,22 @@
     <title>PU Time</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+.disSem{
+margin-top: 9px;
+}
+        </style>
 </head>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="index.php">Timetable Pro</a>
+        <?php
+    if (isset($_COOKIE['whichsem'])) {
+        echo '<span class="navbar-brand disSem" ><h6>' . ucfirst($_COOKIE['whichsem']) . ' Semester</h6></span>';
+    }
+    ?>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
