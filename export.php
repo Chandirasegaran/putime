@@ -255,19 +255,19 @@ include 'db_connection.php';
                             let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
                             let staffnamearrsf1 = []
                             let staffnamearrsf2 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
-                            
+
                             staffnamearr2.forEach(function(element) {
                                 staffnamearr1.push(element.innerText);
                             });
                             staffnamearrsf2.forEach(function(element) {
                                 staffnamearrsf1.push(element.innerText);
                             });
-                            console.log(staffnamearrsf1);
+                            // console.log(staffnamearrsf1);
                             var index = staffnamearr1.indexOf(staffname);
-                            var index1=staffnamearrsf1.indexOf(staffname);
-                            if (index != -1 ||index1 !=-1) {
+                            var index1 = staffnamearrsf1.indexOf(staffname);
+                            if (index != -1 || index1 != -1) {
                                 document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[0].innerHTML;
-                                console.log(staffnamearr1);
+                                // console.log(staffnamearr1);
 
                                 // console.log(document.getElementsByClassName("lab" + i + j)[0]);
                             }
@@ -662,18 +662,17 @@ include 'db_connection.php';
                                         labValues1.push(element.innerText);
                                     });
 
-                        console.log(labValues); 
-                        if(labValues.includes(lab.toString()))
-                        {
-                            var index = labValues.indexOf(lab.toString());
-                            document.getElementById('lab'+lab.toString()+i.toString()+j.toString()).innerText=labValues1[index];
+                                    // console.log(labValues); 
+                                    if (labValues.includes(lab.toString())) {
+                                        var index = labValues.indexOf(lab.toString());
+                                        document.getElementById('lab' + lab.toString() + i.toString() + j.toString()).innerText = labValues1[index];
+                                    }
+                                }
+                            }
                         }
                     }
-                }
-            }
-        }
-    </script>
-</div>
+                </script>
+            </div>
         </div>
 
         <div class="d-flex justify-content-center">

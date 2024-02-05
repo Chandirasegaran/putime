@@ -454,7 +454,7 @@
                 // Now you can use currentCourseText safely.
             } else {
                 // Handle the case when the element is not found.
-                console.error("Element with ID 'currentcourse' not found.");
+                // console.error("Element with ID 'currentcourse' not found.");
             }
             // console.log(currentCourseText);
             var counter = 1; // Start counter from 12
@@ -497,8 +497,9 @@
                 for (let j = 1; j < 9; j++) {
                     let checkId = "select" + i.toString() + j.toString();
                     var element = document.getElementById(checkId);
-                    arr1.push(element.value);
-
+                    if (element) {
+                        arr1.push(element.value);
+                    }
                     arr1 = removeEmptyValues(arr1);
 
                     // You can use the id to do whatever you need here
