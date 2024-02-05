@@ -189,12 +189,21 @@
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
                             let element = document.getElementById(i.toString() + j.toString() + k.toString());
                             let clsvar = null;
-
+                            let clsvarsf = null;
                             if (element && element.value !== null) {
                                 let staffValue = element.value + ".staff";
 
                                 if (staffValue !== ".staff") {
                                     clsvar = staffValue;
+                                }
+                            }
+
+
+                            if (element && element.value !== null) {
+                                let staffValuesf = element.value + ".staff2";
+
+                                if (staffValuesf !== ".staff2") {
+                                    clsvarsf = staffValuesf;
                                 }
                             }
 
@@ -220,6 +229,8 @@
 
                             let elements1 = document.querySelectorAll('.table' + i.toString() + j.toString());
                             let elements2 = document.querySelectorAll('.lab' + i.toString() + j.toString());
+                            let elements3 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
+
                             // Create an array to store the values
 
                             let hcheckarray = [];
@@ -251,6 +262,8 @@
                             }
 
                             let valuesArray = [];
+                            let valuesArraysf = [];
+
                             let labArray = [];
 
 
@@ -261,6 +274,9 @@
                             elements2.forEach(function(elementpara) {
                                 labArray.push(elementpara.innerText);
                             });
+                            elements3.forEach(function(elementpara) {
+                                valuesArraysf.push(elementpara.innerText);
+                            });
                             if (valuesArray.includes(eval(clsvar))) {
 
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
@@ -269,6 +285,9 @@
 
 
                                 //currently working feature
+                            } else if (valuesArraysf.includes(eval(clsvar))) {
+                                // console.log(valuesArray);
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (eval(stvar) != null && valuesArray.includes(eval(stvar))) {
                                 // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
