@@ -128,11 +128,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-<<<<<<< HEAD
                                         <td><input type="text" class="form-control" name="subjectCode1" maxlength="10"  Required></td>
-=======
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" oninput="processInput(this)" Required></td>
->>>>>>> 60c5e418fa2bb67a108395db040fc8a5b9702610
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
