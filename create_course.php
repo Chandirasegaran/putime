@@ -87,7 +87,7 @@ if ($conn->query($sqlInsertData) !== TRUE) {
 // Subject Table
 
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . $batch . '_Subjects (
-    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectCode VARCHAR(15) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     hoursRequiredDup INT,
@@ -168,7 +168,7 @@ if ($bat == true) {
     // Subject Table
 
     $sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . $batch . '_Subjects (
-    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectCode VARCHAR(15) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     hoursRequiredDup INT,
