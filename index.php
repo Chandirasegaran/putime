@@ -439,7 +439,7 @@ include("db_connection_close.php");
                     echo '<tr>';
                     echo '<td>' . $SCRow["subjectCode"] . '</td>';
                     echo '<td>' . $SCRow["subjectName"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteScCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete class</button></td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteScCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete</button></td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -545,7 +545,7 @@ include("db_connection_close.php");
                     echo '<tr>';
                     echo '<td>' . $SCRow["subjectCode"] . '</td>';
                     echo '<td>' . $SCRow["subjectName"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteSeCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete class</button></td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteSeCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete</button></td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
