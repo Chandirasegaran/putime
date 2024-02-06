@@ -20,7 +20,14 @@ include("db_connection_close.php");
 </head>
 
 <body>
+<script>
+        function processInput(inputField) {
+        var inputValue = inputField.value;
+        var cleanedInput = inputValue.replace(/[^a-zA-Z0-9_]/g, '_');
+        inputField.value = cleanedInput;  // Update the input field value
+        }
 
+        </script>
     <?php include 'navbar.php' ?>
     <!-- Modal -->
     <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel" aria-hidden="true">
@@ -82,6 +89,7 @@ include("db_connection_close.php");
         <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
             ADD CLASS
         </button>
+
         <br>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -120,7 +128,11 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
+<<<<<<< HEAD
                                         <td><input type="text" class="form-control" name="subjectCode1" maxlength="10"  Required></td>
+=======
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" oninput="processInput(this)" Required></td>
+>>>>>>> 60c5e418fa2bb67a108395db040fc8a5b9702610
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -375,8 +387,12 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
+<<<<<<< HEAD
                                         <td><input type="text" class="form-control" name="subjectCode1" maxlength="10" Required > </td>
 
+=======
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="10" oninput="processInput(this)" Required></td>
+>>>>>>> 60c5e418fa2bb67a108395db040fc8a5b9702610
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -481,7 +497,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" oninput="processInput(this)" maxlength="8" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -562,7 +578,7 @@ include("db_connection_close.php");
         // Function to add a new row to the table
         function addRowhc() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="8" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + hoursRequiredcount + '" Required></td>' +
                 '<td>' +
@@ -606,7 +622,7 @@ include("db_connection_close.php");
         // Function to add a new row to the table
         function addRowsc() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="8" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + scsubname_count + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + schoursRequiredcount + '" Required></td>' +
                 '<td>' +
@@ -647,7 +663,7 @@ include("db_connection_close.php");
         // Function to add a new row to the table
         function addRowse() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="8" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + sesubname_count + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + sehoursRequiredcount + '" Required></td>' +
                 '<td>' +
@@ -759,7 +775,7 @@ include("db_connection_close.php");
                             let a = subject.type;
                             if (a == ' hc' || a == 'hc') {
                                 var row = '<tr>' +
-                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '" oninput="processInput(this)"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
                                     '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
                                     '<td>' +
@@ -822,7 +838,7 @@ include("db_connection_close.php");
                             let a = subject.type;
                             if (a == ' sc' || a == 'sc') {
                                 var row = '<tr>' +
-                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '" oninput="processInput(this)"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
                                     '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
                                     '<td>' +
@@ -884,7 +900,7 @@ include("db_connection_close.php");
                             let a = subject.type;
                             if (a == ' se' || a == 'se') {
                                 var row = '<tr>' +
-                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '" oninput="processInput(this)"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
                                     '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
                                     '<td>' +
@@ -932,7 +948,7 @@ include("db_connection_close.php");
         function addSubjectRow() {
             // Function to add a new row for a subject in the edit modal
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + editcount + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + editcount + '" maxlength="8" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + editcount + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" Required></td>' +
                 '<td>' +
