@@ -50,7 +50,7 @@ if ($conn->query($sql) !== TRUE) {
 //     echo 'Error creating EVEN Subject table: ' . $conn->error;
 // }
 $sql = 'CREATE TABLE IF NOT EXISTS SOFTCORETB (
-    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectCode VARCHAR(15) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     lab VARCHAR(10)
@@ -62,7 +62,7 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 $sql = 'CREATE TABLE IF NOT EXISTS SETB (
-    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectCode VARCHAR(15) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     lab VARCHAR(10)

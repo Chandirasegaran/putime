@@ -582,7 +582,7 @@
                 alertShown = false;
             }
             if (count == len && !alertShown) {
-                // alert("All courses have been assigned required hours");
+                alert("All courses have been assigned required hours");
                 alertShown = true; // Mark alert as shown
             }
 
@@ -624,5 +624,4 @@
     </script>
 
 </body>
-
 </html>
