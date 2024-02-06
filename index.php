@@ -30,7 +30,7 @@ include("db_connection_close.php");
         </script>
     <?php include 'navbar.php' ?>
     <!-- Modal -->
-    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel" aria-hidden="true">
+    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -61,23 +61,23 @@ include("db_connection_close.php");
     </div>
 
     <script>
-        // Get the last selected option from localStorage, default to "odd" if not set
-        var lastSelectedSemester = localStorage.getItem('lastSelectedSemester') || 'odd';
+    // Get the last selected option from localStorage, default to "odd" if not set
+    var lastSelectedSemester = localStorage.getItem('lastSelectedSemester') || 'odd';
 
-        // Set the checked attribute for the corresponding radio button
-        if (lastSelectedSemester === 'even') {
-            document.getElementById('evenRadio').checked = true;
-        } else {
-            document.getElementById('oddRadio').checked = true;
-        }
+    // Set the checked attribute for the corresponding radio button
+    if (lastSelectedSemester === 'even') {
+        document.getElementById('evenRadio').checked = true;
+    } else {
+        document.getElementById('oddRadio').checked = true;
+    }
 
-        // Add event listener to update last selected option in localStorage
-        document.querySelectorAll('input[name="semester"]').forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                localStorage.setItem('lastSelectedSemester', this.value);
-            });
+    // Add event listener to update last selected option in localStorage
+    document.querySelectorAll('input[name="semester"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            localStorage.setItem('lastSelectedSemester', this.value);
         });
-    </script>
+    });
+</script>
 
     <?php
     if (isset($_COOKIE['whichsem'])) {
@@ -92,14 +92,14 @@ include("db_connection_close.php");
 
         <br>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Class</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -128,7 +128,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="10"  Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" oninput="processInput(this)" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -160,7 +160,7 @@ include("db_connection_close.php");
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                         <button type="submit" class="btn btn-primary">Create Class</button>
                     </div>
                     </form>
@@ -189,7 +189,7 @@ include("db_connection_close.php");
                     echo '<tr>';
                     $courseName = str_replace(['even', 'odd'], '', $classRow["COURSE"]);
                     echo '<td>' . $courseName . '</td>';
-                    echo '<td>
+                                        echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
                     <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
@@ -207,13 +207,13 @@ include("db_connection_close.php");
         <hr noshade>
 
         <!-- Edit Class Modal -->
-        <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editClassModalLabel">Edit Class</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -339,7 +339,7 @@ include("db_connection_close.php");
 
                             <!-- Modal Footer -->
                             <div class="modal-footer mt-5">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                                 <input class="btn btn-primary" type="submit" value="Save Changes">
                             </div>
                     </div>
@@ -356,14 +356,14 @@ include("db_connection_close.php");
             </button>
         </div>
         <br>
-        <div class="modal fade" id="softcoreModal" tabindex="-1" role="dialog" aria-labelledby="softcoreModalLabel" aria-hidden="true">
+        <div class="modal fade" id="softcoreModal" tabindex="-1" role="dialog" aria-labelledby="softcoreModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
                     <div class="modal-header ">
                         <h5 class=" modal-title " id="softcoreModalLabel">Add Softcores</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -415,7 +415,7 @@ include("db_connection_close.php");
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                         <button type="submit" class="btn btn-primary">Create Softcores</button>
                     </div>
                     </form>
@@ -461,14 +461,14 @@ include("db_connection_close.php");
             </button>
         </div>
         <br>
-        <div class="modal fade" id="seModal" tabindex="-1" role="dialog" aria-labelledby="seModalLabel" aria-hidden="true">
+        <div class="modal fade" id="seModal" tabindex="-1" role="dialog" aria-labelledby="seModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="seModalLabel">Add Skill Enhancement</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -521,7 +521,7 @@ include("db_connection_close.php");
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                         <button type="submit" class="btn btn-primary">Create Softcores</button>
                     </div>
                     </form>
@@ -1225,39 +1225,6 @@ include("db_connection_close.php");
                     alert('An error occurred while resetting softcore values.');
                 }
             });
-        }
-
-        function validateInput(input) {
-            var regex = /^[A-Za-z]+$/; // Regex to allow only letters without spaces
-
-            if (!regex.test(input.value)) {
-                // Check for special characters
-                var specialCharsRegex = /[^A-Za-z]/;
-                if (specialCharsRegex.test(input.value)) {
-                    // Display message under the input box
-                    var messageElement = document.createElement("div");
-                    messageElement.textContent = "Please enter only text without special characters.";
-                    messageElement.style.color = "red";
-                    input.parentNode.insertBefore(messageElement, input.nextSibling);
-                } else {
-                    // Display message under the input box
-                    var messageElement = document.createElement("div");
-                    messageElement.textContent = "Please enter only text without spaces.";
-                    messageElement.style.color = "red";
-                    input.parentNode.insertBefore(messageElement, input.nextSibling);
-                }
-                // Change input box style
-                input.style.border = "1px solid red";
-                return false;
-            } else {
-                // Remove any existing error message and reset input box style
-                var errorMessage = input.parentNode.querySelector("div");
-                if (errorMessage) {
-                    errorMessage.remove();
-                }
-                input.style.border = ""; // Reset to default style
-            }
-            return true;
         }
     </script>
     <!-- Include jQuery -->
