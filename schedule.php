@@ -17,7 +17,6 @@
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
 
-
             <label for="listcourse">Select Your Course for Scheduling </label>
 
             <select class="custom-select" name="listcourse" id="listcourse" onclick="hideselect()" onchange="hourCheck()">
@@ -572,21 +571,18 @@
             // });
             // const missingNumber = oldarr.filter(number => !newarr.includes(number));
             // console.log("The missing number from the old array is:", missingNumber[0]);
-
             //prompt when all courses are assigned
             var count = 0;
             for (let r = 0; r < len; r++) {
                 if (result[valuesc[r]] == 0) {
                     count++;
                 }
-
             }
             if (count < len) {
                 alertShown = false;
-
             }
             if (count == len && !alertShown) {
-                alert("All courses have been assigned required hours");
+                // alert("All courses have been assigned required hours");
                 alertShown = true; // Mark alert as shown
             }
 

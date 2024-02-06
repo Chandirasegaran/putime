@@ -54,23 +54,23 @@ include("db_connection_close.php");
     </div>
 
     <script>
-    // Get the last selected option from localStorage, default to "odd" if not set
-    var lastSelectedSemester = localStorage.getItem('lastSelectedSemester') || 'odd';
+        // Get the last selected option from localStorage, default to "odd" if not set
+        var lastSelectedSemester = localStorage.getItem('lastSelectedSemester') || 'odd';
 
-    // Set the checked attribute for the corresponding radio button
-    if (lastSelectedSemester === 'even') {
-        document.getElementById('evenRadio').checked = true;
-    } else {
-        document.getElementById('oddRadio').checked = true;
-    }
+        // Set the checked attribute for the corresponding radio button
+        if (lastSelectedSemester === 'even') {
+            document.getElementById('evenRadio').checked = true;
+        } else {
+            document.getElementById('oddRadio').checked = true;
+        }
 
-    // Add event listener to update last selected option in localStorage
-    document.querySelectorAll('input[name="semester"]').forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            localStorage.setItem('lastSelectedSemester', this.value);
+        // Add event listener to update last selected option in localStorage
+        document.querySelectorAll('input[name="semester"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                localStorage.setItem('lastSelectedSemester', this.value);
+            });
         });
-    });
-</script>
+    </script>
 
     <?php
     if (isset($_COOKIE['whichsem'])) {
@@ -120,7 +120,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="10"  Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -181,7 +181,7 @@ include("db_connection_close.php");
                     echo '<tr>';
                     $courseName = str_replace(['even', 'odd'], '', $classRow["COURSE"]);
                     echo '<td>' . $courseName . '</td>';
-                                        echo '<td>
+                    echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
                     <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
@@ -375,7 +375,8 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="10" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="10" Required > </td>
+
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -1217,6 +1218,39 @@ include("db_connection_close.php");
                     alert('An error occurred while resetting softcore values.');
                 }
             });
+        }
+
+        function validateInput(input) {
+            var regex = /^[A-Za-z]+$/; // Regex to allow only letters without spaces
+
+            if (!regex.test(input.value)) {
+                // Check for special characters
+                var specialCharsRegex = /[^A-Za-z]/;
+                if (specialCharsRegex.test(input.value)) {
+                    // Display message under the input box
+                    var messageElement = document.createElement("div");
+                    messageElement.textContent = "Please enter only text without special characters.";
+                    messageElement.style.color = "red";
+                    input.parentNode.insertBefore(messageElement, input.nextSibling);
+                } else {
+                    // Display message under the input box
+                    var messageElement = document.createElement("div");
+                    messageElement.textContent = "Please enter only text without spaces.";
+                    messageElement.style.color = "red";
+                    input.parentNode.insertBefore(messageElement, input.nextSibling);
+                }
+                // Change input box style
+                input.style.border = "1px solid red";
+                return false;
+            } else {
+                // Remove any existing error message and reset input box style
+                var errorMessage = input.parentNode.querySelector("div");
+                if (errorMessage) {
+                    errorMessage.remove();
+                }
+                input.style.border = ""; // Reset to default style
+            }
+            return true;
         }
     </script>
     <!-- Include jQuery -->
