@@ -399,6 +399,19 @@
                 }
             });
         });
+
+        function hideTable1() {
+        var hideCheckbox = document.getElementById("hideCheckbox");
+        var table = document.getElementById("hidetable");
+        
+        if (hideCheckbox.checked) {
+            table.style.cssText = ""; 
+          
+        } else {
+            table.style.display = "none";
+        }
+    }
+
     </script>
 
     <script>
