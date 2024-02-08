@@ -422,6 +422,19 @@ include("db_connection_close.php");
             </div>
         </div>
         <div>
+            <script>
+        function hideTable1(idname,idname1) {
+        var hideCheckbox = document.getElementById(idname);
+        var table = document.getElementById(idname1);
+        
+        if (hideCheckbox.checked) {
+            table.style.cssText = ""; 
+          
+        } else {
+            table.style.display = "none";
+        }
+    }
+            </script>
             <?php
             include 'db_connection.php';
             $sql = ("SELECT * FROM SOFTCORETB");
@@ -431,8 +444,10 @@ include("db_connection_close.php");
                 die("Error executing the query: " . $conn->error);
             }
             if ($SCResult->num_rows > 0) {
-                echo '<h2>Softcore Details</h2>';
-                echo '<table class="table">';
+                echo '<input type="checkbox" id="checkbox_sf" onchange="hideTable1(\'checkbox_sf\',\'table_sf\')">
+                <label for="checkbox_sf">SHOW SOFTCORE LIST</label>';
+                echo '<h2 >Softcore Details</h2>';
+                echo '<table class="table" id="table_sf" style="display:none">';
                 echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Action</th></tr></thead>';
                 echo '<tbody>';
                 while ($SCRow = $SCResult->fetch_assoc()) {
