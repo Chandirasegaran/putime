@@ -249,7 +249,7 @@ include 'db_connection.php';
             <script>
                 function staffmat(staffname) {
                     for (let i = 0; i < 5; i++) {
-                        for (let j = 0; j < 8; j++) {
+                        for (let j = 0; j <=8; j++) {
                             //document.getElementById(staffname+i+j)
                             let staffnamearr1 = []
                             let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
@@ -266,7 +266,13 @@ include 'db_connection.php';
                             var index = staffnamearr1.indexOf(staffname);
                             var index1 = staffnamearrsf1.indexOf(staffname);
                             if (index != -1 || index1 != -1) {
-                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[0].innerHTML;
+                                var labElements = document.getElementsByClassName("lab"+ i + j);
+                                var combinedString = "";
+
+                                for (var element of labElements) {
+                                    combinedString += element.innerHTML;
+                                }
+                                document.getElementById(staffname + i + j).innerText = combinedString;
                                 // console.log(staffnamearr1);
 
                                 // console.log(document.getElementsByClassName("lab" + i + j)[0]);
