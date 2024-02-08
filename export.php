@@ -248,7 +248,7 @@ include 'db_connection.php';
             ?>
             <script>
                 function staffmat(staffname) {
-                    for (let i = 0; i < 5; i++) {
+                    for (let i = 0; i <=5; i++) {
                         for (let j = 0; j <=8; j++) {
                             //document.getElementById(staffname+i+j)
                             let staffnamearr1 = []
