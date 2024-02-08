@@ -424,6 +424,7 @@ include("db_connection_close.php");
         <div>
             <script>
         function hideTable1(idname,idname1) {
+            // console.log(idname,idname1)
         var hideCheckbox = document.getElementById(idname);
         var table = document.getElementById(idname1);
         
@@ -552,8 +553,10 @@ include("db_connection_close.php");
                 die("Error executing the query: " . $conn->error);
             }
             if ($SCResult->num_rows > 0) {
+                echo '<input type="checkbox" id="checkbox_skill" onchange="hideTable1(\'checkbox_skill\',\'hidsel\')">
+                <label for="checkbox_skill">SHOW SOFTCORE LIST</label>';
                 echo '<h2>Skill Enhancement Details</h2>';
-                echo '<table class="table">';
+                echo '<table class="table" id="hidsel" style="display:none">';
                 echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Action</th></tr></thead>';
                 echo '<tbody>';
                 while ($SCRow = $SCResult->fetch_assoc()) {
