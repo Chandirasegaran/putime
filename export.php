@@ -266,13 +266,14 @@ include 'db_connection.php';
                             var index = staffnamearr1.indexOf(staffname);
                             var index1 = staffnamearrsf1.indexOf(staffname);
                             if (index != -1 || index1 != -1) {
-                                var labElements = document.getElementsByClassName("lab"+ i + j);
-                                var combinedString = "";
+                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[index].innerHTML;
+                                // var labElements = document.getElementsByClassName("lab"+ i + j);
+                                // var combinedString = "";
 
-                                for (var element of labElements) {
-                                    combinedString += element.innerHTML;
-                                }
-                                document.getElementById(staffname + i + j).innerText = combinedString;
+                                // for (var element of labElements) {
+                                //     combinedString += element.innerHTML;
+                                // }
+                                // document.getElementById(staffname + i + j).innerText = combinedString;
                                 // console.log(staffnamearr1);
 
                                 // console.log(document.getElementsByClassName("lab" + i + j)[0]);
