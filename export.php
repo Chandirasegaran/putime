@@ -651,9 +651,9 @@ include 'db_connection.php';
                     labvalue();
 
                     function labvalue() {
-                        for (let lab = 1; lab < 4; lab++) {
-                            for (let i = 1; i < 8; i++) {
-                                for (let j = 1; j < 5; j++) {
+                        for (let lab = 1; lab <=4; lab++) {
+                            for (let i = 1; i <=5; i++) {
+                                for (let j = 1; j <=8; j++) {
                                     var className = 'labcel' + i + j;
                                     var labcode = 'tablecel' + i + j;
                                     // Select elements with the constructed class name
