@@ -20,10 +20,16 @@ include("db_connection_close.php");
 </head>
 
 <body>
-
+    <script>
+        function processInput(inputField) {
+            var inputValue = inputField.value;
+            var cleanedInput = inputValue.replace(/[^a-zA-Z0-9_]/g, '_');
+            inputField.value = cleanedInput; // Update the input field value
+        }
+    </script>
     <?php include 'navbar.php' ?>
     <!-- Modal -->
-    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel" aria-hidden="true">
+    <div class="modal fade" id="semesterModal" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -46,13 +52,31 @@ include("db_connection_close.php");
 
                         <br>
 
-                        <button type="submit" class="btn btn-primary">Choose!</button>
+                        <button type="submit" class="btn btn-primary">Set</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+    // Get the last selected option from localStorage, default to "odd" if not set
+    var lastSelectedSemester = localStorage.getItem('lastSelectedSemester') || 'odd';
+
+    // Set the checked attribute for the corresponding radio button
+    if (lastSelectedSemester === 'even') {
+        document.getElementById('evenRadio').checked = true;
+    } else {
+        document.getElementById('oddRadio').checked = true;
+    }
+
+    // Add event listener to update last selected option in localStorage
+    document.querySelectorAll('input[name="semester"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            localStorage.setItem('lastSelectedSemester', this.value);
+        });
+    });
+</script>
 
     <?php
     if (isset($_COOKIE['whichsem'])) {
@@ -64,16 +88,17 @@ include("db_connection_close.php");
         <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
             ADD CLASS
         </button>
+
         <br>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add Class</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -102,7 +127,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" oninput="processInput(this)" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -134,7 +159,7 @@ include("db_connection_close.php");
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                         <button type="submit" class="btn btn-primary">Create Class</button>
                     </div>
                     </form>
@@ -161,8 +186,9 @@ include("db_connection_close.php");
                 echo '<tbody>';
                 while ($classRow = $classResult->fetch_assoc()) {
                     echo '<tr>';
-                    echo '<td>' . $classRow["COURSE"] . '</td>';
-                    echo '<td>
+                    $courseName = str_replace(['even', 'odd'], '', $classRow["COURSE"]);
+                    echo '<td>' . $courseName . '</td>';
+                                        echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
                     <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
@@ -180,13 +206,13 @@ include("db_connection_close.php");
         <hr noshade>
 
         <!-- Edit Class Modal -->
-        <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editClassModalLabel">Edit Class</h5>
-                        <button type="button" onclick="refreshpage()" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -238,6 +264,21 @@ include("db_connection_close.php");
 
                             $conn->close();
                             ?>
+
+                            <?php
+                            include 'db_connection.php';
+
+                            // Fetch subject names from the database table
+                            $softcoreNamesQuery = $conn->query("SELECT subjectName FROM softcoretb");
+                            $softcoreNames = array();
+
+                            while ($row = $softcoreNamesQuery->fetch_assoc()) {
+                                $softcoreNames[] = $row['subjectName'];
+                            }
+
+                            $conn->close();
+                            ?>
+
 
                             <div class="mt-4">
                                 <h5>Softcores</h5>
@@ -297,7 +338,7 @@ include("db_connection_close.php");
 
                             <!-- Modal Footer -->
                             <div class="modal-footer mt-5">
-                                <button type="button" class="btn btn-secondary" onclick="refreshpage()" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                                 <input class="btn btn-primary" type="submit" value="Save Changes">
                             </div>
                     </div>
@@ -314,14 +355,14 @@ include("db_connection_close.php");
             </button>
         </div>
         <br>
-        <div class="modal fade" id="softcoreModal" tabindex="-1" role="dialog" aria-labelledby="softcoreModalLabel" aria-hidden="true">
+        <div class="modal fade" id="softcoreModal" tabindex="-1" role="dialog" aria-labelledby="softcoreModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
                     <div class="modal-header ">
                         <h5 class=" modal-title " id="softcoreModalLabel">Add Softcores</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -341,7 +382,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="15" oninput="processInput(this)" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -373,7 +414,7 @@ include("db_connection_close.php");
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                         <button type="submit" class="btn btn-primary">Create Softcores</button>
                     </div>
                     </form>
@@ -381,6 +422,20 @@ include("db_connection_close.php");
             </div>
         </div>
         <div>
+            <script>
+        function hideTable1(idname,idname1) {
+            // console.log(idname,idname1)
+        var hideCheckbox = document.getElementById(idname);
+        var table = document.getElementById(idname1);
+        
+        if (hideCheckbox.checked) {
+            table.style.cssText = ""; 
+          
+        } else {
+            table.style.display = "none";
+        }
+    }
+            </script>
             <?php
             include 'db_connection.php';
             $sql = ("SELECT * FROM SOFTCORETB");
@@ -390,15 +445,17 @@ include("db_connection_close.php");
                 die("Error executing the query: " . $conn->error);
             }
             if ($SCResult->num_rows > 0) {
-                echo '<h2>Softcore Details</h2>';
-                echo '<table class="table">';
+                echo '<input type="checkbox" id="checkbox_sf" onchange="hideTable1(\'checkbox_sf\',\'table_sf\')">
+                <label for="checkbox_sf">SHOW SOFTCORE LIST</label>';
+                echo '<h2 >Softcore Details</h2>';
+                echo '<table class="table" id="table_sf" style="display:none">';
                 echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Action</th></tr></thead>';
                 echo '<tbody>';
                 while ($SCRow = $SCResult->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $SCRow["subjectCode"] . '</td>';
                     echo '<td>' . $SCRow["subjectName"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteScCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete class</button></td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteScCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete</button></td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -419,14 +476,14 @@ include("db_connection_close.php");
             </button>
         </div>
         <br>
-        <div class="modal fade" id="seModal" tabindex="-1" role="dialog" aria-labelledby="seModalLabel" aria-hidden="true">
+        <div class="modal fade" id="seModal" tabindex="-1" role="dialog" aria-labelledby="seModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="seModalLabel">Add Skill Enhancement</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -446,7 +503,7 @@ include("db_connection_close.php");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" oninput="processInput(this)" maxlength="15" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -479,7 +536,7 @@ include("db_connection_close.php");
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
                         <button type="submit" class="btn btn-primary">Create Softcores</button>
                     </div>
                     </form>
@@ -496,15 +553,17 @@ include("db_connection_close.php");
                 die("Error executing the query: " . $conn->error);
             }
             if ($SCResult->num_rows > 0) {
+                echo '<input type="checkbox" id="checkbox_skill" onchange="hideTable1(\'checkbox_skill\',\'hidsel\')">
+                <label for="checkbox_skill">SHOW SOFTCORE LIST</label>';
                 echo '<h2>Skill Enhancement Details</h2>';
-                echo '<table class="table">';
+                echo '<table class="table" id="hidsel" style="display:none">';
                 echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Action</th></tr></thead>';
                 echo '<tbody>';
                 while ($SCRow = $SCResult->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $SCRow["subjectCode"] . '</td>';
                     echo '<td>' . $SCRow["subjectName"] . '</td>';
-                    echo '<td><button class="btn btn-danger" onclick="deleteSeCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete class</button></td>';
+                    echo '<td><button class="btn btn-danger" onclick="deleteSeCourse(' . "'" . $SCRow["subjectName"] . "'" . ')">Delete</button></td>';
                     echo '</tr>';
                 }
                 echo '</tbody></table>';
@@ -527,7 +586,7 @@ include("db_connection_close.php");
         // Function to add a new row to the table
         function addRowhc() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + hoursRequiredcount + '" Required></td>' +
                 '<td>' +
@@ -548,7 +607,7 @@ include("db_connection_close.php");
                 '</div>' +
                 '</td>' +
 
-                '<td><input type="text" class="form-control" value="hc" name="type' + subname_count + '" ></td>' +
+                // '<td><input type="text" class="form-control" value="hc" name="type' + subname_count + '" ></td>' +
 
 
                 '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
@@ -571,7 +630,7 @@ include("db_connection_close.php");
         // Function to add a new row to the table
         function addRowsc() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + scsubname_count + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + schoursRequiredcount + '" Required></td>' +
                 '<td>' +
@@ -612,7 +671,7 @@ include("db_connection_close.php");
         // Function to add a new row to the table
         function addRowse() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + sesubname_count + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + sehoursRequiredcount + '" Required></td>' +
                 '<td>' +
@@ -704,7 +763,7 @@ include("db_connection_close.php");
         function editCourse(courseName) {
             console.log(courseName)
             // Use AJAX to fetch course details
-            $.ajax({
+            jQuery.ajax({
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
@@ -724,7 +783,7 @@ include("db_connection_close.php");
                             let a = subject.type;
                             if (a == ' hc' || a == 'hc') {
                                 var row = '<tr>' +
-                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '" oninput="processInput(this)"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
                                     '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
                                     '<td>' +
@@ -767,7 +826,7 @@ include("db_connection_close.php");
 
 
             // Softcore
-            $.ajax({
+            jQuery.ajax({
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
@@ -787,7 +846,7 @@ include("db_connection_close.php");
                             let a = subject.type;
                             if (a == ' sc' || a == 'sc') {
                                 var row = '<tr>' +
-                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '" oninput="processInput(this)"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
                                     '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
                                     '<td>' +
@@ -829,7 +888,7 @@ include("db_connection_close.php");
             });
 
             // Skill Enhancement
-            $.ajax({
+            jQuery.ajax({
                 url: 'get_course_details.php',
                 type: 'POST',
                 dataType: 'json',
@@ -849,7 +908,7 @@ include("db_connection_close.php");
                             let a = subject.type;
                             if (a == ' se' || a == 'se') {
                                 var row = '<tr>' +
-                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '"></td>' +
+                                    '<td><input name="subjectCode' + editcount + '" type="text" class="form-control" value="' + subject.code + '" oninput="processInput(this)"></td>' +
                                     '<td><input name="subjectName' + editcount + '" type="text" class="form-control" value="' + subject.name + '"></td>' +
                                     '<td><input name="hoursRequired' + editcount + '" type="number" class="form-control" value="' + subject.hours + '"></td>' +
                                     '<td>' +
@@ -897,7 +956,7 @@ include("db_connection_close.php");
         function addSubjectRow() {
             // Function to add a new row for a subject in the edit modal
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + editcount + '" maxlength="8" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + editcount + '" maxlength="15" oninput="processInput(this)" Required></td>' +
                 '<td><input type="text" class="form-control" name="subjectName' + editcount + '" maxlength="50" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" Required></td>' +
                 '<td>' +
@@ -929,17 +988,30 @@ include("db_connection_close.php");
 
         function addSoftcoreRow() {
             // Function to add a new row for a subject in the edit modal
-            var newRow = '<tr>' +
+            var newRow =
+                '<tr>' +
                 '<td><input list="softcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchScSubjectDetails(this)" required>' +
                 '<datalist id="softcoreCodes">';
+
+
 
             // Add options for each softcore code
             <?php foreach ($softcoreCodes as $code) { ?>
                 newRow += '<option value="<?= $code ?>">';
             <?php } ?>
-
             newRow += '</datalist></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + editcount + '" required></td>' +
+
+
+
+                '<td><input list="softcoreNames" class="form-control" name="subjectName' + editcount + '" onchange="fetchScSubjectDetails1(this)" required>' +
+                '<datalist id="softcoreNames">';
+
+            <?php foreach ($softcoreNames as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+            newRow += '</datalist></td>' +
+
+
                 '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
@@ -966,10 +1038,46 @@ include("db_connection_close.php");
             editcount++;
         }
 
+
+        
+        function fetchScSubjectDetails1(input) {
+            var subjectName = input.value;
+            var row = input.closest('tr'); // Getting the parent <tr> instead of <td>
+            console.log("fa" + row);
+            // Make an AJAX request to fetch subject details
+            jQuery.ajax({
+                url: 'get_sc_details_name_edit.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'subjectName': subjectName
+                },
+                success: function(response) {
+                    if (response.error) {
+                        console.error(response.error);
+                        return;
+                    }
+                    console.log(response);
+                    // Update the corresponding fields in the row
+                    row.querySelector('[name^="subjectCode"]').value = response.subjectCode;
+                    row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+                    // Update radio button based on the lab value
+                    row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+
+                    row.querySelector('[name^="type"]').value = "sc";
+                },
+                error: function(xhr, status, error) {
+                    console.error('An error occurred while fetching subject details by name.');
+                }
+            });
+        }
+
+
         function fetchScSubjectDetails(input) {
             // console.log(input.value );
             var subjectCode = input.value;
             var row = input.closest('tr');
+            console.log("fB" + row);
 
             // Make an AJAX request to fetch subject details
             jQuery.ajax({
@@ -1000,19 +1108,70 @@ include("db_connection_close.php");
         }
 
 
+        // function addSkillRow() {
+        //     // Function to add a new row for a subject in the edit modal
+        //     var newRow = '<tr>' +
+        //         '<td><input list="seCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchseSubjectDetails(this)" required>' +
+        //         '<datalist id="seCodes">';
+
+        //     // Add options for each softcore code
+        //     php foreach ($seCodes as $code) { ?>
+        //         newRow += '<option value="= $code ?>">';
+        //     php } ?>
+
+        //     newRow += '</datalist></td>' +
+        //         '<td><input type="text" class="form-control" name="subjectName' + editcount + '" required></td>' +
+        //         '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
+        //         '<td>' +
+        //         '<div class="form-check form-check-inline">' +
+        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
+        //         '</div>' +
+        //         '<div class="form-check form-check-inline">' +
+        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1"> 1' +
+        //         '</div>' +
+        //         '<div class="form-check form-check-inline">' +
+        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
+        //         '</div>' +
+        //         '<div class="form-check form-check-inline">' +
+        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3"> 3' +
+        //         '</div>' +
+        //         '<div class="form-check form-check-inline">' +
+        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4"> 4' +
+        //         '</div>' +
+        //         '</td>' +
+        //         '<td><input type="text" class="form-control" value="se" name="type' + editcount + '" ></td>' +
+
+        //         '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+        //         '</tr>';
+        //     document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
+        //     editcount++;
+        // }
         function addSkillRow() {
             // Function to add a new row for a subject in the edit modal
-            var newRow = '<tr>' +
-                '<td><input list="seCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchseSubjectDetails(this)" required>' +
-                '<datalist id="seCodes">';
+            var newRow =
+                '<tr>' +
+                '<td><input list="softcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchseSubjectDetails(this)" required>' +
+                '<datalist id="softcoreCodes">';
+
+
 
             // Add options for each softcore code
-            <?php foreach ($seCodes as $code) { ?>
+            <?php foreach ($softcoreCodes as $code) { ?>
                 newRow += '<option value="<?= $code ?>">';
             <?php } ?>
-
             newRow += '</datalist></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + editcount + '" required></td>' +
+
+
+
+                '<td><input list="softcoreNames" class="form-control" name="subjectName' + editcount + '" onchange="fetchScSubjectDetails1(this)" required>' +
+                '<datalist id="softcoreNames">';
+
+            <?php foreach ($softcoreNames as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+            newRow += '</datalist></td>' +
+
+
                 '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
@@ -1031,13 +1190,47 @@ include("db_connection_close.php");
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4"> 4' +
                 '</div>' +
                 '</td>' +
-                '<td><input type="text" class="form-control" value="se" name="type' + editcount + '" ></td>' +
+                '<td><input type="text" class="form-control" value="sc" name="type' + editcount + '" ></td>' +
 
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
             editcount++;
         }
+
+
+        // function fetchseSubjectDetails1(input) {
+        //     console.log(input.value);
+        //     var subjectCode = input.value;
+        //     var row = input.closest('tr');
+
+        //     // Make an AJAX request to fetch subject details
+        //     jQuery.ajax({
+        //         url: 'get_se_details_edit.php',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         data: {
+        //             'subjectCode': subjectCode
+        //         },
+        //         success: function(response) {
+        //             if (response.error) {
+        //                 console.error(response.error);
+        //                 return;
+        //             }
+
+        //             // Update the corresponding fields in the row
+        //             row.querySelector('[name^="subjectName"]').value = response.subjectName;
+        //             row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+        //             // Update radio button based on the lab value
+        //             row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+        //             row.querySelector('[name^="type"]').value = "se";
+
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error('An error occurred while fetching subject details.');
+        //         }
+        //     });
+        // }
 
         function fetchseSubjectDetails(input) {
             console.log(input.value);
@@ -1065,6 +1258,8 @@ include("db_connection_close.php");
                     row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
                     row.querySelector('[name^="type"]').value = "se";
 
+                    
+
                 },
                 error: function(xhr, status, error) {
                     console.error('An error occurred while fetching subject details.');
@@ -1084,7 +1279,7 @@ include("db_connection_close.php");
 
         function resetScCourse(courseName) {
             // Use AJAX to reset softcore values
-            $.ajax({
+            jQuery.ajax({
                 url: 'reset_softcore.php',
                 type: 'POST',
                 dataType: 'json',

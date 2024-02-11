@@ -87,13 +87,15 @@ if ($conn->query($sqlInsertData) !== TRUE) {
 // Subject Table
 
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . $batch . '_Subjects (
-    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectCode VARCHAR(15) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     hoursRequiredDup INT,
     lab VARCHAR(10),
     staffName VARCHAR(255),
+    labStaffName VARCHAR(255),
     stype VARCHAR(10)
+
 )';
 
 
@@ -166,12 +168,13 @@ if ($bat == true) {
     // Subject Table
 
     $sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . $batch . '_Subjects (
-    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectCode VARCHAR(15) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     hoursRequiredDup INT,
     lab VARCHAR(10),
     staffName VARCHAR(255),
+    labStaffName VARCHAR(255),
     stype VARCHAR(10)
 )';
 
@@ -199,4 +202,3 @@ if ($bat == true) {
 
 include 'db_connection_close.php';
 header("Location: index.php");
-?>

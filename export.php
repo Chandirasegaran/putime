@@ -35,7 +35,7 @@ include 'db_connection.php';
         // Create the 'merged_table' with a serial number field
         $sqlCreateTable = "CREATE TABLE $mergedTable (
                 serialNo INT AUTO_INCREMENT PRIMARY KEY,
-                facultyName VARCHAR(255),
+                facultyName VARCHAR(255),   
                 stype VARCHAR(255),
                 theory VARCHAR(255)
             )";
@@ -55,6 +55,11 @@ include 'db_connection.php';
                                     SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
+
+                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
+                                    SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
+                                    FROM $subjectTableWithSuffix";
+                $conn->query($sqlMergeData);
             }
         }
         ?>
@@ -69,7 +74,7 @@ include 'db_connection.php';
                     <th class="col-1">S.no</th> <!-- Adjust column width here -->
                     <th class="col-2">Faculty Name</th>
                     <th class="col-2">Hardcore/Softcore</th> <!-- Adjust column width here -->
-                    <th class="col-4">Theory</th>
+                    <th class="col-4">Subject</th>
                 </tr>
             </thead>
             <tbody>
@@ -146,7 +151,7 @@ include 'db_connection.php';
                     echo "</tbody></table> <br>";
 
                     // Fetch and display data for each table
-                    $sqlGetData = "SELECT subjectCode, subjectName, lab, stype, staffName FROM $tableName" . "_subjects";
+                    $sqlGetData = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $tableName" . "_subjects";
                     $resultData = $conn->query($sqlGetData);
 
                     if ($resultData && $resultData->num_rows > 0) {
@@ -154,7 +159,7 @@ include 'db_connection.php';
 
                         // Fetching column names for headers
                         // $columns = ["Subject Code", "Subject Name", "Lab", "Type", "Staff Name"];
-                        $columns = ["CODE ", "COURSE TITLE", "LAB", "H/S", "FACULTY"];
+                        $columns = ["CODE ", "COURSE TITLE", "LAB", "H/S", "FACULTY", "FACULTY2"];
                         foreach ($columns as $column) {
                             echo "<th>" . $column . "</th>";
                         }
@@ -243,18 +248,39 @@ include 'db_connection.php';
             ?>
             <script>
                 function staffmat(staffname) {
-                    for (let i = 0; i < 5; i++) {
-                        for (let j = 0; j < 8; j++) {
+                    for (let i = 0; i <=5; i++) {
+                        for (let j = 0; j <=8; j++) {
                             //document.getElementById(staffname+i+j)
                             let staffnamearr1 = []
                             let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
+                            let staffnamearrsf1 = []
+                            let staffnamearrsf2 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
+
                             staffnamearr2.forEach(function(element) {
                                 staffnamearr1.push(element.innerText);
                             });
-                            var index = staffnamearr1.indexOf(staffname);
-                            if (index != -1) {
-                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[0].innerHTML;
-                                console.log(document.getElementsByClassName("lab" + i + j)[0]);
+                            staffnamearrsf2.forEach(function(element) {
+                                staffnamearrsf1.push(element.innerText);
+                            });
+                            // console.log(staffnamearrsf1);
+                            var indexstaff = staffnamearr1.indexOf(staffname);
+                            var index1 = staffnamearrsf1.indexOf(staffname);
+                            if (indexstaff != -1) {
+                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[indexstaff].innerHTML;
+                                // var labElements = document.getElementsByClassName("lab"+ i + j);
+                                // var combinedString = "";
+
+                                // for (var element of labElements) {
+                                //     combinedString += element.innerHTML;
+                                // }
+                                // document.getElementById(staffname + i + j).innerText = combinedString;
+                                // console.log(staffnamearr1);
+
+                                // console.log(document.getElementsByClassName("lab" + i + j)[0]);
+                            }
+                            else if(index1 != -1)
+                            {
+                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[index1].innerHTML;
                             }
                         }
                     }
@@ -314,6 +340,21 @@ include 'db_connection.php';
                                         echo '';
                                     }
                                     echo '</div>';
+
+                                    $labst2 = "SELECT labStaffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                                    $labResultst2 = $conn->query($labst2);
+                                    echo '<div class="labStaffName' . $i . $j . '">';
+                                    if ($labResultst2->num_rows > 0) {
+                                        while ($labRowst2 = $labResultst2->fetch_assoc()) {
+                                            if ($labRowst2['labStaffName'] != "") {
+                                                echo $labRowst2['labStaffName'];
+                                            }
+                                        }
+                                    } else {
+                                        echo '';
+                                    }
+                                    echo '</div>';
+
                                     $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
                                     $labResult = $conn->query($labQuery);
                                     echo '<div class="lab' . $i . $j . '">';
@@ -408,16 +449,17 @@ include 'db_connection.php';
                     $staffName = $staffRow['name'];
                     // echo "<h4>Staff: $staffName</h4>";
                     echo "<br>";
+                    $currrrsem= $_COOKIE['whichsem'];
 
                     // Initialize an array to store the staff timetable
                     $staffTimetable = array();
 
                     // Iterate over all tables with the suffix "_subjects" to find staff's courses
-                    $sqlGetCourses = "SHOW TABLES LIKE '%_subjects'";
+                    $sqlGetCourses = "SHOW TABLES LIKE '".$currrrsem."%_subjects'";
                     $resultCourses = $conn->query($sqlGetCourses);
 
                     while ($tableRow = $resultCourses->fetch_assoc()) {
-                        $subjectTableName = $tableRow['Tables_in_putimetbdb (%_subjects)'];
+                        $subjectTableName = $tableRow['Tables_in_putimetbdb ('.$currrrsem.'%_subjects)'];
 
                         // Fetch the staff's courses from the subject table using a partial match
                         $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
@@ -427,7 +469,15 @@ include 'db_connection.php';
                         while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
                             $staffTimetable[] = $timetableRow;
                         }
+                        $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE labStaffName LIKE '%$staffName%'";
+                        $resultStaffCourses = $conn->query($sqlGetStaffCourses);
+
+                        // Merge the timetable data
+                        while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
+                            $staffTimetable[] = $timetableRow;
+                        }
                     }
+
 
                     // Display the staff timetable in a table
                     if (!empty($staffTimetable)) {
@@ -464,7 +514,177 @@ include 'db_connection.php';
 
 
             ?>
+            <div class="LabTimetable">
+                <!-- Add empty timetable templates for 4 labs -->
+                <!-- Add empty timetable templates for 4 labs -->
+                <?php
+                $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
+                // echo '<H1 class="mt-5">Final Schedule</H1>
+                // <h2>Class Schedule</h2>';
+                if ($scheduleResult->num_rows > 0) {
+                    while ($classRow = $scheduleResult->fetch_assoc()) {
 
+                        $discourse = $classRow["COURSE"];
+
+                        // Fetch the data for the selected course
+                        $sql = "SELECT * FROM `$discourse`";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            // Display the fetched data in a table format without dropdowns
+
+                            // echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
+
+
+                            echo '<table class="table table-bordered " style="display:none">';
+                            $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
+                            echo '<thead>';
+                            echo '<tr>';
+                            foreach ($timeSlots as $timeSlot) {
+                                echo '<th>' . $timeSlot . '</th>';
+                            }
+                            echo '</tr>';
+                            echo '</thead>';
+                            echo '<tbody>';
+
+                            $rowNumber = 1; // Counter for row numbers
+                            $i = 0;
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<tr>';
+                                $i++;
+                                echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
+                                echo '<td>' . $row["DAY"] . '</td>'; // DAYS
+
+                                // Loop through the time slots and display values
+                                $j = 1;
+                                foreach ($row as $columnName => $columnValue) {
+                                    if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
+                                        // Fetch staff name from $discourse."_subjects" table using $columnValue
+                                        $staff_Query = "SELECT subjectCode FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                                        $staff_Result = $conn->query($staff_Query);
+                                        echo '<td ><div class="tablecel' . $i . $j . '">';
+                                        if ($staff_Result->num_rows > 0) {
+                                            while ($staff_Row = $staff_Result->fetch_assoc()) {
+                                                echo $staff_Row['subjectCode'];
+                                            }
+                                        } else {
+                                            echo '';
+                                        }
+                                        echo '</div>';
+
+                                        $labst2 = "SELECT labStaffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                                        $labResultst2 = $conn->query($labst2);
+                                        echo '<div class="labStaffName' . $i . $j . '">';
+                                        if ($labResultst2->num_rows > 0) {
+                                            while ($labRowst2 = $labResultst2->fetch_assoc()) {
+                                                if ($labRowst2['labStaffName'] != "") {
+                                                    echo $labRowst2['labStaffName'];
+                                                }
+                                            }
+                                        } else {
+                                            echo '';
+                                        }
+                                        echo '</div>';
+
+                                        $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
+                                        $labResult = $conn->query($labQuery);
+                                        echo '<div class="labcel' . $i . $j . '" >';
+                                        if ($labResult->num_rows > 0) {
+                                            while ($labRow = $labResult->fetch_assoc()) {
+                                                echo $labRow['lab'];
+                                            }
+                                        } else {
+                                            echo '';
+                                        }
+                                        $j++;
+                                        echo '</div></td>';
+                                    }
+                                }
+
+                                echo '</tr>';
+                            }
+
+                            echo '</tbody>';
+                            echo '</table>';
+                            $i = 0;
+                        } else {
+                            echo 'No data found for the selected course.';
+                        }
+                    }
+                }
+                for ($lab = 1; $lab <= 4; $lab++) {
+                    echo "<h4>Lab $lab Timetable</h4>";
+                    echo "<table class='table table-bordered'>";
+                    echo "<thead><tr><th>SL.NO.</th><th>DAYS</th>";
+
+                    // Generate column headers for time slots
+                    $timeSlots = ["9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
+                    foreach ($timeSlots as $slot) {
+                        echo "<th>$slot</th>";
+                    }
+
+                    echo "</tr></thead>";
+                    echo "<tbody>";
+
+                    // Generate rows for days (adjust the number of days as needed)
+                    $days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
+                    foreach ($days as $index => $day) {
+                        echo "<tr>";
+                        echo "<td>" . ($index + 1) . "</td>"; // SL.NO.
+                        echo "<td>$day</td>";
+
+                        // Generate empty cells for each day and time slot
+                        foreach ($timeSlots as $slotIndex => $slot) {
+                            // Create unique id for each cell
+                            $cellId = "lab" . $lab . ($index + 1) . ($slotIndex + 1);
+                            echo "<td id='$cellId'>";
+                            echo "</td>";
+                        }
+
+                        echo "</tr>";
+                    }
+
+                    echo "</tbody>";
+                    echo "</table>";
+                }
+                ?>
+                <script>
+                    labvalue();
+
+                    function labvalue() {
+                        for (let lab = 1; lab <=4; lab++) {
+                            for (let i = 1; i <=5; i++) {
+                                for (let j = 1; j <=8; j++) {
+                                    var className = 'labcel' + i + j;
+                                    var labcode = 'tablecel' + i + j;
+                                    // Select elements with the constructed class name
+                                    var labElements = document.querySelectorAll('.' + className);
+                                    var labElements1 = document.querySelectorAll('.' + labcode);
+
+                                    // Initialize an empty array to store the innerText values
+                                    var labValues = [];
+                                    var labValues1 = [];
+
+                                    // Loop through the NodeList and push innerText values into the array
+                                    labElements.forEach(function(element) {
+                                        labValues.push(element.innerText);
+                                    });
+
+                                    labElements1.forEach(function(element) {
+                                        labValues1.push(element.innerText);
+                                    });
+
+                                    // console.log(labValues); 
+                                    if (labValues.includes(lab.toString())) {
+                                        var index = labValues.indexOf(lab.toString());
+                                        document.getElementById('lab' + lab.toString() + i.toString() + j.toString()).innerText = labValues1[index];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                </script>
+            </div>
         </div>
 
         <div class="d-flex justify-content-center">

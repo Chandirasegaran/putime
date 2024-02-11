@@ -13,10 +13,9 @@
 
 <body>
     <?php include 'navbar.php' ?>
-    <div class="container mt-5">
+    <div class="container-fluid mt-5">
         <H1>Assign Schedule</H1>
         <div id="assign-schedule">
-
 
             <label for="listcourse">Select Your Course for Scheduling </label>
 
@@ -47,7 +46,8 @@
                 $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
-                        echo '<option value="' . $classRow["COURSE"] . '">' . $classRow["COURSE"] . '</option>';
+                        $trimmedCourseName = preg_replace('/^(even|odd)\s*/', '', $classRow["COURSE"]);
+                        echo '<option value="' . $classRow["COURSE"] . '">' . $trimmedCourseName . '</option>';
                     }
                 } else {
                     echo 'No class records found.';
@@ -160,8 +160,17 @@
                         name: document.getElementById('s' + i + '2').innerText,
                         staff: document.getElementById('s' + i + '3').value,
                         hours: document.getElementById('s' + i + '4').innerText,
-                        lab: document.getElementById('s' + i + '5').innerText
                     };
+
+                    // Check if the element 'document.getElementById('st' + i + '3')' exists
+                    if (document.getElementById('st' + i + '3')) {
+                        window[rowName].staff2 = document.getElementById('st' + i + '3').value;
+                    } else {
+                        window[rowName].staff2 = null;
+                    }
+
+                    window[rowName].lab = document.getElementById('s' + i + '5').innerText;
+
                     // Accessing class variables
                     // console.log(window[rowName].name);  // s11 name
                     // console.log(window[rowName].staff); // s11 staff
@@ -179,11 +188,21 @@
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
                             let element = document.getElementById(i.toString() + j.toString() + k.toString());
                             let clsvar = null;
-
+                            let clsvarsf = null;
                             if (element && element.value !== null) {
                                 let staffValue = element.value + ".staff";
+
                                 if (staffValue !== ".staff") {
                                     clsvar = staffValue;
+                                }
+                            }
+
+
+                            if (element && element.value !== null) {
+                                let staffValuesf = element.value + ".staff2";
+
+                                if (staffValuesf !== ".staff2") {
+                                    clsvarsf = staffValuesf;
                                 }
                             }
 
@@ -194,12 +213,23 @@
                             if (element1 !== null && element1.value !== null) {
                                 labvar = element1.value + ".lab";
                             }
+                            // staff2
+                            let elementst = document.getElementById(i.toString() + j.toString() + k.toString());
+                            let stvar = null;
+
+                            if (elementst !== null && elementst.value !== null) {
+                                stvar = elementst.value + ".staff2";
+                                // console.log(eval(stvar));
+                            }
+
 
                             // Now you can use labvar, which will either be the value followed by ".lab" or null if the element or its value is null.
                             // console.log(eval(clsvar));
 
                             let elements1 = document.querySelectorAll('.table' + i.toString() + j.toString());
                             let elements2 = document.querySelectorAll('.lab' + i.toString() + j.toString());
+                            let elements3 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
+
                             // Create an array to store the values
 
                             let hcheckarray = [];
@@ -231,7 +261,11 @@
                             }
 
                             let valuesArray = [];
+                            let valuesArraysf = [];
+
                             let labArray = [];
+
+
                             // Iterate over the NodeList and push values into the array
                             elements1.forEach(function(elementpara) {
                                 valuesArray.push(elementpara.innerText);
@@ -239,11 +273,23 @@
                             elements2.forEach(function(elementpara) {
                                 labArray.push(elementpara.innerText);
                             });
+                            elements3.forEach(function(elementpara) {
+                                valuesArraysf.push(elementpara.innerText);
+                            });
                             if (valuesArray.includes(eval(clsvar))) {
 
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                                 // console.log(eval(clsvar),valuesArray);
+
+
+                                //currently working feature
+                            } else if (valuesArraysf.includes(eval(clsvar))) {
+                                // console.log(valuesArray);
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                            } else if (eval(stvar) != null && valuesArray.includes(eval(stvar))) {
+                                // console.log(valuesArray);
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
@@ -353,6 +399,19 @@
                 }
             });
         });
+
+        function hideTable1() {
+        var hideCheckbox = document.getElementById("hideCheckbox");
+        var table = document.getElementById("hidetable");
+        
+        if (hideCheckbox.checked) {
+            table.style.cssText = ""; 
+          
+        } else {
+            table.style.display = "none";
+        }
+    }
+
     </script>
 
     <script>
@@ -398,18 +457,16 @@
         // }
 
         function hourCheck() {
-
             let values = [];
             let valuesc = [];
             var currentCourseElement = document.getElementById("currentcourse");
             var currentCourseText = null;
-
             if (currentCourseElement !== null) {
                 currentCourseText = currentCourseElement.innerText;
                 // Now you can use currentCourseText safely.
             } else {
                 // Handle the case when the element is not found.
-                console.error("Element with ID 'currentcourse' not found.");
+                // console.error("Element with ID 'currentcourse' not found.");
             }
             // console.log(currentCourseText);
             var counter = 1; // Start counter from 12
@@ -452,8 +509,9 @@
                 for (let j = 1; j < 9; j++) {
                     let checkId = "select" + i.toString() + j.toString();
                     var element = document.getElementById(checkId);
-                    arr1.push(element.value);
-
+                    if (element) {
+                        arr1.push(element.value);
+                    }
                     arr1 = removeEmptyValues(arr1);
 
                     // You can use the id to do whatever you need here
@@ -481,10 +539,6 @@
                     }
                 }
             }
-
-
-
-
             for (var k = 0; k < arr1.length; k++) {
                 if (result[arr1[k]] > 0) {
                     result[arr1[k]] = ((result[arr1[k]] - 1).toString());
@@ -513,9 +567,7 @@
                         }
                     }
                 }
-
             }
-
             // var newarrN = Array.from(trackIndex.slice(-1));
             // var oldarrN = Array.from(trackIndex.slice(-2, -1));
             // var newarr = [];
@@ -532,26 +584,27 @@
             // });
             // const missingNumber = oldarr.filter(number => !newarr.includes(number));
             // console.log("The missing number from the old array is:", missingNumber[0]);
-
             //prompt when all courses are assigned
             var count = 0;
             for (let r = 0; r < len; r++) {
                 if (result[valuesc[r]] == 0) {
                     count++;
                 }
-
             }
-            // let set;
-            // if (count == len && set != 1) {
+            if (count < len) {
+                alertShown = false;
+            }
+            if (count == len && !alertShown) {
+                alert("All courses have been assigned required hours");
+                alertShown = true; // Mark alert as shown
+            }
 
-            //     alert("All course have been assigned required hours");
-            //     set = 1;
-            // }
             // console.log("count" + count + "" + len);
-            console.log(result);
-
+            // console.log(result);
 
         }
+        var alertShown = false;
+
         var trackIndex = [];
 
         function findIndicesOfElements(array, elements) {
@@ -584,5 +637,4 @@
     </script>
 
 </body>
-
 </html>
