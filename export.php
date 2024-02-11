@@ -449,16 +449,17 @@ include 'db_connection.php';
                     $staffName = $staffRow['name'];
                     // echo "<h4>Staff: $staffName</h4>";
                     echo "<br>";
+                    $currrrsem= $_COOKIE['whichsem'];
 
                     // Initialize an array to store the staff timetable
                     $staffTimetable = array();
 
                     // Iterate over all tables with the suffix "_subjects" to find staff's courses
-                    $sqlGetCourses = "SHOW TABLES LIKE '%_subjects'";
+                    $sqlGetCourses = "SHOW TABLES LIKE '".$currrrsem."%_subjects'";
                     $resultCourses = $conn->query($sqlGetCourses);
 
                     while ($tableRow = $resultCourses->fetch_assoc()) {
-                        $subjectTableName = $tableRow['Tables_in_putimetbdb (%_subjects)'];
+                        $subjectTableName = $tableRow['Tables_in_putimetbdb ('.$currrrsem.'%_subjects)'];
 
                         // Fetch the staff's courses from the subject table using a partial match
                         $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
