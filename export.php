@@ -263,10 +263,10 @@ include 'db_connection.php';
                                 staffnamearrsf1.push(element.innerText);
                             });
                             // console.log(staffnamearrsf1);
-                            var index = staffnamearr1.indexOf(staffname);
+                            var indexstaff = staffnamearr1.indexOf(staffname);
                             var index1 = staffnamearrsf1.indexOf(staffname);
-                            if (index != -1 || index1 != -1) {
-                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[index].innerHTML;
+                            if (indexstaff != -1) {
+                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[indexstaff].innerHTML;
                                 // var labElements = document.getElementsByClassName("lab"+ i + j);
                                 // var combinedString = "";
 
@@ -277,6 +277,10 @@ include 'db_connection.php';
                                 // console.log(staffnamearr1);
 
                                 // console.log(document.getElementsByClassName("lab" + i + j)[0]);
+                            }
+                            else if(index1 != -1)
+                            {
+                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[index1].innerHTML;
                             }
                         }
                     }
