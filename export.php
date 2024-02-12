@@ -37,7 +37,8 @@ include 'db_connection.php';
                 serialNo INT AUTO_INCREMENT PRIMARY KEY,
                 facultyName VARCHAR(255),   
                 stype VARCHAR(255),
-                theory VARCHAR(255)
+                theory VARCHAR(255),
+                lab VARCHAR(10)
             )";
         $conn->query($sqlCreateTable);
 
@@ -51,13 +52,13 @@ include 'db_connection.php';
                 $coursenamewithtrim = str_replace(['odd', 'even', '_subjects'], '', trim($subjectTableWithSuffix));
 
                 // Merge data from individual subject tables into 'merged_table'
-                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
-                                    SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
+                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory,lab)
+                                    SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
 
                 $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
-                                    SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
+                                    SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
             }
@@ -646,6 +647,36 @@ include 'db_connection.php';
 
                     echo "</tbody>";
                     echo "</table>";
+                    echo "</table>";
+
+                    // Display another table for records from merged_table
+                    // echo "<h4>Records for Lab $lab</h4>";
+                    echo "<table class='table table-bordered'>";
+                    echo "<thead><tr><th>Subject Code</th><th>Faculty Name</th><th>Stype</th></tr></thead>";
+                    echo "<tbody>";
+                
+                    // Assuming you have a database connection $conn
+                    $query = "SELECT * FROM merged_table WHERE lab = $lab";
+                    $result = $conn->query($query);
+                
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['theory'] . "</td>";
+                            echo "<td>" . $row['facultyName'] . "</td>";
+                            echo "<td>" . strtoupper($row['stype']) . "</td>";
+                            // echo "<td>" . $row['lab'] . "</td>";
+                            // Add more columns as needed
+                            echo "</tr>";
+                        }
+                
+                        $result->free_result();
+                    } else {
+                        echo "Error in query: " . $conn->error;
+                    }
+                
+                    echo "</tbody>";
+                    echo "</table><br><hr><br>";
                 }
                 ?>
                 <script>
