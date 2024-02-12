@@ -464,14 +464,14 @@ include 'move-to-top.php';
                         $subjectTableName = $tableRow['Tables_in_putimetbdb ('.$currrrsem.'%_subjects)'];
 
                         // Fetch the staff's courses from the subject table using a partial match
-                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
+                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE staffName LIKE '$staffName'";
                         $resultStaffCourses = $conn->query($sqlGetStaffCourses);
 
                         // Merge the timetable data
                         while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
                             $staffTimetable[] = $timetableRow;
                         }
-                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE labStaffName LIKE '%$staffName%'";
+                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE labStaffName LIKE '$staffName'";
                         $resultStaffCourses = $conn->query($sqlGetStaffCourses);
 
                         // Merge the timetable data
