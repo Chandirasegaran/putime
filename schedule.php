@@ -1,6 +1,6 @@
-<?php 
-        include 'move-to-top.php';  
-    ?>
+<?php
+include 'move-to-top.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -589,10 +589,14 @@
             //prompt when all courses are assigned
             var count = 0;
             for (let r = 0; r < len; r++) {
+                let i = r + 1;
+                document.getElementById('s' + i + '4c').innerText = result[valuesc[r]]; // Use innerText to set text content
                 if (result[valuesc[r]] == 0) {
                     count++;
                 }
             }
+
+
             if (count < len) {
                 alertShown = false;
             }
@@ -603,6 +607,7 @@
 
             // console.log("count" + count + "" + len);
             // console.log(result);
+
 
         }
         var alertShown = false;
