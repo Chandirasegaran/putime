@@ -1,6 +1,10 @@
 <!-- staff.php -->
+<?php
+include 'move-to-top.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,6 +12,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
 
     <!-- Include the navbar -->
@@ -18,7 +23,8 @@
         <button class="btn btn-primary" data-toggle="modal" data-target="#addStaffModal">Add Staff Record</button>
 
         <!-- Add Staff Record Modal -->
-        <div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -33,20 +39,21 @@
                             <div class="form-group">
                                 <label for="staffName">Staff Name:</label>
 
-                                <input type="text" class="form-control" id="staffName" name="staffName" required oninput="replacespace(this)">
+                                <input type="text" class="form-control" id="staffName" name="staffName" required
+                                    oninput="replacespace(this)">
                             </div>
-                                <script>
-                                    function replacespace(inputElement) {
-                                        // Get the current input value
-                                        let inputValue = inputElement.value;
+                            <script>
+                                function replacespace(inputElement) {
+                                    // Get the current input value
+                                    let inputValue = inputElement.value;
 
-                                        // Replace dots with underscores
-                                        let replacedValue = inputValue.replace(/\./g, '_').replace(/ /g, '_');
+                                    // Replace dots with underscores
+                                    let replacedValue = inputValue.replace(/\./g, '_').replace(/ /g, '_');
 
-                                        // Update the input value
-                                        inputElement.value = replacedValue;
-                                    }
-                                </script>
+                                    // Update the input value
+                                    inputElement.value = replacedValue;
+                                }
+                            </script>
                             <button type="submit" class="btn btn-primary">Add Record</button>
                         </form>
                     </div>
@@ -57,7 +64,7 @@
         <!-- Display Staff Details -->
         <?php
         // Assuming you have a database connection
-include 'db_connection.php';
+        include 'db_connection.php';
 
         // Fetch and display staff details
         $staffQuery = "SELECT * FROM staff";
@@ -102,4 +109,5 @@ include 'db_connection.php';
     </script>
 
 </body>
+
 </html>
