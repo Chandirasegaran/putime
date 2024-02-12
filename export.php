@@ -58,10 +58,10 @@ include 'move-to-top.php';
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
 
-                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
-                                    SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab
-                                    FROM $subjectTableWithSuffix";
-                $conn->query($sqlMergeData);
+                // $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
+                //                     SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab
+                //                     FROM $subjectTableWithSuffix";
+                // $conn->query($sqlMergeData);
             }
         }
         ?>
@@ -70,7 +70,7 @@ include 'move-to-top.php';
         <h2>PONDICHERRY UNIVERSITY</h2>
         <h3>COMPUTER SCIENCE DEPARTMENT</h3>
         <br>
-        <table class="table table-bordered" hidden>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th class="col-1">S.no</th> <!-- Adjust column width here -->
