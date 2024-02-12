@@ -68,7 +68,7 @@ include 'db_connection.php';
         <h2>PONDICHERRY UNIVERSITY</h2>
         <h3>COMPUTER SCIENCE DEPARTMENT</h3>
         <br>
-        <table class="table table-bordered">
+        <table class="table table-bordered" hidden>
             <thead>
                 <tr>
                     <th class="col-1">S.no</th> <!-- Adjust column width here -->
