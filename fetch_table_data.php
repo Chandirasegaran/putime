@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
         // Add a hide button for the table
         echo '<input type="checkbox" id="hideCheckbox" onchange="hideTable1()">
-        <label for="hideCheckbox">Hide Table</label>';
+        <label for="hideCheckbox">Show Table</label>';
     }
 
     // Fetch the data for the selected course

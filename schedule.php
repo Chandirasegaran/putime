@@ -401,17 +401,16 @@
         });
 
         function hideTable1() {
-        var hideCheckbox = document.getElementById("hideCheckbox");
-        var table = document.getElementById("hidetable");
-        
-        if (hideCheckbox.checked) {
-            table.style.cssText = ""; 
-          
-        } else {
-            table.style.display = "none";
-        }
-    }
+            var hideCheckbox = document.getElementById("hideCheckbox");
+            var table = document.getElementById("hidetable");
 
+            if (hideCheckbox.checked) {
+                table.style.cssText = "";
+
+            } else {
+                table.style.display = "none";
+            }
+        }
     </script>
 
     <script>
@@ -594,7 +593,7 @@
             if (count < len) {
                 alertShown = false;
             }
-            if (count == len && !alertShown) {
+            if (count == len && !alertShown && count > 0) {
                 alert("All courses have been assigned required hours");
                 alertShown = true; // Mark alert as shown
             }
@@ -637,4 +636,5 @@
     </script>
 
 </body>
+
 </html>
