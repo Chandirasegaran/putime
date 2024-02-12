@@ -464,14 +464,14 @@ include 'move-to-top.php';
                         $subjectTableName = $tableRow['Tables_in_putimetbdb ('.$currrrsem.'%_subjects)'];
 
                         // Fetch the staff's courses from the subject table using a partial match
-                        $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
+                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
                         $resultStaffCourses = $conn->query($sqlGetStaffCourses);
 
                         // Merge the timetable data
                         while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
                             $staffTimetable[] = $timetableRow;
                         }
-                        $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE labStaffName LIKE '%$staffName%'";
+                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE labStaffName LIKE '%$staffName%'";
                         $resultStaffCourses = $conn->query($sqlGetStaffCourses);
 
                         // Merge the timetable data
@@ -486,9 +486,13 @@ include 'move-to-top.php';
                         echo "<table class='table table-bordered'>";
                         // Add table header
                         echo "<thead><tr>";
-                        foreach (array_keys($staffTimetable[0]) as $columnName) {
-                            echo "<th>$columnName</th>";
+                        $columns = ["CODE ", "COURSE TITLE", "LAB", "H/S", "FACULTY", "FACULTY2"];
+                        foreach ($columns as $column) {
+                            echo "<th>" . $column . "</th>";
                         }
+                        // foreach (array_keys($staffTimetable[0]) as $columnName) {
+                        //     echo "<th>$columnName</th>";
+                        // }
                         echo "</tr></thead>";
 
                         // Add table body
