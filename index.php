@@ -1,8 +1,7 @@
 <?php
 include("db_connection.php");
 include("db_connection_close.php");
-
-
+include 'move-to-top.php';  
 ?>
 
 <!DOCTYPE html>

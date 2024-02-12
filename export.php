@@ -1,6 +1,7 @@
 <?php
 include 'navbar.php';
 include 'db_connection.php';
+include 'move-to-top.php';  
 ?>
 
 <!DOCTYPE html>
@@ -722,6 +723,7 @@ include 'db_connection.php';
             <script>
                 function prt() {
                     document.getElementById('btnhid').style.display = 'none';
+                    document.getElementById('moveToTopBtn').style.display = 'none';
                     window.print();
                     location.reload();
                 }
