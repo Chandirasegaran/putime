@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $course = $conn->real_escape_string($_POST['course']);
 
     // Fetch subject details based on the selected course
-    $subjectQuery = "SELECT subjectCode, subjectName, hoursRequired, lab, staffName,labStaffName FROM " . $course . "_subjects";
+    $subjectQuery = "SELECT subjectCode, subjectName, hoursRequired, lab, staffName,labStaffName,stype FROM " . $course . "_subjects";
     $subjectResult = $conn->query($subjectQuery);
 
     // Fetch staff names
@@ -32,12 +32,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     // Build HTML for the subject details, staff names, hoursRequired, and lab table
     $tableHtml = '<form method="post" action="update_staff.php" onmouseover="hourCheck()" >'; // Assuming the update script is named update_staff.php
+    // 
+
+
     $tableHtml .= '<table class="table table-bordered" id="stab" onchange="alertstaffupdate()">';
-    $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Hours Required</th><th>Lab</th></tr></thead>';
+    $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Hours Required</th><th>Lab</th><th>HC/SC</th></tr></thead>';
     $tableHtml .= '<tbody>';
     $si = 0;
     $colorarr = 0;
     while ($subjectRow = $subjectResult->fetch_assoc()) {
+
+
         $si++;
         $tableHtml .= '<tr style="background-color:' . $colorArray[$colorarr++] . '">';
         $tableHtml .= '<td id="s' . $si . '1">' . $subjectRow['subjectCode'] . '</td>';
@@ -80,11 +85,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
         $tableHtml .= '<td id="s' . $si . '4" >' . $subjectRow['hoursRequired'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '5" >' . $subjectRow['lab'] . '</td>';
+        $tableHtml .= '<td id="s' . $si . '6" >' . $subjectRow['stype'] . '</td>';
         $tableHtml .= '</tr>';
     }
 
     $tableHtml .= '</tbody>';
     $tableHtml .= '</table>';
+
+
+    // 
     $tableHtml .= '<input type="hidden" name="course" value="' . $course . '">';
     $tableHtml .= '<input class="btn btn-success"  type="submit" value="Update Staff">';
     $tableHtml .= '</form>';

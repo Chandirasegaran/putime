@@ -1,6 +1,7 @@
 <?php
 include 'navbar.php';
 include 'db_connection.php';
+include 'move-to-top.php';  
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +38,8 @@ include 'db_connection.php';
                 serialNo INT AUTO_INCREMENT PRIMARY KEY,
                 facultyName VARCHAR(255),   
                 stype VARCHAR(255),
-                theory VARCHAR(255)
+                theory VARCHAR(255),
+                lab VARCHAR(10)
             )";
         $conn->query($sqlCreateTable);
 
@@ -51,15 +53,15 @@ include 'db_connection.php';
                 $coursenamewithtrim = str_replace(['odd', 'even', '_subjects'], '', trim($subjectTableWithSuffix));
 
                 // Merge data from individual subject tables into 'merged_table'
-                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
-                                    SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
+                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory,lab)
+                                    SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
 
-                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
-                                    SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory
-                                    FROM $subjectTableWithSuffix";
-                $conn->query($sqlMergeData);
+                // $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory)
+                //                     SELECT labStaffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab
+                //                     FROM $subjectTableWithSuffix";
+                // $conn->query($sqlMergeData);
             }
         }
         ?>
@@ -248,8 +250,8 @@ include 'db_connection.php';
             ?>
             <script>
                 function staffmat(staffname) {
-                    for (let i = 0; i < 5; i++) {
-                        for (let j = 0; j < 8; j++) {
+                    for (let i = 0; i <=5; i++) {
+                        for (let j = 0; j <=8; j++) {
                             //document.getElementById(staffname+i+j)
                             let staffnamearr1 = []
                             let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
@@ -263,13 +265,24 @@ include 'db_connection.php';
                                 staffnamearrsf1.push(element.innerText);
                             });
                             // console.log(staffnamearrsf1);
-                            var index = staffnamearr1.indexOf(staffname);
+                            var indexstaff = staffnamearr1.indexOf(staffname);
                             var index1 = staffnamearrsf1.indexOf(staffname);
-                            if (index != -1 || index1 != -1) {
-                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[0].innerHTML;
+                            if (indexstaff != -1) {
+                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[indexstaff].innerHTML;
+                                // var labElements = document.getElementsByClassName("lab"+ i + j);
+                                // var combinedString = "";
+
+                                // for (var element of labElements) {
+                                //     combinedString += element.innerHTML;
+                                // }
+                                // document.getElementById(staffname + i + j).innerText = combinedString;
                                 // console.log(staffnamearr1);
 
                                 // console.log(document.getElementsByClassName("lab" + i + j)[0]);
+                            }
+                            else if(index1 != -1)
+                            {
+                                document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[index1].innerHTML;
                             }
                         }
                     }
@@ -438,16 +451,17 @@ include 'db_connection.php';
                     $staffName = $staffRow['name'];
                     // echo "<h4>Staff: $staffName</h4>";
                     echo "<br>";
+                    $currrrsem= $_COOKIE['whichsem'];
 
                     // Initialize an array to store the staff timetable
                     $staffTimetable = array();
 
                     // Iterate over all tables with the suffix "_subjects" to find staff's courses
-                    $sqlGetCourses = "SHOW TABLES LIKE '%_subjects'";
+                    $sqlGetCourses = "SHOW TABLES LIKE '".$currrrsem."%_subjects'";
                     $resultCourses = $conn->query($sqlGetCourses);
 
                     while ($tableRow = $resultCourses->fetch_assoc()) {
-                        $subjectTableName = $tableRow['Tables_in_putimetbdb (%_subjects)'];
+                        $subjectTableName = $tableRow['Tables_in_putimetbdb ('.$currrrsem.'%_subjects)'];
 
                         // Fetch the staff's courses from the subject table using a partial match
                         $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
@@ -634,15 +648,45 @@ include 'db_connection.php';
 
                     echo "</tbody>";
                     echo "</table>";
+                    echo "</table>";
+
+                    // Display another table for records from merged_table
+                    // echo "<h4>Records for Lab $lab</h4>";
+                    echo "<table class='table table-bordered'>";
+                    echo "<thead><tr><th>Subject Code</th><th>Faculty Name</th><th>Stype</th></tr></thead>";
+                    echo "<tbody>";
+                
+                    // Assuming you have a database connection $conn
+                    $query = "SELECT * FROM merged_table WHERE lab = $lab";
+                    $result = $conn->query($query);
+                
+                    if ($result) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['theory'] . "</td>";
+                            echo "<td>" . $row['facultyName'] . "</td>";
+                            echo "<td>" . strtoupper($row['stype']) . "</td>";
+                            // echo "<td>" . $row['lab'] . "</td>";
+                            // Add more columns as needed
+                            echo "</tr>";
+                        }
+                
+                        $result->free_result();
+                    } else {
+                        echo "Error in query: " . $conn->error;
+                    }
+                
+                    echo "</tbody>";
+                    echo "</table><br><hr><br>";
                 }
                 ?>
                 <script>
                     labvalue();
 
                     function labvalue() {
-                        for (let lab = 1; lab < 4; lab++) {
-                            for (let i = 1; i < 8; i++) {
-                                for (let j = 1; j < 5; j++) {
+                        for (let lab = 1; lab <=4; lab++) {
+                            for (let i = 1; i <=5; i++) {
+                                for (let j = 1; j <=8; j++) {
                                     var className = 'labcel' + i + j;
                                     var labcode = 'tablecel' + i + j;
                                     // Select elements with the constructed class name
@@ -679,6 +723,7 @@ include 'db_connection.php';
             <script>
                 function prt() {
                     document.getElementById('btnhid').style.display = 'none';
+                    document.getElementById('moveToTopBtn').style.display = 'none';
                     window.print();
                     location.reload();
                 }

@@ -45,7 +45,7 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
         }
     } else {
-        break;
+        continue;
     }
 }
 include 'db_connection_close.php';
