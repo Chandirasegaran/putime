@@ -113,7 +113,7 @@ include 'move-to-top.php';
         });
 
         function check() {
-            console.log("H");
+            // console.log("H");
             return false;
         }
     </script>
@@ -238,14 +238,32 @@ include 'move-to-top.php';
                             let hcheckarray = [];
                             let noarray=[];
                             // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
-                            for (let j1 = 1; j1 <= 7; j1++) {
+                            for (let j1 = 1; j1 <= 8; j1++) {
                                 // Select elements with class name based on 'i' and 'j'
                                 let h_elements = document.querySelectorAll('.table' + i.toString() + j1.toString());
                                 let labs_variable = document.querySelectorAll('.lab' + i.toString() + j1.toString());
+                                let h2_element= document.querySelectorAll('.labStaffName' +i.toString() + j1.toString());
                                 // Iterate over the NodeList and push innerText into hcheckarray
                                 h_elements.forEach(function(element,index) {
-                                    hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
-                                        if(labs_variable[index].innerText=="no")
+                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
+                                    if(element.innerText==eval(clsvar))
+                                    {
+                                        hcheckarray.push(element.innerText);
+                                    }
+                                        if(labs_variable[index].innerText=="no" && element.innerText==eval(clsvar))
+                                        {
+                                            noarray.push(labs_variable[index].innerText);
+                                            tcount++;
+                                        }
+                                });
+                                h2_element.forEach(function(elementxy,index)
+                                {
+                                    if(elementxy.innerText==eval(clsvar))
+                                    {
+                                        console.log(elementxy.innerText);
+                                        hcheckarray.push(elementxy.innerText);
+                                    }
+                                    if(labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvar))
                                         {
                                             noarray.push(labs_variable[index].innerText);
                                             tcount++;
@@ -308,14 +326,16 @@ include 'move-to-top.php';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                 element.setAttribute('title', `More than Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
-                                // console.log(hcheckarray,noarray);
+                                tcount=0;
+                                //console.log(hcheckarray);
+                                //console.log(hcheckarray,noarray);
                             } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
 
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                 element.setAttribute('title', `More than ${vcheckarray.filter(element => element === eval(clsvar)).length} Morning Shift`);// Replace 'Your Tooltip Content' with your actual tooltip text
-
+                                
                             }
                         }
                     }
@@ -647,14 +667,14 @@ include 'move-to-top.php';
         }
         function staffcheck(staffnam)
         {
-            for(let ab=1;ab<=8;ab++)
-            {   console.log(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff");
-                // dfg=document.getElementsByClassName(staffnam + ab.toString())[0].value+".staff";
-                //console.log(window[(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff").toString()]);
+            // for(let ab=1;ab<=8;ab++)
+            // {   console.log(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff");
+            //     // dfg=document.getElementsByClassName(staffnam + ab.toString())[0].value+".staff";
+            //     //console.log(window[(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff").toString()]);
 
-                // console.log((document.getElementsByClassName(staffnam + ab.toString())[0].value) + ".staff");
+            //     // console.log((document.getElementsByClassName(staffnam + ab.toString())[0].value) + ".staff");
 
-            }
+            // }
             // console.log(staffnam);
         }
         function callCheck() {
