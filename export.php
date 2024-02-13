@@ -71,7 +71,7 @@ include 'move-to-top.php';
         <h2>PONDICHERRY UNIVERSITY</h2>
         <h3>COMPUTER SCIENCE DEPARTMENT</h3>
         <br>
-        <table class="table table-bordered">
+        <table class="table table-bordered" hidden>
             <thead>
                 <tr>
                     <th class="col-1">S.no</th> <!-- Adjust column width here -->
@@ -113,7 +113,7 @@ include 'move-to-top.php';
     </div>
 
     <!-- Display tables based on names obtained from $adminTable -->
-    <div class="container mt-5">
+    <div class="container mt-3">
         <?php
         // Fetch table names from $adminTable
         $sqlGetTableNamesFromAdmin = "SELECT course AS tableName FROM $adminTable";
@@ -172,7 +172,7 @@ include 'move-to-top.php';
                         while ($row = $resultData->fetch_assoc()) {
                             echo "<tr>";
                             foreach ($row as $rowData) {
-                                echo "<td>" . $rowData . "</td>";
+                                echo "<td>" . strtoupper($rowData) . "</td>";
                             }
                             echo "</tr>";
                         }
@@ -658,7 +658,7 @@ include 'move-to-top.php';
                     // Display another table for records from merged_table
                     // echo "<h4>Records for Lab $lab</h4>";
                     echo "<table class='table table-bordered'>";
-                    echo "<thead><tr><th>Subject Code</th><th>FacultyName</th><th>FacultyName 2</th><th>Stype</th></tr></thead>";
+                    echo "<thead><tr><th>Subject Code</th><th>FacultyName</th><th>FacultyName 2</th><th>H/S</th></tr></thead>";
                     echo "<tbody>";
                 
                     // Assuming you have a database connection $conn
