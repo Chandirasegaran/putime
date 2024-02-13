@@ -643,8 +643,18 @@ include 'move-to-top.php';
             return arr.filter(function(value) {
                 return value !== null && value !== undefined && value !== "" && value !== 0 && value !== false;
             });
-        }
 
+        }
+        function staffcheck(staffnam)
+        {
+            for(let ab=1;ab<=8;ab++)
+            {
+                
+                console.log(window[(document.getElementsByClassName(staffnam + ab.toString())[0].value) + ".staff"]);
+
+            }
+            // console.log(staffnam);
+        }
         function callCheck() {
             mycheck();
             hourCheck();
