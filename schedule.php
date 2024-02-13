@@ -283,7 +283,7 @@ include 'move-to-top.php';
                                 // console.log(h_elementsclash);
                                 h_elementsclash.forEach(function(elementclash,index) {
                                     // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
-                                    if(elementclash.innerText!=eval(clsvar))
+                                    // if(elementclash.innerText!=eval(clsvar))
                                     // console.log(elementclash.innerText,"!=",eval(clsvar));
                                     if(elementclash.innerText==eval(clsvar))
                                     {
@@ -325,7 +325,7 @@ include 'move-to-top.php';
                                 // console.log(h_elementsclash);
                                 h_elementsclash.forEach(function(elementclash,index) {
                                     // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
-                                    if(elementclash.innerText!=eval(clsvar))
+                                    // if(elementclash.innerText!=eval(clsvar))
                                     // console.log(elementclash.innerText,"!=",eval(clsvar));
                                     if(elementclash.innerText==eval(clsvar))
                                     {
