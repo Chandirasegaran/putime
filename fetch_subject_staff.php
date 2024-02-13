@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
 
     $tableHtml .= '<table class="table table-bordered" id="stab" onchange="alertstaffupdate()">';
-    $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Hours Required</th><th>Updated Hours Required</th><th>Lab</th><th>HC/SC</th></tr></thead>';
+    $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Required Hours</th><th>Remaining</th><th>Lab</th><th>HC/SC</th></tr></thead>';
     $tableHtml .= '<tbody>';
     $si = 0;
     $colorarr = 0;

@@ -279,6 +279,7 @@ include 'move-to-top.php';
                             elements3.forEach(function(elementpara) {
                                 valuesArraysf.push(elementpara.innerText);
                             });
+                            
                             if (valuesArray.includes(eval(clsvar))) {
 
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
@@ -300,13 +301,13 @@ include 'move-to-top.php';
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', 'horizontally more than 2');
+                                element.setAttribute('title', `Horizontally more than ${hcheckarray.filter(element => element === eval(clsvar)).length}`);
                             } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
 
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', 'Vertically more than 2'); // Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `Vertically more than ${vcheckarray.filter(element => element === eval(clsvar)).length}`);// Replace 'Your Tooltip Content' with your actual tooltip text
 
                             }
                         }
