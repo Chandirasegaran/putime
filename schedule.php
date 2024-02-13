@@ -234,16 +234,22 @@ include 'move-to-top.php';
                             let elements3 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
 
                             // Create an array to store the values
-
+                            let tcount=0;
                             let hcheckarray = [];
+                            let noarray=[];
                             // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
                             for (let j1 = 1; j1 <= 7; j1++) {
                                 // Select elements with class name based on 'i' and 'j'
                                 let h_elements = document.querySelectorAll('.table' + i.toString() + j1.toString());
-
+                                let labs_variable = document.querySelectorAll('.lab' + i.toString() + j1.toString());
                                 // Iterate over the NodeList and push innerText into hcheckarray
-                                h_elements.forEach(function(element) {
-                                    hcheckarray.push(element.innerText);
+                                h_elements.forEach(function(element,index) {
+                                    hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
+                                        if(labs_variable[index].innerText=="no")
+                                        {
+                                            noarray.push(labs_variable[index].innerText);
+                                            tcount++;
+                                        }
                                 });
                             }
                             let vcheckarray = [];
@@ -301,13 +307,14 @@ include 'move-to-top.php';
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `Horizontally more than ${hcheckarray.filter(element => element === eval(clsvar)).length}`);
+                                element.setAttribute('title', `More than Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
+                                // console.log(hcheckarray,noarray);
                             } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
 
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `Vertically more than ${vcheckarray.filter(element => element === eval(clsvar)).length}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `More than ${vcheckarray.filter(element => element === eval(clsvar)).length} Morning Shift`);// Replace 'Your Tooltip Content' with your actual tooltip text
 
                             }
                         }
