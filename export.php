@@ -36,7 +36,8 @@ include 'move-to-top.php';
         // Create the 'merged_table' with a serial number field
         $sqlCreateTable = "CREATE TABLE $mergedTable (
                 serialNo INT AUTO_INCREMENT PRIMARY KEY,
-                facultyName VARCHAR(255),   
+                facultyName VARCHAR(255), 
+                facultyName2 VARCHAR(255),  
                 stype VARCHAR(255),
                 theory VARCHAR(255),
                 lab VARCHAR(10)
@@ -53,8 +54,8 @@ include 'move-to-top.php';
                 $coursenamewithtrim = str_replace(['odd', 'even', '_subjects'], '', trim($subjectTableWithSuffix));
 
                 // Merge data from individual subject tables into 'merged_table'
-                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory,lab)
-                                    SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab
+                $sqlMergeData = "INSERT INTO $mergedTable (facultyName, stype, theory,lab,facultyName2)
+                                    SELECT staffName, stype AS stype, CONCAT(subjectCode, ' - ', subjectName) AS theory,lab AS lab,labstaffname AS facultyName2
                                     FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
 
@@ -153,7 +154,7 @@ include 'move-to-top.php';
                     echo "</tbody></table> <br>";
 
                     // Fetch and display data for each table
-                    $sqlGetData = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $tableName" . "_subjects";
+                    $sqlGetData = "SELECT subjectCode, subjectName, stype, staffName, labStaffName FROM $tableName" . "_subjects";
                     $resultData = $conn->query($sqlGetData);
 
                     if ($resultData && $resultData->num_rows > 0) {
@@ -161,7 +162,7 @@ include 'move-to-top.php';
 
                         // Fetching column names for headers
                         // $columns = ["Subject Code", "Subject Name", "Lab", "Type", "Staff Name"];
-                        $columns = ["CODE ", "COURSE TITLE", "LAB", "H/S", "FACULTY", "FACULTY2"];
+                        $columns = ["CODE ", "COURSE TITLE", "H/S", "FACULTY", "FACULTY2"];
                         foreach ($columns as $column) {
                             echo "<th>" . $column . "</th>";
                         }
@@ -464,14 +465,14 @@ include 'move-to-top.php';
                         $subjectTableName = $tableRow['Tables_in_putimetbdb ('.$currrrsem.'%_subjects)'];
 
                         // Fetch the staff's courses from the subject table using a partial match
-                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE staffName LIKE '$staffName'";
+                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, stype, staffName, labStaffName FROM $subjectTableName WHERE staffName LIKE '$staffName'";
                         $resultStaffCourses = $conn->query($sqlGetStaffCourses);
 
                         // Merge the timetable data
                         while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
                             $staffTimetable[] = $timetableRow;
                         }
-                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, lab, stype, staffName, labStaffName FROM $subjectTableName WHERE labStaffName LIKE '$staffName'";
+                        $sqlGetStaffCourses = "SELECT subjectCode, subjectName, stype, staffName, labStaffName FROM $subjectTableName WHERE labStaffName LIKE '$staffName'";
                         $resultStaffCourses = $conn->query($sqlGetStaffCourses);
 
                         // Merge the timetable data
@@ -486,7 +487,7 @@ include 'move-to-top.php';
                         echo "<table class='table table-bordered'>";
                         // Add table header
                         echo "<thead><tr>";
-                        $columns = ["CODE ", "COURSE TITLE", "LAB", "H/S", "FACULTY", "FACULTY2"];
+                        $columns = ["CODE ", "COURSE TITLE", "H/S", "FACULTY", "FACULTY2"];
                         foreach ($columns as $column) {
                             echo "<th>" . $column . "</th>";
                         }
@@ -500,7 +501,7 @@ include 'move-to-top.php';
                         foreach ($staffTimetable as $timetableRow) {
                             echo "<tr>";
                             foreach ($timetableRow as $value) {
-                                echo "<td>$value</td>";
+                                echo "<td>" . strtoupper($value) . "</td>";
                             }
                             echo "</tr>";
                         }
@@ -657,7 +658,7 @@ include 'move-to-top.php';
                     // Display another table for records from merged_table
                     // echo "<h4>Records for Lab $lab</h4>";
                     echo "<table class='table table-bordered'>";
-                    echo "<thead><tr><th>Subject Code</th><th>Faculty Name</th><th>Stype</th></tr></thead>";
+                    echo "<thead><tr><th>Subject Code</th><th>FacultyName</th><th>FacultyName 2</th><th>Stype</th></tr></thead>";
                     echo "<tbody>";
                 
                     // Assuming you have a database connection $conn
@@ -669,6 +670,7 @@ include 'move-to-top.php';
                             echo "<tr>";
                             echo "<td>" . $row['theory'] . "</td>";
                             echo "<td>" . $row['facultyName'] . "</td>";
+                            echo "<td>".$row['facultyName2']."</td>";
                             echo "<td>" . strtoupper($row['stype']) . "</td>";
                             // echo "<td>" . $row['lab'] . "</td>";
                             // Add more columns as needed

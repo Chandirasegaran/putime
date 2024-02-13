@@ -648,9 +648,11 @@ include 'move-to-top.php';
         function staffcheck(staffnam)
         {
             for(let ab=1;ab<=8;ab++)
-            {
-                
-                console.log(window[(document.getElementsByClassName(staffnam + ab.toString())[0].value) + ".staff"]);
+            {   console.log(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff");
+                // dfg=document.getElementsByClassName(staffnam + ab.toString())[0].value+".staff";
+                //console.log(window[(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff").toString()]);
+
+                // console.log((document.getElementsByClassName(staffnam + ab.toString())[0].value) + ".staff");
 
             }
             // console.log(staffnam);
