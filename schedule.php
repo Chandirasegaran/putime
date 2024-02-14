@@ -277,14 +277,9 @@ include 'move-to-top.php';
                                 if(j>1)
                                 {
                                 let h_elementsclash = document.querySelectorAll('.table' + i.toString() + (j-1).toString());
-                                // let labs_variable = document.querySelectorAll('.lab' + i.toString() + j1.toString());
-                                // let h2_element= document.querySelectorAll('.labStaffName' +i.toString() + j1.toString());
-                                // Iterate over the NodeList and push innerText into hcheckarray
-                                // console.log(h_elementsclash);
+                                let h_elementsclash2=document.querySelectorAll('.labStaffName' + i.toString() + (j-1).toString());
                                 h_elementsclash.forEach(function(elementclash,index) {
-                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
-                                    // if(elementclash.innerText!=eval(clsvar))
-                                    // console.log(elementclash.innerText,"!=",eval(clsvar));
+                                    
                                     if(elementclash.innerText==eval(clsvar))
                                     {
                                         let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
@@ -294,35 +289,30 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('title', 'already allocated on left side');
                                         left=true;
                                     }
-                                        // if(labs_variable[index].innerText=="no" && element.innerText==eval(clsvar))
-                                        // {
-                                        //     noarray.push(labs_variable[index].innerText);
-                                        //     tcount++;
-                                        // }
+                                        
                                 });
-                                // h2_element.forEach(function(elementxy,index)
-                                // {
-                                //     if(elementxy.innerText==eval(clsvar))
-                                //     {
-                                //         console.log(elementxy.innerText);
-                                //         hcheckarray.push(elementxy.innerText);
-                                //     }
-                                //     if(labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvar))
-                                //         {
-                                //             noarray.push(labs_variable[index].innerText);
-                                //             tcount++;
-                                //         }
-                                // });
+
+                                h_elementsclash2.forEach(function(elementclash,index) {
+                                    
+                                    if(elementclash.innerText==eval(clsvar))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'already allocated on left side');
+                                        left=true;
+                                    }
+                                        
+                                });
+                                
                                 }
 
 
                             if(j<8) {
-                                // Select elements with class name based on 'i' and 'j'
+                                
                                 let h_elementsclash = document.querySelectorAll('.table' + i.toString() + (j+1).toString());
-                                // let labs_variable = document.querySelectorAll('.lab' + i.toString() + j1.toString());
-                                // let h2_element= document.querySelectorAll('.labStaffName' +i.toString() + j1.toString());
-                                // Iterate over the NodeList and push innerText into hcheckarray
-                                // console.log(h_elementsclash);
+                                let h_elementsclash2 = document.querySelectorAll('.labStaffName' + i.toString() + (j+1).toString());
                                 h_elementsclash.forEach(function(elementclash,index) {
                                     // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
                                     // if(elementclash.innerText!=eval(clsvar))
@@ -336,25 +326,23 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('title', 'already allocated on right side');
                                         right=true;
                                     }
-                                        // if(labs_variable[index].innerText=="no" && element.innerText==eval(clsvar))
-                                        // {
-                                        //     noarray.push(labs_variable[index].innerText);
-                                        //     tcount++;
-                                        // }
                                 });
-                                // h2_element.forEach(function(elementxy,index)
-                                // {
-                                //     if(elementxy.innerText==eval(clsvar))
-                                //     {
-                                //         console.log(elementxy.innerText);
-                                //         hcheckarray.push(elementxy.innerText);
-                                //     }
-                                //     if(labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvar))
-                                //         {
-                                //             noarray.push(labs_variable[index].innerText);
-                                //             tcount++;
-                                //         }
-                                // });
+
+                                h_elementsclash2.forEach(function(elementclash,index) {
+                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
+                                    // if(elementclash.innerText!=eval(clsvar))
+                                    // console.log(elementclash.innerText,"!=",eval(clsvar));
+                                    if(elementclash.innerText==eval(clsvar))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'already allocated on right side');
+                                        right=true;
+                                    }
+                                });
+
                             }
 
                             let vcheckarray = [];
