@@ -714,8 +714,8 @@ include 'move-to-top.php';
         }
 
         function allowTextOnly(inputField) {
-            inputField.value = inputField.value.replace(/[^A-Za-z0-9-]/g, '');
-            inputField.value = inputField.value.toUpperCase();
+            inputField.value = inputField.value.replace(/[^A-Za-z0-9-_]/g, '');
+inputField.value = inputField.value.toUpperCase();
         }
 
         function deleteCourse(courseName) {
