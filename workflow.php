@@ -1,7 +1,7 @@
 <?php
 include 'navbar.php';
 include 'db_connection.php';
-include 'move-to-top.php';  
+include 'move-to-top.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -118,6 +118,18 @@ include 'move-to-top.php';
 
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+            <script>
+                function prt() {
+                    document.getElementById('btnhid').style.display = 'none';
+                    document.getElementById('moveToTopBtn').style.display = 'none';
+                    window.print();
+                    location.reload();
+                }
+            </script>
+            <button type="button" id="btnhid" class="btn btn-primary col-3" onclick="prt()">Print</button>
+        </div>
+        <pre><br></pre>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
