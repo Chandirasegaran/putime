@@ -430,7 +430,12 @@ include 'move-to-top.php';
                             } else if (eval(stvar) != null && valuesArray.includes(eval(stvar))) {
                                 // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                            } else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
+                            }
+                            else if (eval(stvar) != null && valuesArraysf.includes(eval(stvar))) {
+                                // console.log(valuesArray);
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                            }
+                             else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
