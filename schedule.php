@@ -258,6 +258,7 @@ include 'move-to-top.php';
                                             tcount++;
                                         }
                                 });
+                                
                                 h2_element.forEach(function(elementxy,index)
                                 {
                                     if(elementxy.innerText==eval(clsvar))
@@ -289,6 +290,15 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('title', 'already allocated on left side');
                                         left=true;
                                     }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 is already allocated on left side');
+                                        left=true;
+                                    }
                                         
                                 });
 
@@ -301,6 +311,15 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('data-toggle', 'tooltip');
                                         targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                         targetElement.setAttribute('title', 'already allocated on left side');
+                                        left=true;
+                                    }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 is already allocated on left side');
                                         left=true;
                                     }
                                         
@@ -326,6 +345,15 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('title', 'already allocated on right side');
                                         right=true;
                                     }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 already allocated on right side');
+                                        right=true;
+                                    }
                                 });
 
                                 h_elementsclash2.forEach(function(elementclash,index) {
@@ -339,6 +367,15 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('data-toggle', 'tooltip');
                                         targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                         targetElement.setAttribute('title', 'already allocated on right side');
+                                        right=true;
+                                    }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 already allocated on right side');
                                         right=true;
                                     }
                                 });
