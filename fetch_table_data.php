@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     $sql = "SELECT * FROM `$course`";
     $result = $conn->query($sql);
-    setcookie("currentCourse", $course, time() + 7600, '/');
+    setcookie("currentCourse", $course, time() + 76000, '/');
 
     if ($result->num_rows > 0) {
         // Add a unique ID for this table
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     // Fetch the data for the selected course
     $sql = "SELECT * FROM `$course`";
     $result = $conn->query($sql);
-    setcookie("currentCourse", $course, time() + 7600, '/');
+    setcookie("currentCourse", $course, time() + 76000, '/');
 
     if ($result->num_rows > 0) {
         // Display the fetched data in a table format with dropdowns

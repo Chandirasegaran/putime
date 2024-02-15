@@ -39,6 +39,7 @@ include 'move-to-top.php';
                 facultyName VARCHAR(255),            
                 stype VARCHAR(255),
                 theory VARCHAR(255),
+                hours INT(11),
                 lab VARCHAR(10)
             )";
         $conn->query($sqlCreateTable);
@@ -53,22 +54,24 @@ include 'move-to-top.php';
                 $coursenamewithtrim = str_replace(['odd', 'even', '_subjects'], '', trim($subjectTableWithSuffix));
 
                 // Merge data from individual subject tables into 'merged_table'
-                $sqlMergeData = "INSERT INTO $workflow (facultyName, stype, theory, lab)
+                $sqlMergeData = "INSERT INTO $workflow (facultyName, stype, theory, hours, lab)
                 SELECT 
                     CASE WHEN staffName IS NULL OR staffName = '' THEN 'Not allocated' ELSE staffName END AS facultyName,
                     stype AS stype, 
                     CONCAT(subjectCode, ' - ', subjectName) AS theory,
+                    hoursRequired AS hours,
                     lab AS lab
                 FROM $subjectTableWithSuffix";
                 $conn->query($sqlMergeData);
 
-                $sqlMergeData = "INSERT INTO $workflow (facultyName, stype, theory, lab)
-                SELECT labStaffName AS facultyName, 
-                       stype AS stype, 
-                       CONCAT(subjectCode, ' - ', subjectName) AS theory,
-                       lab AS lab
-                FROM $subjectTableWithSuffix
-                WHERE labStaffName IS NOT NULL AND labStaffName <> 'Nil'";
+                $sqlMergeData = "INSERT INTO $workflow (facultyName, stype, theory, hours, lab)
+                                SELECT labStaffName AS facultyName, 
+                                    stype AS stype, 
+                                    CONCAT(subjectCode, ' - ', subjectName) AS theory,
+                                    hoursRequired AS hours,
+                                    lab AS lab
+                                FROM $subjectTableWithSuffix
+                                WHERE labStaffName IS NOT NULL AND labStaffName <> 'Nil'";
 
                 $conn->query($sqlMergeData);
             }
@@ -79,21 +82,11 @@ include 'move-to-top.php';
         <h2>PONDICHERRY UNIVERSITY</h2>
         <h3>COMPUTER SCIENCE DEPARTMENT</h3>
         <br>
-        <table class="table table-bordered" >
-            <thead>
-                <tr>
-                    <th class="col-1">S.no</th> <!-- Adjust column width here -->
-                    <th class="col-2">Faculty Name</th>
-                    <th class="col-2">Hardcore/Softcore</th> <!-- Adjust column width here -->
-                    <th class="col-4">Subject</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            <?php
+        <table class="table table-bordered" id="wf_table">
+        <?php
     // Query the merged_table to retrieve data sorted by faculty name and staff table order
     $sqlGetData = "
-        SELECT $workflow.facultyName, $workflow.stype, $workflow.theory
+        SELECT $workflow.facultyName, $workflow.stype, $workflow.theory, $workflow.hours
         FROM $workflow
         LEFT JOIN staff ON $workflow.facultyName = staff.Name
         ORDER BY CASE WHEN staff.Regno IS NULL THEN 1 ELSE 0 END, staff.Regno ASC";
@@ -102,18 +95,72 @@ include 'move-to-top.php';
 
     if ($resultGetData->num_rows > 0) {
         $serial = 1;
+        $prevFacultyName = '';
+        $headerDisplayed = false;
+        $totalTLHrs = 0; // Initialize the total hours variable
+        $sid = 1;
+
         while ($row = $resultGetData->fetch_assoc()) {
+            if (!$headerDisplayed) {
+                echo "<tr>
+                        <th>S.NO</th>
+                        <th>FACULTY NAME</th>
+                        <th>Hardcore/Softcore</th>
+                        <th>THEORY(HARD CORE/SOFT CORE) & LAB</th>
+                        <th>TL HRS</th>
+                        <th>Total TL HRS</th> <!-- New column for total hours -->
+                      </tr>";
+                $headerDisplayed = true;
+            }
+
             echo "<tr>";
-            echo "<td>" . $serial++ . "</td>";
-            echo "<td>" . $row["facultyName"] . "</td>";
-            echo "<td>" . ($row["stype"] === 'hc' ? 'Hardcore' : 'Softcore') . "</td>";
-            echo "<td>" . $row["theory"] . "</td>";
-            echo "</tr>";
+            if ($prevFacultyName != $row["facultyName"]) {
+                if ($prevFacultyName != '') {
+                    echo "<td ></td>"; // Empty cell for serial number
+                    echo "<td ></td>"; // Empty cell for faculty name
+                    echo "<td ></td>"; // Empty cell for stype
+                    echo "<td colspan='2' style='text-align: right;'><b>TOTAL HOURS TAKEN</b></td>"; // Empty cell for theory
+                    echo "<td id=".'row'.$sid++." ><b> $totalTLHrs</b></td>"; // Display total hours
+                    echo "</tr>";
+                    $totalTLHrs = 0; // Reset total hours for a new staff
+                }
+
+                echo "<tr>";
+                echo "<td id=".'row'.$sid++.">" . $serial++ . "</td>";
+                echo "<td >" . $row["facultyName"] . "</td>";
+            } else {
+                echo "<td id=".'row'.$sid++."></td>"; // Empty cell for serial number
+                echo "<td ></td>"; // Empty cell for faculty name
+            }
+            echo "<td >" . ($row["stype"] === 'hc' ? 'Hardcore' : 'Softcore') . "</td>";
+            echo "<td >" . $row["theory"] . "</td>";
+            echo "<td >" . $row["hours"] . "</td>"; // Display the 'hours' column
+            $totalTLHrs += $row["hours"]; // Accumulate total hours
+
+            // Display total hours on the last row for each faculty
+            if ($resultGetData->num_rows > 1 && $prevFacultyName == $row["facultyName"]) {
+                echo "<td id=".'row'.$sid++."></td>"; // Empty cell for total hours
+                echo "</tr>";
+            }
+
+            $prevFacultyName = $row["facultyName"];
         }
+
+        // Display the total hours for the last faculty
+        echo "<tr>";
+        echo "<td ></td>"; // Empty cell for serial number
+        echo "<td ></td>"; // Empty cell for faculty name
+        echo "<td ></td>"; // Empty cell for stype
+        echo "<td colspan='2' style='text-align: right;'><b>TOTAL HOURS TAKEN</b></td>"; // Empty cell for theory
+        echo "<td id=".'row'.$sid." ><b> $totalTLHrs</b></td>"; // Display total hours
+        echo "</tr>";
+
     } else {
-        echo "<tr><td colspan='4'>No data available</td></tr>";
+        echo "<tr><td colspan='6'>No data available</td></tr>";
     }
 ?>
+
+
 
 
             </tbody>
