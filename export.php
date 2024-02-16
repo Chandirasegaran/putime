@@ -1,7 +1,7 @@
 <?php
 include 'navbar.php';
 include 'db_connection.php';
-include 'move-to-top.php';  
+include 'move-to-top.php';
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ include 'move-to-top.php';
 
         // Define the new name of the merged table
         $mergedTable = 'merged_table'; // Updated table name
-
+        
         // Check if 'merged_table' already exists and delete it if it does
         $sqlCheckTable = "SHOW TABLES LIKE '$mergedTable'";
         $resultCheckTable = $conn->query($sqlCheckTable);
@@ -115,6 +115,7 @@ include 'move-to-top.php';
     <!-- Display tables based on names obtained from $adminTable -->
     <div class="container mt-3">
         <?php
+        $coursehidecount = 1;
         // Fetch table names from $adminTable
         $sqlGetTableNamesFromAdmin = "SELECT course AS tableName FROM $adminTable";
         $resultTableNames = $conn->query($sqlGetTableNamesFromAdmin);
@@ -124,14 +125,15 @@ include 'move-to-top.php';
                 $tableName = $tableRow['tableName'];
 
                 // Display the table name
-                echo "<h4>Course: " . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . "</h4>";
-
+                echo "<h4 class='hidecourse" . $coursehidecount . "'>Course: " . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . "</h4>";
+                echo '<input type="checkbox" class="hidehidecheckbox" id="hideCheckcourse' . $coursehidecount . '" onchange="hidelab(\'hidecourse' . $coursehidecount . '\')">
+                <label class="hidehidecheckbox" for="hideCheckcourse">Hide Course ' . $tableName . '</label>';
                 // Fetch and display data for each table
                 $sqlGetData = "SELECT * FROM $tableName";
                 $resultData = $conn->query($sqlGetData);
 
                 if ($resultData && $resultData->num_rows > 0) {
-                    echo "<table class='table table-bordered'><thead><tr>";
+                    echo "<table class='table table-bordered hidecourse" . $coursehidecount . "'><thead><tr>";
 
                     // Fetching column names for headers
                     $columns = array_keys($resultData->fetch_assoc());
@@ -151,14 +153,14 @@ include 'move-to-top.php';
                         }
                         echo "</tr>";
                     }
-                    echo "</tbody></table> <br>";
+                    echo "</tbody></table> <br class='hidecourse" . $coursehidecount . "'>";
 
                     // Fetch and display data for each table
                     $sqlGetData = "SELECT subjectCode, subjectName, stype, staffName, labStaffName FROM $tableName" . "_subjects";
                     $resultData = $conn->query($sqlGetData);
 
                     if ($resultData && $resultData->num_rows > 0) {
-                        echo "<table class='table table-bordered'><thead><tr>";
+                        echo "<table class='table table-bordered hidecourse" . $coursehidecount . "'><thead><tr>";
 
                         // Fetching column names for headers
                         // $columns = ["Subject Code", "Subject Name", "Lab", "Type", "Staff Name"];
@@ -176,11 +178,12 @@ include 'move-to-top.php';
                             }
                             echo "</tr>";
                         }
-                        echo "</tbody></table> <br>";
+                        echo "</tbody></table> <br class='hidecourse" . $coursehidecount++ . "'>";
                     } else {
-                        echo "No data available for table " . $tableName . "<br>";
+                        // echo "<pre class='hidecourse" . $coursehidecount++ . "'>No data available for table " . $tableName . "<br>";
                     }
                 }
+
             }
         }
         ?>
@@ -193,32 +196,32 @@ include 'move-to-top.php';
             // // Fetch staff names
             // $sqlGetStaffNames = "SELECT NAME FROM staff";
             // $resultStaffNames = $conn->query($sqlGetStaffNames);
-
+            
             // if ($resultStaffNames->num_rows > 0) {
             //     while ($staffRow = $resultStaffNames->fetch_assoc()) {
             //         $staffName = $staffRow['NAME'];
             //         echo "<h4>Staff: $staffName</h4>";
-
+            
             //         // Initialize an array to store the staff timetable
             //         $staffTimetable = array();
-
+            
             //         // Iterate over all tables with the suffix "_subjects" to find staff's courses
             //         $sqlGetCourses = "SHOW TABLES LIKE '%_subjects'";
             //         $resultCourses = $conn->query($sqlGetCourses);
-
+            
             //         while ($tableRow = $resultCourses->fetch_assoc()) {
             //             $subjectTableName = $tableRow['Tables_in_putimetbdb (%_subjects)'];
-
+            
             //             // Fetch the staff's courses from the subject table using a partial match
             //             $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
             //             $resultStaffCourses = $conn->query($sqlGetStaffCourses);
-
+            
             //             // Merge the timetable data
             //             while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
             //                 $staffTimetable[] = $timetableRow;
             //             }
             //         }
-
+            
             //         // Display the staff timetable in a table
             //         if (!empty($staffTimetable)) {
             //             echo "<table class='table table-bordered'>";
@@ -228,7 +231,7 @@ include 'move-to-top.php';
             //                 echo "<th>$columnName</th>";
             //             }
             //             echo "</tr></thead>";
-
+            
             //             // Add table body
             //             echo "<tbody>";
             //             foreach ($staffTimetable as $timetableRow) {
@@ -239,7 +242,7 @@ include 'move-to-top.php';
             //                 echo "</tr>";
             //             }
             //             echo "</tbody>";
-
+            
             //             echo "</table><br>";
             //         } else {
             //             echo "No courses found for $staffName.<br>";
@@ -251,18 +254,18 @@ include 'move-to-top.php';
             ?>
             <script>
                 function staffmat(staffname) {
-                    for (let i = 0; i <=5; i++) {
-                        for (let j = 0; j <=8; j++) {
+                    for (let i = 0; i <= 5; i++) {
+                        for (let j = 0; j <= 8; j++) {
                             //document.getElementById(staffname+i+j)
                             let staffnamearr1 = []
                             let staffnamearr2 = document.querySelectorAll('.table' + i.toString() + j.toString());
                             let staffnamearrsf1 = []
                             let staffnamearrsf2 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
 
-                            staffnamearr2.forEach(function(element) {
+                            staffnamearr2.forEach(function (element) {
                                 staffnamearr1.push(element.innerText);
                             });
-                            staffnamearrsf2.forEach(function(element) {
+                            staffnamearrsf2.forEach(function (element) {
                                 staffnamearrsf1.push(element.innerText);
                             });
                             // console.log(staffnamearrsf1);
@@ -281,8 +284,7 @@ include 'move-to-top.php';
 
                                 // console.log(document.getElementsByClassName("lab" + i + j)[0]);
                             }
-                            else if(index1 != -1)
-                            {
+                            else if (index1 != -1) {
                                 document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[index1].innerHTML;
                             }
                         }
@@ -327,7 +329,7 @@ include 'move-to-top.php';
                             $i++;
                             echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
                             echo '<td>' . $row["DAY"] . '</td>'; // DAYS
-
+            
                             $j = 1;
                             foreach ($row as $columnName => $columnValue) {
                                 if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
@@ -389,12 +391,15 @@ include 'move-to-top.php';
             $sqlGetStaff = "SELECT DISTINCT name FROM staff";
             $resultStaff = $conn->query($sqlGetStaff);
             echo '<br><br><h1>Faculty Time Table</h1><hr>';
+            $facultyhidecount = 1;
             if ($resultStaff->num_rows > 0) {
                 while ($staffRow = $resultStaff->fetch_assoc()) {
                     $staffName = $staffRow['name'];
 
-                    echo "<h4>Timetable for $staffName</h4>";
-                    echo "<table class='table table-bordered'>";
+                    echo "<h4 class='hidefaculty" . $facultyhidecount . "'>Timetable for $staffName</h4>";
+                    echo '<input type="checkbox" class="hidehidecheckbox" id="hidecheckfaculty' . $facultyhidecount . '" onchange="hidelab(\'hidefaculty' . $facultyhidecount . '\')">
+                <label class="hidehidecheckbox" for="hidecheckfaculty">Hide Faculty ' . $staffName . '</label>';
+                    echo "<table class='table table-bordered hidefaculty" . $facultyhidecount . "'>";
                     echo "<thead>";
                     echo "<tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr>";
                     echo "</thead>";
@@ -412,7 +417,7 @@ include 'move-to-top.php';
                             $startMinute = ($slotIndex % 2) * 30; // Alternate between 0 and 30 minutes
                             $endHour = $startHour + ($startMinute + 30 >= 60 ? 1 : 0); // Increment hour if end time is on the next hour
                             $endMinute = ($startMinute + 30) % 60; // Cycle minutes between 0 and 30
-
+            
                             // Format time slots for display
                             $startTime = sprintf("%d.%02d", $startHour, $startMinute);
                             $endTime = sprintf("%d.%02d", $endHour, $endMinute);
@@ -446,23 +451,23 @@ include 'move-to-top.php';
 
 
                     // Faculty Time Table
-
+            
 
 
                     $staffName = $staffRow['name'];
                     // echo "<h4>Staff: $staffName</h4>";
-                    echo "<br>";
-                    $currrrsem= $_COOKIE['whichsem'];
+                    echo "<br class='hidefaculty" . $facultyhidecount . "'>";
+                    $currrrsem = $_COOKIE['whichsem'];
 
                     // Initialize an array to store the staff timetable
                     $staffTimetable = array();
 
                     // Iterate over all tables with the suffix "_subjects" to find staff's courses
-                    $sqlGetCourses = "SHOW TABLES LIKE '".$currrrsem."%_subjects'";
+                    $sqlGetCourses = "SHOW TABLES LIKE '" . $currrrsem . "%_subjects'";
                     $resultCourses = $conn->query($sqlGetCourses);
 
                     while ($tableRow = $resultCourses->fetch_assoc()) {
-                        $subjectTableName = $tableRow['Tables_in_putimetbdb ('.$currrrsem.'%_subjects)'];
+                        $subjectTableName = $tableRow['Tables_in_putimetbdb (' . $currrrsem . '%_subjects)'];
 
                         // Fetch the staff's courses from the subject table using a partial match
                         $sqlGetStaffCourses = "SELECT subjectCode, subjectName, stype, staffName, labStaffName FROM $subjectTableName WHERE staffName LIKE '$staffName'";
@@ -484,7 +489,7 @@ include 'move-to-top.php';
 
                     // Display the staff timetable in a table
                     if (!empty($staffTimetable)) {
-                        echo "<table class='table table-bordered'>";
+                        echo "<table class='table table-bordered hidefaculty" . $facultyhidecount . "'>";
                         // Add table header
                         echo "<thead><tr>";
                         $columns = ["CODE ", "COURSE TITLE", "H/S", "FACULTY", "FACULTY2"];
@@ -507,13 +512,13 @@ include 'move-to-top.php';
                         }
                         echo "</tbody>";
 
-                        echo "</table><br>";
+                        echo "</table><br class='hidefaculty" . $facultyhidecount . "'>";
                     } else {
-                        echo "No courses found for $staffName.<br>";
+                        // echo "No courses found for $staffName.<br>";
                     }
                     // dfggfgdgdf
-                    echo "<hr>";
-                    echo "<br><br>";
+                    echo "<hr class='hidefaculty" . $facultyhidecount . "'>";
+                    echo "<br class='hidefaculty" . $facultyhidecount . "'><br class='hidefaculty" . $facultyhidecount++ . "'>";
                 }
             } else {
                 echo "No staff found.";
@@ -539,9 +544,9 @@ include 'move-to-top.php';
 
                         if ($result->num_rows > 0) {
                             // Display the fetched data in a table format without dropdowns
-
+                
                             // echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
-
+                
 
                             echo '<table class="table table-bordered " style="display:none">';
                             $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
@@ -561,7 +566,7 @@ include 'move-to-top.php';
                                 $i++;
                                 echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
                                 echo '<td>' . $row["DAY"] . '</td>'; // DAYS
-
+                
                                 // Loop through the time slots and display values
                                 $j = 1;
                                 foreach ($row as $columnName => $columnValue) {
@@ -615,15 +620,16 @@ include 'move-to-top.php';
                             echo '</table>';
                             $i = 0;
                         } else {
-                            echo 'No data found for the selected course.';
+                            // echo 'No data found for the selected course.';
                         }
                     }
                 }
                 for ($lab = 1; $lab <= 4; $lab++) {
-                    echo "<h4>Lab $lab Timetable</h4>";
-                    echo "<table class='table table-bordered'>";
+                    echo "<h4 class='hidelab" . $lab . "'>Lab $lab Timetable</h4>";
+                    echo '<input type="checkbox" class="hidehidecheckbox" id="hideChecklab' . $lab . '" onchange="hidelab(\'hidelab' . $lab . '\')">
+                    <label class="hidehidecheckbox" for="hideChecklab">Hide lab ' . $lab . '</label>';
+                    echo "<table class='table table-bordered hidelab" . $lab . "'>";
                     echo "<thead><tr><th>SL.NO.</th><th>DAYS</th>";
-
                     // Generate column headers for time slots
                     $timeSlots = ["9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
                     foreach ($timeSlots as $slot) {
@@ -657,42 +663,55 @@ include 'move-to-top.php';
 
                     // Display another table for records from merged_table
                     // echo "<h4>Records for Lab $lab</h4>";
-                    echo "<table class='table table-bordered'>";
+                    echo "<table class='table table-bordered hidelab" . $lab . "'>";
                     echo "<thead><tr><th>Subject Code</th><th>FacultyName</th><th>FacultyName 2</th><th>H/S</th></tr></thead>";
                     echo "<tbody>";
-                
+
                     // Assuming you have a database connection $conn
                     $query = "SELECT * FROM merged_table WHERE lab = $lab";
                     $result = $conn->query($query);
-                
+
                     if ($result) {
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . $row['theory'] . "</td>";
                             echo "<td>" . $row['facultyName'] . "</td>";
-                            echo "<td>".$row['facultyName2']."</td>";
+                            echo "<td>" . $row['facultyName2'] . "</td>";
                             echo "<td>" . strtoupper($row['stype']) . "</td>";
                             // echo "<td>" . $row['lab'] . "</td>";
                             // Add more columns as needed
                             echo "</tr>";
                         }
-                
+
                         $result->free_result();
                     } else {
                         echo "Error in query: " . $conn->error;
                     }
-                
+
                     echo "</tbody>";
-                    echo "</table><br><hr><br>";
+                    echo "</table><br class='hidelab" . $lab . "'><hr class='hidelab" . $lab . "'><br>";
                 }
                 ?>
                 <script>
+                    function hidelab(hidelabname) {
+                        // console.log("clicked");
+                        var elements = document.getElementsByClassName(hidelabname);
+
+                        for (var i = 0; i < elements.length; i++) {
+                            if (elements[i].hasAttribute("hidden")) {
+                                elements[i].removeAttribute("hidden");
+                            } else {
+                                elements[i].setAttribute("hidden", true);
+                            }
+                        }
+                    }
+
                     labvalue();
 
                     function labvalue() {
-                        for (let lab = 1; lab <=4; lab++) {
-                            for (let i = 1; i <=5; i++) {
-                                for (let j = 1; j <=8; j++) {
+                        for (let lab = 1; lab <= 4; lab++) {
+                            for (let i = 1; i <= 5; i++) {
+                                for (let j = 1; j <= 8; j++) {
                                     var className = 'labcel' + i + j;
                                     var labcode = 'tablecel' + i + j;
                                     // Select elements with the constructed class name
@@ -704,11 +723,11 @@ include 'move-to-top.php';
                                     var labValues1 = [];
 
                                     // Loop through the NodeList and push innerText values into the array
-                                    labElements.forEach(function(element) {
+                                    labElements.forEach(function (element) {
                                         labValues.push(element.innerText);
                                     });
 
-                                    labElements1.forEach(function(element) {
+                                    labElements1.forEach(function (element) {
                                         labValues1.push(element.innerText);
                                     });
 
@@ -730,6 +749,15 @@ include 'move-to-top.php';
                 function prt() {
                     document.getElementById('btnhid').style.display = 'none';
                     document.getElementById('moveToTopBtn').style.display = 'none';
+                    var elements = document.getElementsByClassName('hidehidecheckbox');
+
+                    for (var i = 0; i < elements.length; i++) {
+                        if (elements[i].style.display === 'none') {
+                            elements[i].style.display = ''; // Show the element
+                        } else {
+                            elements[i].style.display = 'none'; // Hide the element
+                        }
+                    }
                     window.print();
                     location.reload();
                 }

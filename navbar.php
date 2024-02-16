@@ -32,7 +32,7 @@
                     <a class="nav-link" href="schedule.php">Schedule</a>
                 </li>
                 <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'workflow.php') ? 'active' : ''; ?>">
-                    <a class="nav-link" href="workflow.php">Work Flow</a>
+                    <a class="nav-link" href="workflow.php">Work Load</a>
                 </li>
                 <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'export.php') ? 'active' : ''; ?>">
                     <a class="nav-link" href="export.php">Export</a>
