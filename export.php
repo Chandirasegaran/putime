@@ -76,6 +76,7 @@ include 'move-to-top.php';
                 echo '' . ucfirst($_COOKIE['whichsem']) . ' Semester Time Table';
             }
             ?>
+            <pre id="yearval"></pre>
         </h3>
         <br>
         <table class="table table-bordered" hidden>
@@ -117,6 +118,15 @@ include 'move-to-top.php';
                 ?>
             </tbody>
         </table>
+        <script>
+    function updateYearValue() {
+        var inputElement = document.getElementById("year");
+        var h1Element = document.getElementById("yearval");
+
+        // Set the content of the h1 element to the value of the input
+        h1Element.textContent = inputElement.value;
+    }
+</script>
     </div>
 
     <!-- Display tables based on names obtained from $adminTable -->
@@ -126,7 +136,7 @@ include 'move-to-top.php';
         // Fetch table names from $adminTable
         $sqlGetTableNamesFromAdmin = "SELECT course AS tableName FROM $adminTable";
         $resultTableNames = $conn->query($sqlGetTableNamesFromAdmin);
-
+        echo '<pre class="hidehidecheckbox">YEAR: <input type="text" id="year" oninput="updateYearValue()"></pre>';
         if ($resultTableNames->num_rows > 0) {
             while ($tableRow = $resultTableNames->fetch_assoc()) {
                 $tableName = $tableRow['tableName'];
