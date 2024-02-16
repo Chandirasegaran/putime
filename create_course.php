@@ -40,8 +40,15 @@ include 'db_connection.php';
 
 
 // Batch 1
-
-$sql = "INSERT INTO " . ($currsem == "odd" ? "adminodd" : "admineven") . " (COURSE) VALUES ('$currsem$courseName')";
+if($bat==true)
+{
+    $batch="B1";
+}
+else
+{
+    $batch="";
+}
+$sql = "INSERT INTO " . ($currsem == "odd" ? "adminodd" : "admineven") . " (COURSE) VALUES ('$currsem$courseName$batch')";
 
 if ($conn->query($sql) !== TRUE) {
     echo 'Error Inserting into Admin table: ' . $conn->error;
@@ -49,7 +56,7 @@ if ($conn->query($sql) !== TRUE) {
 
 // Time table Creation
 
-$sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName . ' (
+$sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . $courseName .$batch. ' (
     `ORDER` INT PRIMARY KEY,
     DAY varchar(10),
     `9_30` VARCHAR(30),
@@ -68,7 +75,7 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 $sqlInsertData = "
-    INSERT INTO `{$currsem}{$courseName}` (`ORDER`, DAY, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
+    INSERT INTO `{$currsem}{$courseName}{$batch}` (`ORDER`, DAY, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
     VALUES 
     (1,'MONDAY', '', '', '', '', '', '', '', ''),
     (2,'TUESDAY', '', '', '', '', '', '', '', ''),

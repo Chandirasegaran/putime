@@ -20,7 +20,8 @@ include 'move-to-top.php';
 
 <body>
     <script>
-        function processInput(inputField) {
+        function processInput(inputField) {15
+
             var inputValue = inputField.value;
             var cleanedInput = inputValue.replace(/[^a-zA-Z0-9_]/g, '_');
             inputField.value = cleanedInput; // Update the input field value
@@ -126,7 +127,7 @@ include 'move-to-top.php';
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="8" oninput="processInput(this)" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="15" oninput="processInput(this)" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
@@ -713,8 +714,8 @@ include 'move-to-top.php';
         }
 
         function allowTextOnly(inputField) {
-            inputField.value = inputField.value.replace(/[^A-Za-z0-9-]/g, '');
-            inputField.value = inputField.value.toUpperCase();
+            inputField.value = inputField.value.replace(/[^A-Za-z0-9-_]/g, '');
+inputField.value = inputField.value.toUpperCase();
         }
 
         function deleteCourse(courseName) {

@@ -1,6 +1,6 @@
-<?php 
-        include 'move-to-top.php';  
-    ?>
+<?php
+include 'move-to-top.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -113,7 +113,7 @@
         });
 
         function check() {
-            console.log("H");
+            // console.log("H");
             return false;
         }
     </script>
@@ -234,18 +234,154 @@
                             let elements3 = document.querySelectorAll('.labStaffName' + i.toString() + j.toString());
 
                             // Create an array to store the values
-
+                            let tcount=0;
                             let hcheckarray = [];
+                            let noarray=[];
+                            let left=null;
+                            let right=null;
                             // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
-                            for (let j1 = 1; j1 <= 7; j1++) {
+                            for (let j1 = 1; j1 <= 8; j1++) {
                                 // Select elements with class name based on 'i' and 'j'
                                 let h_elements = document.querySelectorAll('.table' + i.toString() + j1.toString());
-
+                                let labs_variable = document.querySelectorAll('.lab' + i.toString() + j1.toString());
+                                let h2_element= document.querySelectorAll('.labStaffName' +i.toString() + j1.toString());
                                 // Iterate over the NodeList and push innerText into hcheckarray
-                                h_elements.forEach(function(element) {
-                                    hcheckarray.push(element.innerText);
+                                h_elements.forEach(function(element,index) {
+                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
+                                    if(element.innerText==eval(clsvar))
+                                    {
+                                        hcheckarray.push(element.innerText);
+                                    }
+                                        if(labs_variable[index].innerText=="no" && element.innerText==eval(clsvar))
+                                        {
+                                            noarray.push(labs_variable[index].innerText);
+                                            tcount++;
+                                        }
+                                });
+                                
+                                h2_element.forEach(function(elementxy,index)
+                                {
+                                    if(elementxy.innerText==eval(clsvar))
+                                    {
+                                        // console.log(elementxy.innerText);
+                                        hcheckarray.push(elementxy.innerText);
+                                    }
+                                    if(labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvar))
+                                        {
+                                            noarray.push(labs_variable[index].innerText);
+                                            tcount++;
+                                        }
                                 });
                             }
+                            let hcheckarrayclash = [];
+                                
+                                if(j>1)
+                                {
+                                let h_elementsclash = document.querySelectorAll('.table' + i.toString() + (j-1).toString());
+                                let h_elementsclash2=document.querySelectorAll('.labStaffName' + i.toString() + (j-1).toString());
+                                h_elementsclash.forEach(function(elementclash,index) {
+                                    
+                                    if(elementclash.innerText==eval(clsvar))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'already allocated on left side');
+                                        left=true;
+                                    }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 is already allocated on left side');
+                                        left=true;
+                                    }
+                                        
+                                });
+
+                                h_elementsclash2.forEach(function(elementclash,index) {
+                                    
+                                    if(elementclash.innerText==eval(clsvar))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'already allocated on left side');
+                                        left=true;
+                                    }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 is already allocated on left side');
+                                        left=true;
+                                    }
+                                        
+                                });
+                                
+                                }
+
+
+                            if(j<8) {
+                                
+                                let h_elementsclash = document.querySelectorAll('.table' + i.toString() + (j+1).toString());
+                                let h_elementsclash2 = document.querySelectorAll('.labStaffName' + i.toString() + (j+1).toString());
+                                h_elementsclash.forEach(function(elementclash,index) {
+                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
+                                    // if(elementclash.innerText!=eval(clsvar))
+                                    // console.log(elementclash.innerText,"!=",eval(clsvar));
+                                    if(elementclash.innerText==eval(clsvar))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'already allocated on right side');
+                                        right=true;
+                                    }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 already allocated on right side');
+                                        right=true;
+                                    }
+                                });
+
+                                h_elementsclash2.forEach(function(elementclash,index) {
+                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
+                                    // if(elementclash.innerText!=eval(clsvar))
+                                    // console.log(elementclash.innerText,"!=",eval(clsvar));
+                                    if(elementclash.innerText==eval(clsvar))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'already allocated on right side');
+                                        right=true;
+                                    }
+                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    {
+                                        let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
+                                        targetElement.style.backgroundColor = 'red';
+                                        targetElement.setAttribute('data-toggle', 'tooltip');
+                                        targetElement.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                        targetElement.setAttribute('title', 'staff 2 already allocated on right side');
+                                        right=true;
+                                    }
+                                });
+
+                            }
+
                             let vcheckarray = [];
 
                             if (j == 1) {
@@ -279,6 +415,7 @@
                             elements3.forEach(function(elementpara) {
                                 valuesArraysf.push(elementpara.innerText);
                             });
+                            
                             if (valuesArray.includes(eval(clsvar))) {
 
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
@@ -293,21 +430,46 @@
                             } else if (eval(stvar) != null && valuesArray.includes(eval(stvar))) {
                                 // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                            } else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
+                            }
+                            else if (eval(stvar) != null && valuesArraysf.includes(eval(stvar))) {
+                                // console.log(valuesArray);
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                            }
+                             else if (eval(labvar) != 'no' && labArray.includes(eval(labvar))) {
                                 // console.log(document.getElementById(i.toString() + j.toString() + k.toString()));
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
-                                element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', 'horizontally more than 2');
+                                element.setAttribute('data-placement', 'bottom');
+                                if(left==null && right==null)
+                                { // You can change the placement as needed
+                                element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
+                                }
+                                else if(left==true && right==null)
+                                {
+                                    element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
+                                }
+                                else if(left==null && right==true)
+                                {
+                                    element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
+                                }
+                                else if(left==true && right==true)
+                                {
+                                    element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
+                                }
+                                left=null;
+                                right=null;
+                                tcount=0;
+                                //console.log(hcheckarray);
+                                //console.log(hcheckarray,noarray);
                             } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
 
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', 'Vertically more than 2'); // Replace 'Your Tooltip Content' with your actual tooltip text
-
+                                element.setAttribute('title', `More than ${vcheckarray.filter(element => element === eval(clsvar)).length} Morning Shift`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                
                             }
                         }
                     }
@@ -404,17 +566,16 @@
         });
 
         function hideTable1() {
-        var hideCheckbox = document.getElementById("hideCheckbox");
-        var table = document.getElementById("hidetable");
-        
-        if (hideCheckbox.checked) {
-            table.style.cssText = ""; 
-          
-        } else {
-            table.style.display = "none";
-        }
-    }
+            var hideCheckbox = document.getElementById("hideCheckbox");
+            var table = document.getElementById("hidetable");
 
+            if (hideCheckbox.checked) {
+                table.style.cssText = "";
+
+            } else {
+                table.style.display = "none";
+            }
+        }
     </script>
 
     <script>
@@ -590,20 +751,25 @@
             //prompt when all courses are assigned
             var count = 0;
             for (let r = 0; r < len; r++) {
+                let i = r + 1;
+                document.getElementById('s' + i + '4c').innerText = result[valuesc[r]]; // Use innerText to set text content
                 if (result[valuesc[r]] == 0) {
                     count++;
                 }
             }
+
+
             if (count < len) {
                 alertShown = false;
             }
-            if (count == len && !alertShown) {
+            if (count == len && !alertShown && count > 0) {
                 alert("All courses have been assigned required hours");
                 alertShown = true; // Mark alert as shown
             }
 
             // console.log("count" + count + "" + len);
             // console.log(result);
+
 
         }
         var alertShown = false;
@@ -631,8 +797,20 @@
             return arr.filter(function(value) {
                 return value !== null && value !== undefined && value !== "" && value !== 0 && value !== false;
             });
-        }
 
+        }
+        function staffcheck(staffnam)
+        {
+            // for(let ab=1;ab<=8;ab++)
+            // {   console.log(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff");
+            //     // dfg=document.getElementsByClassName(staffnam + ab.toString())[0].value+".staff";
+            //     //console.log(window[(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff").toString()]);
+
+            //     // console.log((document.getElementsByClassName(staffnam + ab.toString())[0].value) + ".staff");
+
+            // }
+            // console.log(staffnam);
+        }
         function callCheck() {
             mycheck();
             hourCheck();
@@ -640,4 +818,5 @@
     </script>
 
 </body>
+
 </html>
