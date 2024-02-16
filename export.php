@@ -68,8 +68,15 @@ include 'move-to-top.php';
         ?>
 
         <!-- Display the merged_table data in a Bootstrap table with rowspan and sorted by faculty name -->
-        <h2>PONDICHERRY UNIVERSITY</h2>
-        <h3>COMPUTER SCIENCE DEPARTMENT</h3>
+        <h2 style="text-align:center">PONDICHERRY UNIVERSITY</h2>
+        <h3 style="text-align:center">COMPUTER SCIENCE DEPARTMENT</h3>
+        <h3 style="text-align:center">
+            <?php
+            if (isset($_COOKIE['whichsem'])) {
+                echo '' . ucfirst($_COOKIE['whichsem']) . ' Semester';
+            }
+            ?>
+        </h3>
         <br>
         <table class="table table-bordered" hidden>
             <thead>
