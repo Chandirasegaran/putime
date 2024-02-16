@@ -84,7 +84,7 @@ include 'move-to-top.php';
         <h3 style="text-align:center">
             <?php
             if (isset($_COOKIE['whichsem'])) {
-                echo '' . ucfirst($_COOKIE['whichsem']) . ' Semester';
+                echo '' . ucfirst($_COOKIE['whichsem']) . ' Semester Time Table';
             }
             ?>
         </h3>

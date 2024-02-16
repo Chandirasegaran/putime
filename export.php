@@ -73,7 +73,7 @@ include 'move-to-top.php';
         <h3 style="text-align:center">
             <?php
             if (isset($_COOKIE['whichsem'])) {
-                echo '' . ucfirst($_COOKIE['whichsem']) . ' Semester';
+                echo '' . ucfirst($_COOKIE['whichsem']) . ' Semester Time Table';
             }
             ?>
         </h3>
@@ -134,7 +134,7 @@ include 'move-to-top.php';
                 // Display the table name
                 echo "<h4 class='hidecourse" . $coursehidecount . "'>Course: " . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . "</h4>";
                 echo '<input type="checkbox" class="hidehidecheckbox" id="hideCheckcourse' . $coursehidecount . '" onchange="hidelab(\'hidecourse' . $coursehidecount . '\')">
-                <label class="hidehidecheckbox" for="hideCheckcourse">Hide Course ' . $tableName . '</label>';
+                <label class="hidehidecheckbox" for="hideCheckcourse">Hide Course ' . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . '</label>';
                 // Fetch and display data for each table
                 $sqlGetData = "SELECT * FROM $tableName";
                 $resultData = $conn->query($sqlGetData);
