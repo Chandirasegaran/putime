@@ -273,6 +273,8 @@ include 'move-to-top.php';
                                             tcount++;
                                         }
                                 });
+
+
                             }
                             let hcheckarrayclash = [];
                                 
@@ -334,9 +336,7 @@ include 'move-to-top.php';
                                 let h_elementsclash = document.querySelectorAll('.table' + i.toString() + (j+1).toString());
                                 let h_elementsclash2 = document.querySelectorAll('.labStaffName' + i.toString() + (j+1).toString());
                                 h_elementsclash.forEach(function(elementclash,index) {
-                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
-                                    // if(elementclash.innerText!=eval(clsvar))
-                                    // console.log(elementclash.innerText,"!=",eval(clsvar));
+
                                     if(elementclash.innerText==eval(clsvar))
                                     {
                                         let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
@@ -384,7 +384,7 @@ include 'move-to-top.php';
                             }
 
                             let vcheckarray = [];
-
+                            let v2count=0;
                             if (j == 1) {
                                 // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
                                 for (let i1 = 1; i1 <= 7; i1++) {
@@ -392,6 +392,8 @@ include 'move-to-top.php';
                                     let v_elements = document.querySelectorAll('.table' + i1.toString() + j.toString());
                                     let v_labs_variable = document.querySelectorAll('.lab' + i1.toString() + j.toString());
                                     let v2_element= document.querySelectorAll('.labStaffName' +i1.toString() + j.toString());
+
+
                                     // Iterate over the NodeList and push innerText into hcheckarray
                                     v_elements.forEach(function(element,index) {
                                         if(element.innerText==eval(clsvar))
@@ -403,6 +405,20 @@ include 'move-to-top.php';
                                         }
                                         }
                                     });
+                                    
+                                    v2_element.forEach(function(elementxy,index)
+                                {
+                                    if(elementxy.innerText==eval(clsvar))
+                                    {
+                                        // console.log(elementxy.innerText);
+                                        vcheckarray.push(elementxy.innerText);
+                                    }
+                                    if(v_labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvar))
+                                        {
+                                            vcount++;
+                                        }
+                                });
+
                                 }
                                 // console.log(vcheckarray);
 
