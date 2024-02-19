@@ -384,6 +384,7 @@ include 'move-to-top.php';
                             }
 
                             let vcheckarray = [];
+                            let v2checkarray=[];
                             let v2count=0;
                             if (j == 1) {
                                 // Assuming 'i' is defined in your context and you want to iterate 'j' from 1 to 7
@@ -392,7 +393,6 @@ include 'move-to-top.php';
                                     let v_elements = document.querySelectorAll('.table' + i1.toString() + j.toString());
                                     let v_labs_variable = document.querySelectorAll('.lab' + i1.toString() + j.toString());
                                     let v2_element= document.querySelectorAll('.labStaffName' +i1.toString() + j.toString());
-
 
                                     // Iterate over the NodeList and push innerText into hcheckarray
                                     v_elements.forEach(function(element,index) {
@@ -418,6 +418,30 @@ include 'move-to-top.php';
                                             vcount++;
                                         }
                                 });
+
+                                v_elements.forEach(function(element,index) {
+                                        if(element.innerText==eval(clsvarsf))
+                                        {
+                                        v2checkarray.push(element.innerText);
+                                        if(v_labs_variable[index].innerText=="no" && element.innerText==eval(clsvarsf))
+                                        {
+                                            v2count++;
+                                        }
+                                        }
+                                    });
+
+                                v2_element.forEach(function(elementxy,index)
+                                {
+                                    if(elementxy.innerText==eval(clsvarsf))
+                                    {
+                                        // console.log(elementxy.innerText);
+                                        v2checkarray.push(elementxy.innerText);
+                                    }
+                                    if(v_labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvarsf))
+                                        {
+                                            v2count++;
+                                        }
+                                });    
 
                                 }
                                 // console.log(vcheckarray);
@@ -496,6 +520,14 @@ include 'move-to-top.php';
                                 element.setAttribute('title', `Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 
                             }
+                            else if (v2checkarray.filter(element => element === eval(clsvarsf)).length >= 2) {
+
+                                    document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
+                                    element.setAttribute('data-toggle', 'tooltip');
+                                    element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                                    element.setAttribute('title', `staff 2 Theory-${v2count} Lab-${v2checkarray.filter(element => element === eval(clsvarsf)).length-v2count}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+
+                                    }
                         }
                     }
                 }
