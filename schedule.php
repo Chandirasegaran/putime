@@ -235,6 +235,7 @@ include 'move-to-top.php';
 
                             // Create an array to store the values
                             let tcount=0;
+                            let vcount=0;
                             let hcheckarray = [];
                             let noarray=[];
                             let left=null;
@@ -389,10 +390,18 @@ include 'move-to-top.php';
                                 for (let i1 = 1; i1 <= 7; i1++) {
                                     // Select elements with class name based on 'i' and 'j'
                                     let v_elements = document.querySelectorAll('.table' + i1.toString() + j.toString());
-
+                                    let v_labs_variable = document.querySelectorAll('.lab' + i1.toString() + j.toString());
+                                    let v2_element= document.querySelectorAll('.labStaffName' +i1.toString() + j.toString());
                                     // Iterate over the NodeList and push innerText into hcheckarray
-                                    v_elements.forEach(function(element) {
+                                    v_elements.forEach(function(element,index) {
+                                        if(element.innerText==eval(clsvar))
+                                        {
                                         vcheckarray.push(element.innerText);
+                                        if(v_labs_variable[index].innerText=="no" && element.innerText==eval(clsvar))
+                                        {
+                                            vcount++;
+                                        }
+                                        }
                                     });
                                 }
                                 // console.log(vcheckarray);
@@ -468,7 +477,7 @@ include 'move-to-top.php';
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `More than ${vcheckarray.filter(element => element === eval(clsvar)).length} Morning Shift`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 
                             }
                         }
