@@ -318,7 +318,7 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('title', 'already allocated on left side');
                                         left=true;
                                     }
-                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    else if(elementclash.innerText==eval(clsvarsf) && eval(stvar) != 'Nil')
                                     {
                                         let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
                                         targetElement.style.backgroundColor = 'red';
@@ -341,7 +341,7 @@ include 'move-to-top.php';
                                         targetElement.setAttribute('title', 'already allocated on left side');
                                         left=true;
                                     }
-                                    else if(elementclash.innerText==eval(clsvarsf))
+                                    else if(elementclash.innerText==eval(clsvarsf) && eval(stvar) != 'Nil')
                                     {
                                         let targetElement = document.getElementById(i.toString() + j.toString() + k.toString());
                                         targetElement.style.backgroundColor = 'red';
@@ -501,11 +501,11 @@ include 'move-to-top.php';
                             } else if (valuesArraysf.includes(eval(clsvar))) {
                                 // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
-                            } else if (eval(stvar) != null && valuesArray.includes(eval(stvar))) {
+                            } else if (eval(stvar) != null && eval(stvar) != 'Nil' && valuesArray.includes(eval(stvar))) {
                                 // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             }
-                            else if (eval(stvar) != null && valuesArraysf.includes(eval(stvar))) {
+                            else if (eval(stvar) != null && eval(stvar) != 'Nil' && valuesArraysf.includes(eval(stvar))) {
                                 // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             }
@@ -538,7 +538,7 @@ include 'move-to-top.php';
                                 //console.log(hcheckarray);
                                 //console.log(hcheckarray,noarray);
                             }
-                            else if (h2checkarray.filter(element => element === eval(clsvarsf)).length >= 2) {
+                            else if (h2checkarray.filter(element => element === eval(clsvarsf)).length >= 2 && eval(stvar) != 'Nil') {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom');
@@ -573,7 +573,7 @@ include 'move-to-top.php';
                                 element.setAttribute('title', `Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 
                             }
-                            else if (v2checkarray.filter(element => element === eval(clsvarsf)).length >= 2) {
+                            else if (v2checkarray.filter(element => element === eval(clsvarsf)).length >= 2 && eval(stvar) != 'Nil') {
 
                                     document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                     element.setAttribute('data-toggle', 'tooltip');
