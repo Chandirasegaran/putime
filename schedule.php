@@ -570,7 +570,7 @@ include 'move-to-top.php';
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 
                             }
                             else if (v2checkarray.filter(element => element === eval(clsvarsf)).length >= 2 && eval(stvar) != 'Nil') {
@@ -578,7 +578,7 @@ include 'move-to-top.php';
                                     document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                     element.setAttribute('data-toggle', 'tooltip');
                                     element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                    element.setAttribute('title', `staff 2 Theory-${v2count} Lab-${v2checkarray.filter(element => element === eval(clsvarsf)).length-v2count}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                    element.setAttribute('title', `Vertically staff 2 Theory-${v2count} Lab-${v2checkarray.filter(element => element === eval(clsvarsf)).length-v2count}`);// Replace 'Your Tooltip Content' with your actual tooltip text
 
                                     }
                         }
