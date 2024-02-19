@@ -235,8 +235,10 @@ include 'move-to-top.php';
 
                             // Create an array to store the values
                             let tcount=0;
+                            let t2count=0;
                             let vcount=0;
                             let hcheckarray = [];
+                            let h2checkarray = [];
                             let noarray=[];
                             let left=null;
                             let right=null;
@@ -274,6 +276,29 @@ include 'move-to-top.php';
                                         }
                                 });
 
+                                h_elements.forEach(function(element,index) {
+                                    // hcheckarray.push(element.innerText==eval(clsvar) && element.innerText);
+                                    if(element.innerText==eval(clsvarsf))
+                                    {
+                                        h2checkarray.push(element.innerText);
+                                    }
+                                        if(labs_variable[index].innerText=="no" && element.innerText==eval(clsvarsf))
+                                        {
+                                            t2count++;
+                                        }
+                                });
+                                h2_element.forEach(function(elementxy,index)
+                                {
+                                    if(elementxy.innerText==eval(clsvarsf))
+                                    {
+                                        // console.log(elementxy.innerText);
+                                        h2checkarray.push(elementxy.innerText);
+                                    }
+                                    if(labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvarsf))
+                                        {
+                                            t2count++;
+                                        }
+                                });
 
                             }
                             let hcheckarrayclash = [];
@@ -493,26 +518,54 @@ include 'move-to-top.php';
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
+                                element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
                                 tcount=0;
                                 //console.log(hcheckarray);
                                 //console.log(hcheckarray,noarray);
-                            } else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
+                            }
+                            else if (h2checkarray.filter(element => element === eval(clsvarsf)).length >= 2) {
+                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
+                                element.setAttribute('data-toggle', 'tooltip');
+                                element.setAttribute('data-placement', 'bottom');
+                                if(left==null && right==null)
+                                { // You can change the placement as needed
+                                element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                }
+                                else if(left==true && right==null)
+                                {
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on left side`);
+                                }
+                                else if(left==null && right==true)
+                                {
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on right side`);
+                                }
+                                else if(left==true && right==true)
+                                {
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on both side`);
+                                }
+                                left=null;
+                                right=null;
+                                t2count=0;
+                                //console.log(hcheckarray);
+                                //console.log(hcheckarray,noarray);
+                            }
+
+                            else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
 
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
