@@ -51,10 +51,13 @@ try {
                     )
                 );
             } else {
-                // No subjects found
+                // Return an empty table structure
                 $response = array(
-                    'status' => 'error',
-                    'message' => 'No subjects found for the given course.'
+                    'status' => 'success',
+                    'data' => array(
+                        'course_name' => $courseName,
+                        'subjects' => array()  // Empty array
+                    )
                 );
             }
         } else {

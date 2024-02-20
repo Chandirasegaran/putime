@@ -223,6 +223,34 @@ include 'move-to-top.php';
                                 <input name="courseName" type="text" class="form-control" id="editCourseName" required>
                             </div>
                             <!-- Table for Hardcore subjects -->
+                            <?php
+                            include 'db_connection.php';
+
+                            // Fetch subject codes from the database table
+                            $hardcoreCodesQuery = $conn->query("SELECT subjectCode FROM hardcoretb");
+                            $hardcoreCodes = array();
+
+                            while ($row = $hardcoreCodesQuery->fetch_assoc()) {
+                                $hardcoreCodes[] = $row['subjectCode'];
+                            }
+
+                            $conn->close();
+                            ?>
+
+                            <?php
+                            include 'db_connection.php';
+
+                            // Fetch subject names from the database table
+                            $hardcoreNamesQuery = $conn->query("SELECT subjectName FROM hardcoretb");
+                            $hardcoreNames = array();
+
+                            while ($row = $hardcoreNamesQuery->fetch_assoc()) {
+                                $hardcoreNames[] = $row['subjectName'];
+                            }
+
+                            $conn->close();
+                            ?>
+
                             <table class="table table-bordered" id="editSubjectsTable">
                                 <thead class="thead-dark">
                                     <tr>
@@ -348,6 +376,106 @@ include 'move-to-top.php';
             </div>
         </div>
 
+        <div class="mt-5">
+            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#hardcoreModal">
+                ADD HARDCORE
+            </button>
+        </div>
+        <div class="modal fade" id="hardcoreModal" tabindex="-1" role="dialog" aria-labelledby="hardcoreModalLabel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-xl" role="document">
+                <!-- Increased modal width using modal-xl for larger screens -->
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class=" modal-title " id="hardcoreModalLabel">Add Softcores</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="create_hardcore.php" method="post">
+
+                            <!-- Table -->
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Subject Name</th>
+                                        <th>Hours Required</th>
+                                        <th>Lab</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="15" oninput="processInput(this)" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
+                                        <td><input type="number" class="form-control" name="hoursRequired1" Required>
+                                        </td>
+                                        <td>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="no" checked> No
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="1"> 1
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="2"> 2
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="3"> 3
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" class="form-check-input" name="lab1" value="4"> 4
+                                            </div>
+                                        </td>
+                                        <td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Add Row Button -->
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowsc()">Add
+                                Row</button>
+
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href = 'index.php';">Close</button>
+                        <button type="submit" class="btn btn-primary">Create Hardcores</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <?php
+            include 'db_connection.php';
+            $sql = ("SELECT * FROM HARDCORETB");
+            // echo $sql;
+            $hardResult = $conn->query($sql);
+            if ($hardResult === false) { 
+                die("Error executing the query: " . $conn->error);
+            }
+            if ($hardResult->num_rows > 0) {
+                echo '<input type="checkbox" id="checkbox_hard" onchange="hideTable1(\'checkbox_hard\',\'table_hard\')">
+                <label for="checkbox_hard">SHOW HARDCORE LIST</label>';
+                echo '<h2 >Hardcore Details</h2>';
+                echo '<table class="table" id="table_hard" style="display:none">';
+                echo '<thead><tr><th>Course Code</th><th>Course Name</th><th>Action</th></tr></thead>';
+                echo '<tbody>';
+                while ($hardRow = $hardResult->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . $hardRow["subjectCode"] . '</td>';
+                    echo '<td>' . $hardRow["subjectName"] . '</td>';
+                    echo '<td><button class="btn btn-danger" onclick="deletehardCourse(' . "'" . $hardRow["subjectName"] . "'" . ')">Delete</button></td>';
+                    echo '</tr>';
+                }
+                echo '</tbody></table>';
+            } else {
+                echo 'No Course records found.';
+            }
+            $conn->close();
+            ?>
 
         <div class="mt-5">
             <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#softcoreModal">
@@ -469,7 +597,7 @@ include 'move-to-top.php';
 
         <!-- Skill Enhancement -->
         <br>
-        <hr noshade>
+        <hr noshade hidden>
         <div class="mt-5">
             <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#seModal">
                 ADD SKILL ENHANCEMENT
@@ -726,6 +854,16 @@ inputField.value = inputField.value.toUpperCase();
                 window.location.href = 'delete_course.php?coursename=' + courseName;
             }
         }
+        
+        function deletehardCourse(courseName) {
+            console.log('Delete Course called with courseName:', courseName);
+            var confirmation = confirm("Are you sure you want to delete this Course record?");
+            if (confirmation) {
+                // Redirect to the PHP file that handles the deletion
+                window.location.href = 'delete_hard_course.php?coursename=' + courseName;
+            }
+        }
+
 
         function deleteScCourse(courseName) {
             console.log('Delete Course called with courseName:', courseName);
@@ -955,10 +1093,31 @@ inputField.value = inputField.value.toUpperCase();
         // let edhoursRequiredcount = 2;
         function addSubjectRow() {
             // Function to add a new row for a subject in the edit modal
-            var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + editcount + '" maxlength="15" oninput="processInput(this)" Required></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + editcount + '" maxlength="50" Required></td>' +
-                '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" Required></td>' +
+            var newRow = 
+                '<tr>' +
+                '<td><input list="hardcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchhardSubjectDetails(this)" required>' +
+                '<datalist id="hardcoreCodes">';
+
+
+
+            // Add options for each softcore code
+            <?php foreach ($hardcoreCodes as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+            newRow += '</datalist></td>' +
+
+
+
+                '<td><input list="hardcoreNames" class="form-control" name="subjectName' + editcount + '" onchange="fetchhardSubjectDetails1(this)" required>' +
+                '<datalist id="hardcoreNames">';
+
+            <?php foreach ($hardcoreNames as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+            newRow += '</datalist></td>' +
+
+
+                '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
                 '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
@@ -977,6 +1136,7 @@ inputField.value = inputField.value.toUpperCase();
                 '</div>' +
                 '</td>' +
                 '<td><input type="text" class="form-control" value="hc" name="type' + editcount + '" ></td>' +
+
                 '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#editSubjectsTable tbody').insertAdjacentHTML('beforeend', newRow);
@@ -1037,7 +1197,40 @@ inputField.value = inputField.value.toUpperCase();
             document.querySelector('#addSoftcoreTableId tbody').insertAdjacentHTML('beforeend', newRow);
             editcount++;
         }
+        function fetchhardSubjectDetails(input)
+        {
+             // console.log(input.value );
+             var subjectCode = input.value;
+            var row = input.closest('tr');
+            console.log("fB" + row);
 
+            // Make an AJAX request to fetch subject details
+            jQuery.ajax({
+                url: 'get_hard_details_edit.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'subjectCode': subjectCode
+                },
+                success: function(response) {
+                    if (response.error) {
+                        console.error(response.error);
+                        return;
+                    }
+
+                    // Update the corresponding fields in the row
+                    row.querySelector('[name^="subjectName"]').value = response.subjectName;
+                    row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+                    // Update radio button based on the lab value
+                    row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+
+                    row.querySelector('[name^="type"]').value = "hc";
+                },
+                error: function(xhr, status, error) {
+                    console.error('An error occurred while fetching subject details.');
+                }
+            });
+        }
 
         
         function fetchScSubjectDetails1(input) {
