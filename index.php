@@ -20,7 +20,7 @@ include 'move-to-top.php';
 
 <body>
     <script>
-        function processInput(inputField) {15
+        function processInput(inputField) {
 
             var inputValue = inputField.value;
             var cleanedInput = inputValue.replace(/[^a-zA-Z0-9_]/g, '_');
