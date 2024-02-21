@@ -115,7 +115,7 @@ include 'move-to-top.php';
                             </div>
 
                             <!-- Table -->
-                            <table class="table">
+                            <!-- <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Subject Code</th>
@@ -151,11 +151,11 @@ include 'move-to-top.php';
                                         <td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
 
                             <!-- Add Row Button -->
-                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowhc()">Add
-                                Row</button>
+                            <!-- <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowhc()">Add
+                                Row</button> -->
 
                     </div>
                     <div class="modal-footer">
