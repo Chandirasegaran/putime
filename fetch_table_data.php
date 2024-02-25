@@ -16,7 +16,7 @@ $colorArray = [
     '#9b59b6',
     '#d35400',
     '#27ae60',
-    '#c0392b'
+    '#ffa07a'
 ];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                 if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
                     echo '<td>';
 
-                    echo '<select id="' . "select" . $row["ORDER"] . $i . '" class="form-control ' . "sel" . $row["ORDER"] . $i . '" name="' . $course . $row["ORDER"] . $i . '" onchange="callCheck()" onclick="staffcheck(\'sel' . $row["ORDER"]. $i .'\')">';
+                    echo '<select id="' . "select" . $row["ORDER"] . $i . '" class="form-control ' . "sel" . $row["ORDER"] . $i . '" name="' . $course . $row["ORDER"] . $i . '" onchange="callCheck()" onclick="staffcheck(\'' . $row["ORDER"]. $i .'\')">';
 
                     //onclick="removesel('.$row["ORDER"] . $i.')"
 

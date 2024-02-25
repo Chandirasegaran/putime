@@ -151,9 +151,9 @@ include 'move-to-top.php';
         // };
         var hasFunctionExecuted = false;
         // Your onmouseover function
-        function generatematrix() {
+        function generatematrix(i_value,j_continue) {
             if (!hasFunctionExecuted) {
-                
+
                 // Your code to execute on mouseover goes here
                 // Assuming you have a variable for the total number of subjects ($si in this case)
                 for (var i = 1; i <= document.getElementById('hidval').innerText; i++) {
@@ -164,6 +164,7 @@ include 'move-to-top.php';
                         name: document.getElementById('s' + i + '2').innerText,
                         staff: document.getElementById('s' + i + '3').value,
                         hours: document.getElementById('s' + i + '4').innerText,
+                        color: document.getElementById('s' + i + '1').style.backgroundColor
                     };
 
                     // Check if the element 'document.getElementById('st' + i + '3')' exists
@@ -175,24 +176,20 @@ include 'move-to-top.php';
 
                     window[rowName].lab = document.getElementById('s' + i + '5').innerText;
 
-                    // Accessing class variables
-                    // console.log(window[rowName].name);  // s11 name
-                    // console.log(window[rowName].staff); // s11 staff
-                    // console.log(window[rowName].hours); // s11 hours
-                    // console.log(window[rowName].lab);   // s11 lab
-                    //     row.push(document.getElementById('s' + i + '1').innerText);
-                    //     row.push(document.getElementById('s' + i + '2').innerText);
-                    //     row.push(document.getElementById('s' + i + '3').value);
-                    //     row.push(document.getElementById('s' + i + '4').innerText);
-                    //     row.push(document.getElementById('s' + i + '5').innerText);
-                    // matrix.push(row);
+                    
                 }
                 for (let i = 1; i <= 5; i++) {
                     for (let j = 1; j <= 8; j++) {
                         for (let k = 0; k <= (document.getElementById("hidval").innerText - 1); k++) {
                             let element = document.getElementById(i.toString() + j.toString() + k.toString());
+                            if(element && element.innerText)
+                            {
+                             element.style.backgroundColor = eval(element.innerText + ".color");
+                            }
                             let clsvar = null;
                             let clsvarsf = null;
+                            let presenttcount=null;
+                            let presentlabcount=null;
                             if (element && element.value !== null) {
                                 let staffValue = element.value + ".staff";
 
@@ -200,7 +197,6 @@ include 'move-to-top.php';
                                     clsvar = staffValue;
                                 }
                             }
-
 
                             if (element && element.value !== null) {
                                 let staffValuesf = element.value + ".staff2";
@@ -474,6 +470,27 @@ include 'move-to-top.php';
 
                             }
 
+                            for(let j_skip=1;j_skip<=8;j_skip++)
+                            {
+                                if(j_continue==j_skip)
+                                {
+                                    continue;
+                                }
+                                var dropdown = document.getElementById("select" + i_value + "" + j_skip);
+                                if (dropdown.value) {
+                                    if(eval(clsvar)==eval(dropdown.value+".staff") && eval(labvar)==eval(dropdown.value+".lab") && eval(labvar)=="no")
+                                    {
+                                        presenttcount++;
+                                    }
+                                    else if(eval(clsvar)==eval(dropdown.value+".staff") && eval(labvar)==eval(dropdown.value+".lab") && eval(labvar)!="no")
+                                    {
+                                        presentlabcount++;
+                                    }
+                                }
+                                
+                            }
+
+
                             let valuesArray = [];
                             let valuesArraysf = [];
 
@@ -530,29 +547,31 @@ include 'move-to-top.php';
                                 element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 }
                             }
-                            else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
+                            else if ((hcheckarray.filter(element => element === eval(clsvar)).length)+presenttcount >= 2) {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
+                                element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount+presenttcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount+presenttcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount+presenttcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount+presenttcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
                                 tcount=0;
+                                //console.log(hcheckarray);
+                                //console.log(hcheckarray,noarray);
                             }
                             else if (h2checkarray.filter(element => element === eval(clsvarsf)).length >= 2 && eval(stvar) != 'Nil') {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
@@ -577,11 +596,10 @@ include 'move-to-top.php';
                                 left=null;
                                 right=null;
                                 t2count=0;
-                                //console.log(hcheckarray);
-                                //console.log(hcheckarray,noarray);
                             }
 
                             else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
+
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
@@ -594,86 +612,9 @@ include 'move-to-top.php';
                                     element.setAttribute('data-toggle', 'tooltip');
                                     element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                     element.setAttribute('title', `Vertically staff 2 Theory-${v2count} Lab-${v2checkarray.filter(element => element === eval(clsvarsf)).length-v2count}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+
                                     }
-                            else if ((hcheckarray.filter(element => element === eval(clsvar)).length >= 1) && (vcheckarray.filter(element => element === eval(clsvar)).length >= 1))
-                            {
-                                if((left==null && right==null))
-                                {
-                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
-                                element.setAttribute('data-toggle', 'tooltip');
-                                element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
-                                }
-                                else if(left==null && right==true)
-                                {
-                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
-                                element.setAttribute('data-toggle', 'tooltip');
-                                element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);// Replace 'Your Tooltip Content' with your actual tooltip text
-                                }
-                            }
-                            else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 1) {
-                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
-                                element.setAttribute('data-toggle', 'tooltip');
-                                element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
-                            }
-                            else if (v2checkarray.filter(element => element === eval(clsvarsf)).length >= 1 && eval(stvar) != 'Nil') {
-                            document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
-                            element.setAttribute('data-toggle', 'tooltip');
-                            element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                            element.setAttribute('title', `Vertically staff 2 Theory-${v2count} Lab-${v2checkarray.filter(element => element === eval(clsvarsf)).length-v2count}`);// Replace 'Your Tooltip Content' with your actual tooltip text
-                            }
-                            else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 1) {
-                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
-                                element.setAttribute('data-toggle', 'tooltip');
-                                element.setAttribute('data-placement', 'bottom');
-                                if(left==null && right==null)
-                                { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
-                                }
-                                else if(left==true && right==null)
-                                {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
-                                }
-                                else if(left==null && right==true)
-                                {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
-                                }
-                                else if(left==true && right==true)
-                                {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
-                                }
-                                left=null;
-                                right=null;
-                                tcount=0;
-                            }
-                            else if (h2checkarray.filter(element => element === eval(clsvarsf)).length >= 1 && eval(stvar) != 'Nil') {
-                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
-                                element.setAttribute('data-toggle', 'tooltip');
-                                element.setAttribute('data-placement', 'bottom');
-                                if(left==null && right==null)
-                                { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
-                                }
-                                else if(left==true && right==null)
-                                {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on left side`);
-                                }
-                                else if(left==null && right==true)
-                                {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on right side`);
-                                }
-                                else if(left==true && right==true)
-                                {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on both side`);
-                                }
-                                left=null;
-                                right=null;
-                                t2count=0;
-                                //console.log(hcheckarray);
-                                //console.log(hcheckarray,noarray);
-                            }
+                            
                         }
                     }
                 }
@@ -703,7 +644,7 @@ include 'move-to-top.php';
 
                 // console.log(matrix);
                 // Set the flag to true to indicate that the function has been executed
-                hasFunctionExecuted = true;
+                hasFunctionExecuted = false;
             }
 
 
@@ -1004,7 +945,15 @@ include 'move-to-top.php';
         }
         function staffcheck(staffnam)
         {
-            generatematrix();
+            // for(let ab=1;ab<=8;ab++)
+            // {   console.log(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff");
+            //     // dfg=document.getElementsByClassName(staffnam + ab.toString())[0].value+".staff";
+            //     //console.log(window[(document.getElementsByClassName(staffnam + ab.toString())[0].value + ".staff").toString()]);
+
+            //     // console.log((document.getElementsByClassName(staffnam + ab.toString())[0].value) + ".staff");
+
+            // }
+            // console.log(staffnam);
         }
         function callCheck() {
             mycheck();

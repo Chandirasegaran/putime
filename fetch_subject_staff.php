@@ -17,7 +17,7 @@ $colorArray = [
     '#9b59b6',
     '#d35400',
     '#27ae60',
-    '#c0392b'
+    '#ffa07a'
 ];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $course = $conn->real_escape_string($_POST['course']);
