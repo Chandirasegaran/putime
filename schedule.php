@@ -1002,9 +1002,22 @@ include 'move-to-top.php';
             });
 
         }
-        function staffcheck(staffnam)
+        function staffcheck(i_check)
         {
-            generatematrix();
+        //    let selectboxid="select"+i_check;
+        //    var dropdown = document.getElementById(selectboxid);
+        // //    console.log(dropdown);
+        //    for (var i = 1; i < dropdown.options.length; i++) {
+        //     let dropstaffname=eval(dropdown.options[i].value+".staff");
+        //     console.log(dropstaffname);
+        //     }
+            // for(let j=0;i<8;i++)
+            // {
+            //     if(j=j_check)
+            //     {
+            //         continue;
+            //     }
+            // }
         }
         function callCheck() {
             mycheck();
