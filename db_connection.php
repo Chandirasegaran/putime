@@ -72,6 +72,46 @@ $sql = 'CREATE TABLE IF NOT EXISTS SOFTCORETB (
 if ($conn->query($sql) !== TRUE) {
     echo 'Error creating Softcore table: ' . $conn->error;
 }
+for ($i = 1; $i <= 4; $i++) {
+    $tableName = $currsem . 'lab' . $i.'_subjects';
+
+    $sql = "CREATE TABLE IF NOT EXISTS $tableName (
+        subjectCode VARCHAR(15) PRIMARY KEY,
+        subjectName VARCHAR(255),
+        hoursRequired INT,
+        hoursRequiredDup INT,
+        lab VARCHAR(10),
+        staffName VARCHAR(255),
+        labStaffName VARCHAR(255),
+        stype VARCHAR(10)
+    )";
+
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error creating $tableName table: " . $conn->error;
+    }
+}
+
+for ($i = 1; $i <= 4; $i++) {
+    $tableName = $currsem . 'lab' . $i;
+
+$sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . 'lab' . $i. ' (
+    `ORDER` INT PRIMARY KEY,
+    DAY varchar(10),
+    `9_30` VARCHAR(30),
+    `10_30` VARCHAR(30),
+    `11_30` VARCHAR(30),
+    `12_30` VARCHAR(30),
+    `1_30` VARCHAR(30),
+    `2_30` VARCHAR(30),
+    `3_30` VARCHAR(30),
+    `4_30` VARCHAR(30)
+)';
+
+
+if ($conn->query($sql) !== TRUE) {
+    echo 'Error creating Timetable table: ' . $conn->error;
+}
+}
 
 $sql = 'CREATE TABLE IF NOT EXISTS SETB (
     subjectCode VARCHAR(15) PRIMARY KEY,
