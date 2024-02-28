@@ -23,79 +23,33 @@ include 'move-to-top.php';
     $tableName = ($currsem == "odd") ? "adminodd" : "admineven";
     $tableNamesResult = $conn->query("SELECT * FROM $tableName");
 
-    if ($tableNamesResult->num_rows > 0) {
-        echo '<div class="container-fluid">
-                <H1>Lab Schedule</H1>
-                <div class="form-group">
-                    <label for="labDropdown">Select Lab:</label>
-                    <select class="form-control" id="labDropdown" onchange="updateLabTable()">
-                        <option value="1">Lab 1</option>
-                        <option value="2">Lab 2</option>
-                        <option value="3">Lab 3</option>
-                        <option value="4">Lab 4</option>
-                    </select>
-                </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>subjectCode</th>
-                            <th>subjectName</th>
-                            <th>hoursRequired</th>
-                            <th>hoursRequiredDup</th>
-                            <th>lab</th>
-                            <th>staffName</th>
-                            <th>labStaffName</th>
-                            <th>stype</th>
-                            <th>tablename</th>
-                        </tr>
-                    </thead>
-                    <tbody>';
+    // Truncate lab_subjects tables before inserting new values
+    $conn->query("TRUNCATE TABLE ${currsem}lab1_subjects");
+    $conn->query("TRUNCATE TABLE ${currsem}lab2_subjects");
+    $conn->query("TRUNCATE TABLE ${currsem}lab3_subjects");
+    $conn->query("TRUNCATE TABLE ${currsem}lab4_subjects");
 
+    if ($tableNamesResult->num_rows > 0) {
         while ($tableRow = $tableNamesResult->fetch_assoc()) {
             $subjectTableName = $tableRow["COURSE"] . "_subjects";
             $subjectsResult = $conn->query("SELECT * FROM $subjectTableName");
 
             while ($subjectRow = $subjectsResult->fetch_assoc()) {
-                echo '<tr>
-                        <td>' . $subjectRow["subjectCode"] . '</td>
-                        <td>' . $subjectRow["subjectName"] . '</td>
-                        <td>' . $subjectRow["hoursRequired"] . '</td>
-                        <td>' . $subjectRow["hoursRequiredDup"] . '</td>
-                        <td>' . $subjectRow["lab"] . '</td>
-                        <td>' . $subjectRow["staffName"] . '</td>
-                        <td>' . $subjectRow["labStaffName"] . '</td>
-                        <td>' . $subjectRow["stype"] . '</td>
-                        <td>'.$tableRow["COURSE"].'</td>
-                    </tr>';
+                // Skip rows with lab value "no"
+                if ($subjectRow["lab"] == "no") {
+                    continue;
+                }
+
+                // Insert values into corresponding lab_subjects table
+                $labTableName = "${currsem}lab" . $subjectRow["lab"] . "_subjects";
+                $insertQuery = "INSERT INTO $labTableName (subjectCode, subjectName, hoursRequired, hoursRequiredDup, lab, staffName, labStaffName, stype, coursename)
+                                VALUES ('{$subjectRow["subjectCode"]}', '{$subjectRow["subjectName"]}', '{$subjectRow["hoursRequired"]}', '{$subjectRow["hoursRequiredDup"]}', '{$subjectRow["lab"]}', '{$subjectRow["staffName"]}', '{$subjectRow["labStaffName"]}', '{$subjectRow["stype"]}', '{$tableRow["COURSE"]}')";
+                $conn->query($insertQuery);
             }
         }
-
-        echo '</tbody></table></div>';
-    } else {
-        echo 'No tables found.';
-    }
-
+    } 
     $conn->close();
     ?>
-
-    <script>
-        updateLabTable();
-        function updateLabTable() {
-            var selectedLab = document.getElementById("labDropdown").value;
-            var rows = document.getElementsByTagName("tr");
-
-            for (var i = 1; i < rows.length; i++) {
-                var cells = rows[i].getElementsByTagName("td");
-                var labValue = cells[4].innerText;
-
-                if (selectedLab === "select" || labValue === selectedLab) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        }
-    </script>
 </body>
 
 </html>

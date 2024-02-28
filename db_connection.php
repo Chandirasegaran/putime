@@ -83,7 +83,8 @@ for ($i = 1; $i <= 4; $i++) {
         lab VARCHAR(10),
         staffName VARCHAR(255),
         labStaffName VARCHAR(255),
-        stype VARCHAR(10)
+        stype VARCHAR(10),
+        coursename VARCHAR(30)
     )";
 
     if ($conn->query($sql) !== TRUE) {
@@ -94,23 +95,38 @@ for ($i = 1; $i <= 4; $i++) {
 for ($i = 1; $i <= 4; $i++) {
     $tableName = $currsem . 'lab' . $i;
 
-$sql = 'CREATE TABLE IF NOT EXISTS ' . $currsem . 'lab' . $i. ' (
-    `ORDER` INT PRIMARY KEY,
-    DAY varchar(10),
-    `9_30` VARCHAR(30),
-    `10_30` VARCHAR(30),
-    `11_30` VARCHAR(30),
-    `12_30` VARCHAR(30),
-    `1_30` VARCHAR(30),
-    `2_30` VARCHAR(30),
-    `3_30` VARCHAR(30),
-    `4_30` VARCHAR(30)
-)';
+    // Create table if not exists
+    $sqlCreateTable = 'CREATE TABLE IF NOT EXISTS ' . $currsem . 'lab' . $i . ' (
+        `ORDER` INT PRIMARY KEY,
+        DAY varchar(10),
+        `9_30` VARCHAR(30),
+        `10_30` VARCHAR(30),
+        `11_30` VARCHAR(30),
+        `12_30` VARCHAR(30),
+        `1_30` VARCHAR(30),
+        `2_30` VARCHAR(30),
+        `3_30` VARCHAR(30),
+        `4_30` VARCHAR(30)
+    )';
 
+    if ($conn->query($sqlCreateTable) !== TRUE) {
+        echo 'Error creating Timetable table: ' . $conn->error;
+    }
 
-if ($conn->query($sql) !== TRUE) {
-    echo 'Error creating Timetable table: ' . $conn->error;
-}
+    // Insert data if the table is newly created
+    $sqlInsertData = "
+        INSERT IGNORE INTO `{$currsem}lab{$i}` (`ORDER`, DAY, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
+        VALUES 
+        (1, 'MONDAY', '', '', '', '', '', '', '', ''),
+        (2, 'TUESDAY', '', '', '', '', '', '', '', ''),
+        (3, 'WEDNESDAY', '', '', '', '', '', '', '', ''),
+        (4, 'THURSDAY', '', '', '', '', '', '', '', ''),
+        (5, 'FRIDAY', '', '', '', '', '', '', '', '');
+    ";
+
+    if ($conn->query($sqlInsertData) !== TRUE) {
+        echo 'Error inserting data: ' . $conn->error;
+    }
 }
 
 $sql = 'CREATE TABLE IF NOT EXISTS SETB (
