@@ -49,7 +49,7 @@ include 'schedule_lab.php';
             $(document).ready(function () {
                 // Initially call the function to load Lab 1 subjects
                 updateLabSubjects(1);
-
+                updateassigning_tab(1);
                 $('#labDropdown').change(function () {
                     var selectedLab = $(this).val();
 
@@ -80,11 +80,13 @@ include 'schedule_lab.php';
                 type: "POST",
                 url: "fetch_lab_data.php", // Adjust the path to match your file structure
                 data: {
-                    course: "lab"+selectedLab
+                    course: "lab"+selectedLab,
+                    labno:selectedLab
                 },
                 success: function(response) {
                     // Update the assigningtable div with the received table data
                     document.getElementById('assigningtable').innerHTML = response;
+                    
                 },
                 error: function(error) {
                     console.log("Error: " + error.responseText);

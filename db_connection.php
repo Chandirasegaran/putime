@@ -87,7 +87,7 @@ for ($i = 1; $i <= 4; $i++) {
         coursename VARCHAR(30)
     )";
 
-    if ($conn->query($sql) !== TRUE) {
+    if ($currsem!="" && $conn->query($sql) !== TRUE) {
         echo "Error creating $tableName table: " . $conn->error;
     }
 }
@@ -109,7 +109,7 @@ for ($i = 1; $i <= 4; $i++) {
         `4_30` VARCHAR(30)
     )';
 
-    if ($conn->query($sqlCreateTable) !== TRUE) {
+    if ($currsem!="" && $conn->query($sqlCreateTable) !== TRUE) {
         echo 'Error creating Timetable table: ' . $conn->error;
     }
 
@@ -124,7 +124,7 @@ for ($i = 1; $i <= 4; $i++) {
         (5, 'FRIDAY', '', '', '', '', '', '', '', '');
     ";
 
-    if ($conn->query($sqlInsertData) !== TRUE) {
+    if ($currsem!="" && $conn->query($sqlInsertData) !== TRUE) {
         echo 'Error inserting data: ' . $conn->error;
     }
 }

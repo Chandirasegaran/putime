@@ -71,7 +71,7 @@ if (isset($_POST['lab'])) {
 
             // Increment color index, and reset to 0 if it exceeds the array length
             $colorIndex = ($colorIndex + 1) % count($colorArray);
-        }
+        }   
 
         echo '</tbody></table>';
     } else {

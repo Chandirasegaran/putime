@@ -24,9 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     include 'db_connection.php';
 
     $course = $_POST['course'];
-    
+
     $sql = "SELECT * FROM `$currsem$course`";
     $result = $conn->query($sql);
+    setcookie("currentCourse", $course, time() + 76000, '/');
 
     if ($result->num_rows > 0) {
         // Add a unique ID for this table
@@ -68,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     }
 
     // Fetch the data for the selected course
-    $sql = $sql = "SELECT * FROM `$currsem$course`";
+    $sql = "SELECT * FROM `$currsem$course`";
     $result = $conn->query($sql);
     setcookie("currentCourse", $course, time() + 76000, '/');
 
@@ -108,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
                     echo '<option value="">Select</option>';
 
                     // Fetch and populate dropdown options with values from $course."_subjects" table
-                    $subjectResult = $conn->query("SELECT * FROM {$course}_subjects");
+                    $subjectResult = $conn->query("SELECT * FROM {$currsem}{$course}_subjects");
                     $ai = 0;
                     $count = 0;
                     while ($subjectRow = $subjectResult->fetch_assoc()) {
@@ -139,117 +140,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     // $scheduleResult = $conn->query("SELECT * FROM adminodd");    }
     // else if($currsem=="Even"){
     // $scheduleResult = $conn->query("SELECT * FROM admineven");    }
-    $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
-    echo '<H1 class="mt-5">Final Schedule</H1>
-    <h2>Class Schedule</h2>';
-    if ($scheduleResult->num_rows > 0) {
-        $days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"];
+    $baseTableName = $currsem == "odd" ? "oddlab" : "evenlab";
 
-        while ($classRow = $scheduleResult->fetch_assoc()) {
-            $discourse = $classRow["COURSE"];
-            if ($discourse == $course) {
-                continue;
-                // echo '<table class="table table-bordered"><thead><tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr></thead><tbody>';
-                // for ($rowNumber = 1; $rowNumber <= 5; $rowNumber++) {
-                //     echo '<tr>';
-                //     echo '<td>' . $rowNumber . '</td>'; // SL.NO.
-                //     echo '<td>' . $days[$rowNumber-1] . '</td>'; // DAYS
-                //     for ($j = 1; $j <= 8; $j++) {
-                //         echo '<td>';
-                //         echo '<div class="table' . $rowNumber . $j . '"></div>';
-                //         echo '<div class="labStaffName' . $rowNumber . $j . '"></div>';
-                //         echo '<div class="lab' . $rowNumber . $j . '"></div>';
-                //         echo '</td>';
-                //     }
-                //     echo '</tr>';
-                // }
-                // echo '</tbody></table>';
-            }
-            // Fetch the data for the selected course
-            $sql = "SELECT * FROM `$discourse`";
-            $result = $conn->query($sql);
+// Loop to generate and query tables
+for ($i = 1; $i <= 4; $i++) {
+    $tableName = $baseTableName . $i;
 
-            if ($result->num_rows > 0) {
-                // Display the fetched data in a table format without dropdowns
+    $result = $conn->query("SELECT * FROM $tableName");
 
-                echo '<h1 id="currentcourse" class="mt-5">' . str_replace(array('even', 'odd'), '', $discourse) .  '</h1>';
+    echo "<h2>$tableName</h2>";
 
+    if ($result->num_rows > 0) {
+        echo '<table border="1">';
+        echo '<tr><th>Column1</th><th>Column2</th><!-- Add more headers as needed --></tr>';
 
-                echo '<table class="table table-bordered">';
-                $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
-                echo '<thead>';
-                echo '<tr>';
-                foreach ($timeSlots as $timeSlot) {
-                    echo '<th>' . $timeSlot . '</th>';
-                }
-                echo '</tr>';
-                echo '</thead>';
-                echo '<tbody>';
-
-                $rowNumber = 1; // Counter for row numbers
-                $i = 0;
-                while ($row = $result->fetch_assoc()) {
-                    echo '<tr>';
-                    $i++;
-                    echo '<td>' . $rowNumber++ . '</td>'; // SL.NO.
-                    echo '<td>' . $row["DAY"] . '</td>'; // DAYS
-
-                    // Loop through the time slots and display values
-                    $j = 1;
-                    foreach ($row as $columnName => $columnValue) {
-                        if ($columnName !== 'ORDER' && $columnName !== 'DAY') {
-                            // Fetch staff name from $discourse."_subjects" table using $columnValue
-                            $staffQuery = "SELECT staffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
-                            $staffResult = $conn->query($staffQuery);
-                            echo '<td ><div class="table' . $i . $j . '">';
-                            if ($staffResult->num_rows > 0) {
-                                while ($staffRow = $staffResult->fetch_assoc()) {
-                                    echo $staffRow['staffName'];
-                                }
-                            } else {
-                                echo '';
-                            }
-                            echo '</div>';
-
-                            $labst2 = "SELECT labStaffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
-                            $labResultst2 = $conn->query($labst2);
-                            echo '<div class="labStaffName' . $i . $j . '">';
-                            if ($labResultst2->num_rows > 0) {
-                                while ($labRowst2 = $labResultst2->fetch_assoc()) {
-                                    if ($labRowst2['labStaffName'] != "") {
-                                        echo $labRowst2['labStaffName'];
-                                    }
-                                }
-                            } else {
-                                echo '';
-                            }
-                            echo '</div>';
-
-                            $labQuery = "SELECT lab FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
-                            $labResult = $conn->query($labQuery);
-                            echo '<div class="lab' . $i . $j . '" >';
-                            if ($labResult->num_rows > 0) {
-                                while ($labRow = $labResult->fetch_assoc()) {
-                                    echo $labRow['lab'];
-                                }
-                            } else {
-                                echo '';
-                            }
-                            $j++;
-                            echo '</div></td>';
-                        }
-                    }
-
-                    echo '</tr>';
-                }
-
-                echo '</tbody>';
-                echo '</table>';
-                $i = 0;
-            } else {
-                echo 'No data found for the selected course.';
-            }
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>';
+            echo '<td>' . $row['column1'] . '</td>';
+            echo '<td>' . $row['column2'] . '</td>';
+            // Add more columns as needed
+            echo '</tr>';
         }
+
+        echo '</table>';
+    } else {
+        echo '<p>No records found in ' . $tableName . '</p>';
     }
-    $conn->close();
+}
+
+$conn->close();
 }
