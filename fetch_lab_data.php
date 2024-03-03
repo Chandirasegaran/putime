@@ -74,6 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     setcookie("currentCourse", $course, time() + 76000, '/');
 
     if ($result->num_rows > 0) {
+
         // Display the fetched data in a table format with dropdowns
         // echo '<h1 id="currentcourse" onmouseover="hourCheck()">' . $course . '</h1>';
 
@@ -143,25 +144,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $baseTableName = $currsem == "odd" ? "oddlab" : "evenlab";
 
 // Loop to generate and query tables
-for ($i = 1; $i <= 4; $i++) {
-    $tableName = $baseTableName . $i;
-
+for ($ilab = 1; $ilab <= 4; $ilab++) {
+    $tableName = $baseTableName . $ilab;
+    if($currsem.$course==$tableName)
+    {
+        continue;
+    }
     $result = $conn->query("SELECT * FROM $tableName");
 
-    echo "<h2>$tableName</h2>";
-
     if ($result->num_rows > 0) {
-        echo '<table border="1">';
-        echo '<tr><th>Column1</th><th>Column2</th><!-- Add more headers as needed --></tr>';
-
+        echo '<h1 id="currentcourse" class="mt-5">' . str_replace(array('even', 'odd'), '', $tableName) .  '</h1>';
+        echo '<table class="table table-bordered">';
+        $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];
+        // Table header
+        echo '<thead>';
+        echo '<tr>';
+        foreach ($timeSlots as $timeSlot) {
+            echo '<th>' . $timeSlot . '</th>';
+        }
+        echo '</tr>';
+        echo '</thead>';
+        $timeSlots = ["SL.NO.", "DAYS", "9_30", "10_30", "11_30", "12_30", "1_30", "2_30", "3_30", "4_30"];
+        // Table body
+        echo '<tbody>';
+        $i=1;
         while ($row = $result->fetch_assoc()) {
             echo '<tr>';
-            echo '<td>' . $row['column1'] . '</td>';
-            echo '<td>' . $row['column2'] . '</td>';
-            // Add more columns as needed
+            $j=1;
+            foreach ($timeSlots as $timeSlot) {
+                if ($timeSlot == "SL.NO.") {
+                    echo '<td>' . $row['ORDER'] . '</td>';
+                    
+                } elseif ($timeSlot == "DAYS") {
+                    echo '<td>' . $row['DAY'] . '</td>';
+                } else {
+                    // echo '<td>' . $row[$timeSlot] . '</td>';
+                    // Display other columns based on $timeSlot
+                    $staffQuery = "SELECT staffName FROM {$tableName}_subjects WHERE subjectCode = '$row[$timeSlot]'";
+                            $staffResult = $conn->query($staffQuery);
+                            echo '<td ><div class="table' . $i . $j . '">';
+                            if ($staffResult->num_rows > 0) {
+                                while ($staffRow = $staffResult->fetch_assoc()) {
+                                    echo $staffRow['staffName'];
+                                }
+                            } else {
+                                echo '';
+                            }
+                            echo '</div>';
+
+                            $labst2 = "SELECT labStaffName FROM {$tableName}_subjects WHERE subjectCode = '$row[$timeSlot]'";
+                            $labResultst2 = $conn->query($labst2);
+                            echo '<div class="labStaffName' . $i . $j . '">';
+                            if ($labResultst2->num_rows > 0) {
+                                while ($labRowst2 = $labResultst2->fetch_assoc()) {
+                                    if ($labRowst2['labStaffName'] != "") {
+                                        echo $labRowst2['labStaffName'];
+                                    }
+                                }
+                            } else {
+                                echo '';
+                            }
+                            echo '</div>';
+
+                            $labQuery = "SELECT lab FROM {$tableName}_subjects WHERE subjectCode = '$row[$timeSlot]'";
+                            $labResult = $conn->query($labQuery);
+                            echo '<div class="lab' . $i . $j . '" >';
+                            if ($labResult->num_rows > 0) {
+                                while ($labRow = $labResult->fetch_assoc()) {
+                                    echo $labRow['lab'];
+                                }
+                            } else {
+                                echo '';
+                            }
+                            $j++;
+                            echo '</div></td>';
+                }
+            }
             echo '</tr>';
         }
-
+        echo '</tbody>';
         echo '</table>';
     } else {
         echo '<p>No records found in ' . $tableName . '</p>';
