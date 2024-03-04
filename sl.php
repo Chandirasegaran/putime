@@ -476,15 +476,39 @@ include 'schedule_lab.php';
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 }
                                 else if(left==null && right==true)
                                 {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 }
+                            }
+                            else if ((hcheckarray.filter(element => element === eval(clsvar)).length >= 2) &&(h2checkarray.filter(element => element === eval(clsvarsf)).length >= 2 && eval(stvar) != 'Nil')) {
+                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
+                                element.setAttribute('data-toggle', 'tooltip');
+                                element.setAttribute('data-placement', 'bottom');
+                                if(left==null && right==null)
+                                { // You can change the placement as needed
+                                element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} and ${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                }
+                                else if(left==true && right==null)
+                                {
+                                    element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side and and ${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                }
+                                else if(left==null && right==true)
+                                {
+                                    element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side and and ${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                }
+                                else if(left==true && right==true)
+                                {
+                                    element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side and and ${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                }
+                                left=null;
+                                right=null;
+                                tcount=0;
                             }
                             else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 2) {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
@@ -492,19 +516,19 @@ include 'schedule_lab.php';
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
+                                element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
+                                    element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
+                                    element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
+                                    element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
@@ -516,19 +540,19 @@ include 'schedule_lab.php';
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
@@ -558,14 +582,14 @@ include 'schedule_lab.php';
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 }
                                 else if(left==null && right==true)
                                 {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length-vcount} and horizontally ${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);// Replace 'Your Tooltip Content' with your actual tooltip text
                                 }
                             }
                             else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 1) {
@@ -586,19 +610,19 @@ include 'schedule_lab.php';
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
+                                element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
