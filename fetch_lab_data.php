@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     // Fetch the data for the selected course
     $sql = "SELECT * FROM `$currsem$course`";
     $result = $conn->query($sql);
-    setcookie("currentCourse", $course, time() + 76000, '/');
+    setcookie("currentCourse",$course, time() + 76000, '/');
 
     if ($result->num_rows > 0) {
 
@@ -180,6 +180,7 @@ for ($ilab = 1; $ilab <= 4; $ilab++) {
                 } else {
                     // echo '<td>' . $row[$timeSlot] . '</td>';
                     // Display other columns based on $timeSlot
+                    
                     $staffQuery = "SELECT staffName FROM {$tableName}_subjects WHERE subjectCode = '$row[$timeSlot]'";
                             $staffResult = $conn->query($staffQuery);
                             echo '<td ><div class="table' . $i . $j . '">';
@@ -211,7 +212,8 @@ for ($ilab = 1; $ilab <= 4; $ilab++) {
                             echo '<div class="lab' . $i . $j . '" >';
                             if ($labResult->num_rows > 0) {
                                 while ($labRow = $labResult->fetch_assoc()) {
-                                    echo $labRow['lab'];
+                                    // echo $labRow['lab'];
+                                    echo "$row[$timeSlot]";
                                 }
                             } else {
                                 echo '';

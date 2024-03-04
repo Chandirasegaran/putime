@@ -38,11 +38,11 @@ if (isset($_POST['lab'])) {
                     <tr>
                         <th>subjectCode</th>
                         <th>subjectName</th>
-                        <th>hoursRequired</th>
-                        <th>hoursRequiredDup</th>
-                        <th>lab</th>
                         <th>staffName</th>
                         <th>labStaffName</th>
+                        <th>hoursRequired</th>
+                        <th>Remaining</th>
+                        <th>lab</th>
                         <th>stype</th>
                         <th>course name</th>
                     </tr>
@@ -50,23 +50,24 @@ if (isset($_POST['lab'])) {
                 <tbody>';
 
         $colorIndex = 0;
+        $hidval=0;
         while ($row = $labResult->fetch_assoc()) {
             // Remove $currsem value from coursename
             $courseName = str_replace($currsem, '', $row['coursename']);
 
             // Check if labStaffName is "Nil" and display an empty string
             $labStaffName = ($row['labStaffName'] == "Nil") ? "" : $row['labStaffName'];
-
+            $hidval++;
             echo "<tr style='background-color: {$colorArray[$colorIndex]}'>
-                    <td>{$row['subjectCode']}</td>
-                    <td>{$row['subjectName']}</td>
-                    <td>{$row['hoursRequired']}</td>
-                    <td>{$row['hoursRequiredDup']}</td>
-                    <td>{$row['lab']}</td>
-                    <td>{$row['staffName']}</td>
-                    <td>{$labStaffName}</td>
-                    <td>{$row['stype']}</td>
-                    <td>{$courseName}</td>
+                    <td id='s{$hidval}1'>{$row['subjectCode']}</td>
+                    <td id='s{$hidval}2'>{$row['subjectName']}</td>
+                    <td id='s{$hidval}3'>{$row['staffName']}</td>
+                    <td id='st{$hidval}3'>{$labStaffName}</td>
+                    <td id='s{$hidval}4'>{$row['hoursRequired']}</td>
+                    <td id='s{$hidval}4c'></td>
+                    <td id='s{$hidval}5'>{$row['lab']}</td>
+                    <td id='s{$hidval}6'>{$row['stype']}</td>
+                    <td id='s{$hidval}7'>{$courseName}</td>
                 </tr>";
 
             // Increment color index, and reset to 0 if it exceeds the array length
@@ -77,6 +78,7 @@ if (isset($_POST['lab'])) {
     } else {
         echo 'No data found for Lab ' . $labNumber . '.';
     }
+    echo '<div id="hidval" style="display:none;">' . $hidval . '</div>';
 
     // Close the database connection
     $conn->close();
