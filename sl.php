@@ -149,11 +149,14 @@ include 'schedule_lab.php';
                             let element = document.getElementById(i.toString() + j.toString() + k.toString());
                             let clsvar = null;
                             let clsvarsf = null;
+                            let course=null;
                             if (element && element.value !== null) {
                                 let staffValue = element.value + ".staff";
-
+                                let courseValue = element.value + ".course";
+                                
                                 if (staffValue !== ".staff") {
                                     clsvar = staffValue;
+                                    course=courseValue;
                                 }
                             }
 
@@ -455,7 +458,12 @@ include 'schedule_lab.php';
 
 
                                 //currently working feature
-                            } else if (valuesArraysf.includes(eval(clsvar))) {
+                            }
+                            else if(labArray.includes(eval(course)))
+                            {
+                                document.getElementById(i.toString() + j.toString() + k.toString()).remove();
+                            }
+                            else if (valuesArraysf.includes(eval(clsvar))) {
                                 // console.log(valuesArray);
                                 document.getElementById(i.toString() + j.toString() + k.toString()).remove();
                             } else if (eval(stvar) != null && eval(stvar) != 'Nil' && valuesArray.includes(eval(stvar))) {
