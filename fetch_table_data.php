@@ -69,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     }
 
     // Fetch the data for the selected course
+
     $sql = "SELECT * FROM `$course`";
     $result = $conn->query($sql);
     setcookie("currentCourse", $course, time() + 76000, '/');

@@ -20,7 +20,7 @@ if ($conn->query($sqlDrop) !== TRUE) {
 }
 
 $sql = 'CREATE TABLE IF NOT EXISTS ' . $courseName . '_Subjects (
-    subjectCode VARCHAR(8) PRIMARY KEY,
+    subjectCode VARCHAR(25) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     hoursRequiredDup INT,

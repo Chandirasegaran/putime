@@ -213,7 +213,19 @@ for ($ilab = 1; $ilab <= 4; $ilab++) {
                             if ($labResult->num_rows > 0) {
                                 while ($labRow = $labResult->fetch_assoc()) {
                                     // echo $labRow['lab'];
-                                    echo "$row[$timeSlot]";
+                                    $inputString = $row[$timeSlot];
+
+                                    // Find the position of the last underscore
+                                    $lastUnderscorePos = strrpos($inputString, '_');
+
+                                    // Check if an underscore was found
+                                    if ($lastUnderscorePos !== false) {
+                                        // Extract the substring after the last underscore
+                                        $textAfterUnderscore = substr($inputString, $lastUnderscorePos + 1);
+                                        
+                                        // Display the result
+                                        echo $textAfterUnderscore;
+                                    }
                                 }
                             } else {
                                 echo '';

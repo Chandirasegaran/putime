@@ -130,7 +130,7 @@ include 'schedule_lab.php';
                     }
 
                     window[rowName].lab = document.getElementById('s' + i + '5').innerText;
-
+                    window[rowName].course=document.getElementById('s' + i + '7').innerText;
                     // Accessing class variables
                     // console.log(window[rowName].name);  // s11 name
                     // console.log(window[rowName].staff); // s11 staff

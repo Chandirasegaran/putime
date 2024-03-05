@@ -50,7 +50,7 @@ if ($conn->query($sql) !== TRUE) {
 //     echo 'Error creating EVEN Subject table: ' . $conn->error;
 // }
 $sql = 'CREATE TABLE IF NOT EXISTS HARDCORETB (
-    subjectCode VARCHAR(15) PRIMARY KEY,
+    subjectCode VARCHAR(25) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     lab VARCHAR(10)
@@ -62,7 +62,7 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 $sql = 'CREATE TABLE IF NOT EXISTS SOFTCORETB (
-    subjectCode VARCHAR(15) PRIMARY KEY,
+    subjectCode VARCHAR(25) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     lab VARCHAR(10)
@@ -76,7 +76,7 @@ for ($i = 1; $i <= 4; $i++) {
     $tableName = $currsem . 'lab' . $i.'_subjects';
 
     $sql = "CREATE TABLE IF NOT EXISTS $tableName (
-        subjectCode VARCHAR(15) PRIMARY KEY,
+        subjectCode VARCHAR(25) PRIMARY KEY,
         subjectName VARCHAR(255),
         hoursRequired INT,
         hoursRequiredDup INT,
@@ -130,7 +130,7 @@ for ($i = 1; $i <= 4; $i++) {
 }
 
 $sql = 'CREATE TABLE IF NOT EXISTS SETB (
-    subjectCode VARCHAR(15) PRIMARY KEY,
+    subjectCode VARCHAR(25) PRIMARY KEY,
     subjectName VARCHAR(255),
     hoursRequired INT,
     lab VARCHAR(10)

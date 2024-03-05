@@ -39,11 +39,11 @@ include 'move-to-top.php';
                 if ($subjectRow["lab"] == "no") {
                     continue;
                 }
-
+                $modifiedCourse = str_replace(array('even', 'odd'), '', $tableRow["COURSE"]);
                 // Insert values into corresponding lab_subjects table
                 $labTableName = "${currsem}lab" . $subjectRow["lab"] . "_subjects";
                 $insertQuery = "INSERT INTO $labTableName (subjectCode, subjectName, hoursRequired, hoursRequiredDup, lab, staffName, labStaffName, stype, coursename)
-                                VALUES ('{$subjectRow["subjectCode"]}', '{$subjectRow["subjectName"]}', '{$subjectRow["hoursRequired"]}', '{$subjectRow["hoursRequiredDup"]}', '{$subjectRow["lab"]}', '{$subjectRow["staffName"]}', '{$subjectRow["labStaffName"]}', '{$subjectRow["stype"]}', '{$tableRow["COURSE"]}')";
+                                VALUES ('{$subjectRow["subjectCode"]}_{$modifiedCourse}', '{$subjectRow["subjectName"]}', '{$subjectRow["hoursRequired"]}', '{$subjectRow["hoursRequiredDup"]}', '{$subjectRow["lab"]}', '{$subjectRow["staffName"]}', '{$subjectRow["labStaffName"]}', '{$subjectRow["stype"]}', '{$tableRow["COURSE"]}')";
                 $conn->query($insertQuery);
             }
         }
