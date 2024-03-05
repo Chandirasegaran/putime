@@ -181,9 +181,63 @@ include 'move-to-top.php';
                     location.reload();
                 }
             </script>
-            <button type="button" id="btnhid" class="btn btn-primary col-3" onclick="prt()">Print</button>
+            <!-- <button type="button" id="btnhid" class="btn btn-primary col-3" onclick="prt()">Print</button> -->
         </div>
+        
         <pre><br></pre>
+        <div class="d-flex justify-content-center">
+        <script>
+    // ... (previous functions) ...
+
+    function exportToCSV() {
+        var table = document.getElementById('wf_table');
+        var rows = table.querySelectorAll('tr');
+        var csv = [];
+
+        // Collect column headers
+        var headerRow = rows[0];
+        var headers = headerRow.querySelectorAll('th');
+        var header = [];
+
+        for (var i = 0; i < headers.length; i++) {
+            header.push(headers[i].innerText);
+        }
+
+        csv.push(header.join(','));
+
+        // Collect data rows
+        for (var i = 1; i < rows.length; i++) {
+            var row = [];
+            var cols = rows[i].querySelectorAll('td');
+
+            for (var j = 0; j < cols.length; j++) {
+                var cellText = cols[j].innerText;
+
+                // Move "TOTAL HOURS TAKEN" one step right
+                if (cellText === 'TOTAL HOURS TAKEN' && j > 0) {
+                    row.push(''); // Add an empty cell
+                }
+
+                row.push(cellText);
+            }
+
+            csv.push(row.join(','));
+        }
+
+        // Create and download the CSV file
+        var csvContent = csv.join('\n');
+        var blob = new Blob([csvContent], { type: 'text/csv' });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'Workflow.csv';
+        link.click();
+    }
+</script>
+    <button type="button" id="btnhid" class="btn btn-primary col-3" onclick="prt()">Print</button>
+    <button type="button" id="btnhid1" class="btn btn-success ml-2 col-3" onclick="exportToCSV()">Export CSV</button>
+</div>
+<pre><br></pre>
+
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

@@ -111,6 +111,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
                     // Fetch and populate dropdown options with values from $course."_subjects" table
                     $subjectResult = $conn->query("SELECT * FROM {$currsem}{$course}_subjects");
+                    $lab1 = $conn->query("SELECT * FROM {$currsem}lab1_subjects");
+                    $lab2 = $conn->query("SELECT * FROM {$currsem}lab2_subjects");
+                    $lab3 = $conn->query("SELECT * FROM {$currsem}lab3_subjects");
+                    $lab4 = $conn->query("SELECT * FROM {$currsem}lab4_subjects");
                     $ai = 0;
                     $count = 0;
                     while ($subjectRow = $subjectResult->fetch_assoc()) {
