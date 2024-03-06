@@ -19,7 +19,7 @@ include 'schedule_lab.php';
 </head>
 
 <body>
-    <div class="container mt-4">
+    <div class="container-fluid mt-4">
         <h1>Lab Subjects</h1>
 
         <!-- Bootstrap Form Group for selecting lab -->
@@ -524,19 +524,19 @@ include 'schedule_lab.php';
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}`);
+                                element.setAttribute('title', `${eval(clsvar)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `Lab-${hcheckarray.filter(element => element === eval(clsvar)).length-tcount} with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvar)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
@@ -548,19 +548,19 @@ include 'schedule_lab.php';
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
