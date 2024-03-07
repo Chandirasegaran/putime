@@ -386,7 +386,7 @@ include 'move-to-top.php';
                 <!-- Increased modal width using modal-xl for larger screens -->
                 <div class="modal-content">
                     <div class="modal-header ">
-                        <h5 class=" modal-title " id="hardcoreModalLabel">Add Softcores</h5>
+                        <h5 class=" modal-title " id="hardcoreModalLabel">Add Hardcores</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href = 'index.php';">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -435,7 +435,7 @@ include 'move-to-top.php';
                             </table>
 
                             <!-- Add Row Button -->
-                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowsc()">Add
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowhard()">Add
                                 Row</button>
 
                     </div>
@@ -747,6 +747,42 @@ include 'move-to-top.php';
             hoursRequiredcount++;
         }
 
+    let hclab_count = 2;
+    let hcsubname_count = 2;
+    let hcsubcode_count = 2;
+    let hchoursRequiredcount = 2;
+
+    // Function to add a new row to the "hardcoreModal" table
+    function addRowhard() {
+        var newRow = '<tr>' +
+            '<td><input type="text" class="form-control" name="subjectCode' + hcsubcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
+            '<td><input type="text" class="form-control" name="subjectName' + hcsubname_count + '" maxlength="50" Required></td>' +
+            '<td><input type="number" class="form-control" name="hoursRequired' + hchoursRequiredcount + '" Required></td>' +
+            '<td>' +
+            '<div class="form-check form-check-inline">' +
+            '<input type="radio" class="form-check-input" name="lab' + hclab_count + '" value="no" checked> No' +
+            '</div>' +
+            '<div class="form-check form-check-inline">' +
+            '<input type="radio" class="form-check-input" name="lab' + hclab_count + '" value="1"> 1' +
+            '</div>' +
+            '<div class="form-check form-check-inline">' +
+            '<input type="radio" class="form-check-input" name="lab' + hclab_count + '" value="2"> 2' +
+            '</div>' +
+            '<div class="form-check form-check-inline">' +
+            '<input type="radio" class="form-check-input" name="lab' + hclab_count + '" value="3"> 3' +
+            '</div>' +
+            '<div class="form-check form-check-inline">' +
+            '<input type="radio" class="form-check-input" name="lab' + hclab_count + '" value="4"> 4' +
+            '</div>' +
+            '</td>' +
+            '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+            '</tr>';
+        document.querySelector('#hardcoreModal table tbody').insertAdjacentHTML('beforeend', newRow);
+        hclab_count++;
+        hcsubname_count++;
+        hcsubcode_count++;
+        hchoursRequiredcount++;
+    }
 
 
         // Soft core table
