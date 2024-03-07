@@ -983,14 +983,50 @@ include 'move-to-top.php';
             });
 
         }
-        function staffcheck(i_check) {
-            //    let selectboxid="select"+i_check;
-            //    var dropdown = document.getElementById(selectboxid);
-            // //    console.log(dropdown);
-            //    for (var i = 1; i < dropdown.options.length; i++) {
-            //     let dropstaffname=eval(dropdown.options[i].value+".staff");
-            //     console.log(dropstaffname);
-            //     }
+
+        function staffcheck(input_value)
+        {
+           let selectboxid="select"+input_value;
+           var dropdown = document.getElementById(selectboxid);
+        //    console.log(dropdown);
+           for (var i = 1; i < dropdown.options.length; i++) {
+            let dropstaffname=eval(dropdown.options[i].value+".staff");
+            // console.log(dropstaffname);
+            let firstPart = input_value.slice(0, 1);  // Get the first character
+            let secondPart = input_value.slice(1);
+            
+            for(let j_loop=1;j_loop<=8;j_loop++)
+            {
+                if(j_loop==secondPart)
+                {
+                    continue;
+                }
+                if(document.getElementById("select"+firstPart+""+j_loop).value!=""){
+                //    console.log(eval(document.getElementById("select"+firstPart+""+j_loop).value).staff);
+                    let otherstaff=eval(document.getElementById("select"+firstPart+""+j_loop).value).staff;
+                    if(otherstaff==dropstaffname && dropdown.options[i].value!=document.getElementById("select"+firstPart+""+j_loop).value)
+                    {
+                    // console.log(otherstaff);
+                    if(!dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') != 'tooltip')
+                    {
+                    dropdown.options[i].style.backgroundColor="red";
+                    dropdown.options[i].setAttribute('data-toggle', 'changed');
+                    dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                    dropdown.options[i].setAttribute('title', `${otherstaff} already having an another course ${dropdown.options[i].value} on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                    }
+                    else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip')
+                    {
+                        let existingTitle = dropdown.options[i].getAttribute('title');
+                        dropdown.options[i].setAttribute('data-toggle', 'tooltip-changed');
+                        let newTextToAppend = "and already having an another course "+dropdown.options[i].value+" on same day"; // Replace with the text you want to append
+                        let updatedTitle = existingTitle ? existingTitle + ' ' + newTextToAppend : newTextToAppend;
+                        dropdown.options[i].setAttribute('title', updatedTitle)
+                    }
+                }
+                }
+                
+            }
+            }
             // for(let j=0;i<8;i++)
             // {
             //     if(j=j_check)
@@ -999,6 +1035,23 @@ include 'move-to-top.php';
             //     }
             // }
         }
+
+        // function staffcheck(i_check) {
+        //     //    let selectboxid="select"+i_check;
+        //     //    var dropdown = document.getElementById(selectboxid);
+        //     // //    console.log(dropdown);
+        //     //    for (var i = 1; i < dropdown.options.length; i++) {
+        //     //     let dropstaffname=eval(dropdown.options[i].value+".staff");
+        //     //     console.log(dropstaffname);
+        //     //     }
+        //     // for(let j=0;i<8;i++)
+        //     // {
+        //     //     if(j=j_check)
+        //     //     {
+        //     //         continue;
+        //     //     }
+        //     // }
+        // }
         function callCheck() {
             mycheck();
             hourCheck();
