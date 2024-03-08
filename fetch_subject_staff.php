@@ -44,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
 
         $si++;
-        $tableHtml .= '<tr style="background-color:' . $colorArray[$colorarr++] . '">';
-        $tableHtml .= '<td id="s' . $si . '1">' . $subjectRow['subjectCode'] . '</td>';
+        $tableHtml .= '<tr style="background-color:' . $colorArray[$colorarr] . '">';
+        $tableHtml .= '<td id="s' . $si . '1" style="background-color:' . $colorArray[$colorarr++] . '">' . $subjectRow['subjectCode'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '2">' . $subjectRow['subjectName'] . '</td>';
 
         $tableHtml .= '<td "><select id="s' . $si . '3" class="custom-select" name="staffName[' . $subjectRow['subjectCode'] . ']" >';

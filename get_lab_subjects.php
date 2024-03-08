@@ -59,7 +59,7 @@ if (isset($_POST['lab'])) {
             $labStaffName = ($row['labStaffName'] == "Nil") ? "" : $row['labStaffName'];
             $hidval++;
             echo "<tr style='background-color: {$colorArray[$colorIndex]}'>
-                    <td id='s{$hidval}1'>{$row['subjectCode']}</td>
+                    <td id='s{$hidval}1' style='background-color: {$colorArray[$colorIndex]}'>{$row['subjectCode']}</td>
                     <td id='s{$hidval}2'>{$row['subjectName']}</td>
                     <td id='s{$hidval}3'>{$row['staffName']}</td>
                     <td id='st{$hidval}3'>{$labStaffName}</td>
