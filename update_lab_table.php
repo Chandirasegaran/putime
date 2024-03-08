@@ -93,12 +93,16 @@ for ($order = 1; $order <= 5; $order++) {
             // Check if the cell value is not empty
             if (!empty($cellValue)) {
                 // Split the value using the last underscore
-                $parts = explode('_', $cellValue);
-                $course = $parts[0];
-                $location = strtolower($parts[1]); // Convert $location to lowercase
+                $lastUnderscorePos = strrpos($cellValue, '_');
+                if ($lastUnderscorePos !== false) {
+                    // Extract the parts before and after the last underscore
+                    $course = substr($cellValue, 0, $lastUnderscorePos);
+                    $location = strtolower(substr($cellValue, $lastUnderscorePos + 1));
+                } // Convert $location to lowercase
                 // echo "UPDATE {$currsem}{$location} SET $timeSlot = '$course' WHERE `ORDER` = $order";
                 // Update the location table using the obtained order value and $currsem
                 $updateSql = "UPDATE {$currsem}{$location} SET $timeSlot = '$course' WHERE `ORDER` = $order";
+                // echo "UPDATE {$currsem}{$location} SET $timeSlot = '$course' WHERE `ORDER` = $order<br>";
                 if($conn->query($updateSql))
                 {
                     echo "SUCCESS";

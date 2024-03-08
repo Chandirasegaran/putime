@@ -59,6 +59,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             // You may want to add error handling here
         }
     }
+    for ($lab = 1; $lab <= 4; $lab++) {
+        // Generate table name dynamically with semester
+        $tableName = $currsem . "lab" . $lab;
+    
+        // Truncate the table
+        $truncateQuery = "TRUNCATE TABLE $tableName";
+        $conn->query($truncateQuery);
+    
+        // Insert values into the table
+        $insertQuery = "INSERT INTO $tableName (`ORDER`, `DAY`, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
+                        VALUES
+                        (1, 'MONDAY', '', '', '', '', '', '', '', ''),
+                        (2, 'TUESDAY', '', '', '', '', '', '', '', ''),
+                        (3, 'WEDNESDAY', '', '', '', '', '', '', '', ''),
+                        (4, 'THURSDAY', '', '', '', '', '', '', '', ''),
+                        (5, 'FRIDAY', '', '', '', '', '', '', '', '')";
+    
+        $conn->query($insertQuery);
+    }
+
     // Redirect to the page where the form was submitted
     header("Location:index.php");
     exit();
