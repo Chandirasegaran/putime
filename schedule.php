@@ -594,12 +594,16 @@ include 'move-to-top.php';
                                     element.setAttribute('data-toggle', 'tooltip');
                                     element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                     element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length - vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length - tcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                    element.setAttribute('data-hidden', 'not red');
+                                
                                 }
                                 else if (left == null && right == true) {
                                     document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
                                     element.setAttribute('data-toggle', 'tooltip');
                                     element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                     element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length - vcount} and horizontally ${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length - tcount} with a class on right side`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                    element.setAttribute('data-hidden', 'not red');
+                                
                                 }
                             }
                             else if (vcheckarray.filter(element => element === eval(clsvar)).length >= 1) {
@@ -607,17 +611,23 @@ include 'move-to-top.php';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                 element.setAttribute('title', `vertically Theory-${vcount} Lab-${vcheckarray.filter(element => element === eval(clsvar)).length - vcount}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('data-hidden', 'not red');
+                                
                             }
                             else if (v2checkarray.filter(element => element === eval(clsvarsf)).length >= 1 && eval(stvar) != 'Nil') {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                                 element.setAttribute('title', `Vertically staff 2 Theory-${v2count} Lab-${v2checkarray.filter(element => element === eval(clsvarsf)).length - v2count}`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                                element.setAttribute('data-hidden', 'not red');
+                
                             }
                             else if (hcheckarray.filter(element => element === eval(clsvar)).length >= 1) {
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom');
+                                element.setAttribute('data-hidden', 'not red');
+
                                 if (left == null && right == null) { // You can change the placement as needed
                                     element.setAttribute('title', `${eval(clsvar)} has Theory-${tcount} Lab-${hcheckarray.filter(element => element === eval(clsvar)).length - tcount}`);
                                 }
@@ -638,6 +648,8 @@ include 'move-to-top.php';
                                 document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom');
+                                element.setAttribute('data-hidden', 'not red');
+                                
                                 if (left == null && right == null) { // You can change the placement as needed
                                     element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length - t2count}`);
                                 }
@@ -1002,6 +1014,24 @@ include 'move-to-top.php';
                     dropdown.options[i].removeAttribute('title');
                     dropdown.options[i].style.backgroundColor=eval(dropdown.options[i].value+".color");
                 }
+                else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') === 'tooltip-changed')
+            {
+                dropdown.options[i].setAttribute('data-toggle', 'tooltip');
+
+                // Get the current title text
+                let currentTitle = dropdown.options[i].getAttribute('title');
+
+                // Modify the title text to remove everything after 'and already'
+                let modifiedTitle = currentTitle ? currentTitle.split(' and already')[0] : '';
+
+                // Set the modified title text
+                dropdown.options[i].setAttribute('title', modifiedTitle.trim());
+
+                if(dropdown.options[i].hasAttribute('data-hidden'))
+                {
+                    dropdown.options[i].style.backgroundColor='rgba(255, 0, 0, 0.4)';
+                }
+            }
             let dropstaffname=eval(dropdown.options[i].value+".staff");
             let dropstaffname2=eval(dropdown.options[i].value+".staff2");
             // console.log(dropstaffname2);
@@ -1028,7 +1058,7 @@ include 'move-to-top.php';
                     dropdown.options[i].style.backgroundColor="red";
                     dropdown.options[i].setAttribute('data-toggle', 'changed');
                     dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                    dropdown.options[i].setAttribute('title', `${otherstaff} already having an another course ${dropdown.options[i].value} on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                    dropdown.options[i].setAttribute('title', `${otherstaff} already having an another course on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
                     }
                     else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip')
                     {
@@ -1047,7 +1077,7 @@ include 'move-to-top.php';
                     {
                         dropdown.options[i].setAttribute('data-toggle', 'changed');
                         dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                        dropdown.options[i].setAttribute('title', `${otherstaff} already having an another course ${dropdown.options[i].value} on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                        dropdown.options[i].setAttribute('title', `${otherstaff} already having an another course on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
                         dropdown.options[i].style.backgroundColor="red";
                     }
                     else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip')
@@ -1067,7 +1097,7 @@ include 'move-to-top.php';
                     dropdown.options[i].style.backgroundColor="red";
                     dropdown.options[i].setAttribute('data-toggle', 'changed');
                     dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                    dropdown.options[i].setAttribute('title', `${otherstaff2} already having an another course ${dropdown.options[i].value} on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                    dropdown.options[i].setAttribute('title', `${otherstaff2} already having an another course on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
                     }
                     else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip')
                     {
@@ -1086,7 +1116,7 @@ include 'move-to-top.php';
                     dropdown.options[i].style.backgroundColor="red";
                     dropdown.options[i].setAttribute('data-toggle', 'changed');
                     dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
-                    dropdown.options[i].setAttribute('title', `${otherstaff2} already having an another course ${dropdown.options[i].value} on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                    dropdown.options[i].setAttribute('title', `${otherstaff2} already having an another course on same day`);// Replace 'Your Tooltip Content' with your actual tooltip text
                     }
                     else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip')
                     {
