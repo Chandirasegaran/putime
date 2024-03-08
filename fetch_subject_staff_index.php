@@ -31,12 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $staffResult = $conn->query($staffQuery);
 
     // Build HTML for the subject details, staff names, hoursRequired, and lab table
-    // $tableHtml = '<form method="post" action="update_staff.php" onmouseover="hourCheck()" >'; // Assuming the update script is named update_staff.php
+    $tableHtml = '<form method="post" action="update_staff.php" onmouseover="hourCheck()" >'; // Assuming the update script is named update_staff.php
     // 
 
 
-    $tableHtml = '<table class="table table-bordered" id="stab" onchange="alertstaffupdate()">';
-    $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Required Hours</th><th>Remaining</th><th>Lab</th><th>HC/SC</th></tr></thead>';
+    $tableHtml .= '<table class="table table-bordered" id="stab" onchange="alertstaffupdate()">';
+    $tableHtml .= '<thead><tr><th>Subject Code</th><th>Subject Name</th><th>Staff Name</th><th>Required Hours</th><th>Lab</th><th>HC/SC</th></tr></thead>';
     $tableHtml .= '<tbody>';
     $si = 0;
     $colorarr = 0;
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         $tableHtml .= '<td id="s' . $si . '1" style="background-color:' . $colorArray[$colorarr++] . '">' . $subjectRow['subjectCode'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '2">' . $subjectRow['subjectName'] . '</td>';
 
-        $tableHtml .= '<td  style="pointer-events: none;""><select id="s' . $si . '3" class="custom-select" name="staffName[' . $subjectRow['subjectCode'] . ']" >';
+        $tableHtml .= '<td "><select id="s' . $si . '3" class="custom-select" name="staffName[' . $subjectRow['subjectCode'] . ']" >';
 
         // Add an initial option with value "Select"
         $tableHtml .= '<option value="">Select</option>';
@@ -83,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         $tableHtml .= '</td>';
 
         $tableHtml .= '<td id="s' . $si . '4" >' . $subjectRow['hoursRequired'] . '</td>';
-        $tableHtml .= '<td id="s' . $si . '4c"> </td>';
 
         $tableHtml .= '<td id="s' . $si . '5" >' . $subjectRow['lab'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '6" >' . $subjectRow['stype'] . '</td>';
@@ -96,10 +95,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
 
     // 
+    $tableHtml .= '<div class="text-right mt-3">';
     $tableHtml .= '<input type="hidden" name="course" value="' . $course . '">';
-    // $tableHtml .= '<input class="btn btn-success"  type="submit" value="Update Staff">';
-    // $tableHtml .= '</form>';
+    $tableHtml .= '<input class="btn btn-success mr-2" type="submit" value="Allocate Staff">';
+    $tableHtml .= '<button type="button" class="btn btn-secondary mr-2" data-dismiss="modal" onclick="window.location.href=\'index.php\';">Close</button>';
+    $tableHtml .= '</div>';
+    $tableHtml .= '</form>';
     echo $tableHtml;
+    
 
     echo '<div id="hidval" style="display: none;">' . $si . '</div>';
 }

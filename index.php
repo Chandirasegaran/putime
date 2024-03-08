@@ -190,7 +190,8 @@ include 'move-to-top.php';
                     echo '<td>' . $courseName . '</td>';
                                         echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
-                    <button class="btn btn-success" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Softcore</button>
+                    <button class="btn btn-success" onclick="updateStaff(\'' . addslashes($classRow['COURSE']) . '\')">Allocate Staff</button>
+                    <!--<button class="btn btn-info" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset courses</button>-->
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
                     </td>';
 
@@ -204,7 +205,46 @@ include 'move-to-top.php';
             ?>
         </div>
         <hr noshade>
+        <!-- Update Staff Modal -->
+        <div class="modal fade modal-fullscreen" id="updateStaffModal" tabindex="-1" role="dialog" aria-labelledby="updateStaffModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-xl" style="max-width: 90vw;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateStaffModalLabel">Allocate Staff</h5>
+                    <button type="button" class="close" onclick="window.location.href='index.php';" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="update_staff.php" method="post">
+                    <div id="assigningtable">
+                        <!-- Displaying Table -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <script>
+            function updateStaff(courseId) {
+    // Make an AJAX request to fetch the table content for the given course
+    $.ajax({
+        type: "POST",
+        url: "fetch_subject_staff_index.php",
+        data: {
+            course: courseId // Passing the courseId to the server
+        },
+        success: function(response) {
+            // Update the assigningtable div with the received table data
+            $('#assigningtable').html(response);
+            // Now that the content is loaded, show the modal
+            $('#updateStaffModal').modal('show');
+        },
+        error: function(xhr, status, error) {
+            console.error("An error occurred: " + status + ", " + error);
+        }
+    });
+}
 
+        </script>
         <!-- Edit Class Modal -->
         <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog" aria-labelledby="editClassModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-xl" role="document">

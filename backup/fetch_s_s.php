@@ -48,37 +48,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         $tableHtml .= '<td id="s' . $si . '1" style="background-color:' . $colorArray[$colorarr++] . '">' . $subjectRow['subjectCode'] . '</td>';
         $tableHtml .= '<td id="s' . $si . '2">' . $subjectRow['subjectName'] . '</td>';
 
-        $tableHtml .= '<td  style="pointer-events: none;""><select id="s' . $si . '3" class="custom-select" name="staffName[' . $subjectRow['subjectCode'] . ']" >';
-
+        $tableHtml .= '<td>';
+        $tableHtml .= '<div id="s' . $si . '3" class="bg-white p-2 text-center border rounded">' . $subjectRow["staffName"] . '</div>';
+        if($subjectRow["labStaffName"]!="")
+        {
+        $tableHtml .= '<div id="st' . $si . '3" class="bg-white p-2 text-center border rounded">' . $subjectRow["labStaffName"] . '</div>';
+        }
+        else
+        {
+            $tableHtml .= '<div id="st' . $si . '3">' . $subjectRow["labStaffName"] . '</div>';
+        }
+        $tableHtml .= '</td>';
+        
+        // <td id='s{$hidval}3'>{$row['staffName']}</td>
+        // <td id='st{$hidval}3'>{$labStaffName}</td>
         // Add an initial option with value "Select"
-        $tableHtml .= '<option value="">Select</option>';
+        // $tableHtml .= '<option value="">Select</option>';
 
-        // Reset the data pointer to the beginning of the staff result set
-        $staffResult->data_seek(0);
+        // // Reset the data pointer to the beginning of the staff result set
+        // $staffResult->data_seek(0);
 
-        // Populate dropdown with staff names
-        while ($staffRow = $staffResult->fetch_assoc()) {
-            $selected = ($staffRow['name'] == $subjectRow['staffName']) ? 'selected' : '';
-            $tableHtml .= '<option  value="' . $staffRow['name'] . '" ' . $selected . '>' . $staffRow['name'] . '</option>';
-        }
+        // // Populate dropdown with staff names
+        // while ($staffRow = $staffResult->fetch_assoc()) {
+        //     $selected = ($staffRow['name'] == $subjectRow['staffName']) ? 'selected' : '';
+        //     $tableHtml .= '<option  value="' . $staffRow['name'] . '" ' . $selected . '>' . $staffRow['name'] . '</option>';
+        // }
 
-        $tableHtml .= '</select>';
-        if ($subjectRow['lab'] != "no") {
+        // $tableHtml .= '</select>';
+        // if ($subjectRow['lab'] != "no") {
 
-            $tableHtml .= '<select id="st' . $si . '3" class="custom-select" name="labStaffName[' . $subjectRow['subjectCode'] . ']" >';
+        //     $tableHtml .= '<select id="st' . $si . '3" class="custom-select" name="labStaffName[' . $subjectRow['subjectCode'] . ']" >';
 
-            // Add an initial option with value "Select"
-            $tableHtml .= '<option value="Nil">Select</option>';
+        //     // Add an initial option with value "Select"
+        //     $tableHtml .= '<option value="Nil">Select</option>';
 
-            // Reset the data pointer to the beginning of the staff result set
-            $staffResult->data_seek(0);
+        //     // Reset the data pointer to the beginning of the staff result set
+        //     $staffResult->data_seek(0);
 
-            // Populate dropdown with staff names
-            while ($staffRow = $staffResult->fetch_assoc()) {
-                $selected = ($staffRow['name'] == $subjectRow['labStaffName']) ? 'selected' : '';
-                $tableHtml .= '<option value="' . $staffRow['name'] . '" ' . ($selected ? 'selected' : '') . '>' . $staffRow['name'] . '</option>';
-            }
-        }
+        //     // Populate dropdown with staff names
+        //     while ($staffRow = $staffResult->fetch_assoc()) {
+        //         $selected = ($staffRow['name'] == $subjectRow['labStaffName']) ? 'selected' : '';
+        //         $tableHtml .= '<option value="' . $staffRow['name'] . '" ' . ($selected ? 'selected' : '') . '>' . $staffRow['name'] . '</option>';
+        //     }
+        // }
 
         $tableHtml .= '</td>';
 
