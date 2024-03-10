@@ -239,6 +239,7 @@ for ($ilab = 1; $ilab <= 4; $ilab++) {
                 }
             }
             echo '</tr>';
+            $i++;
         }
         echo '</tbody>';
         echo '</table>';

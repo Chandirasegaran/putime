@@ -219,7 +219,7 @@ include 'schedule_lab.php';
                                         if(labs_variable[index].innerText=="no" && element.innerText==eval(clsvar))
                                         {
                                             noarray.push(labs_variable[index].innerText);
-                                            tcount++;
+                                            // tcount++;
                                         }
                                 });
                                 
@@ -233,7 +233,7 @@ include 'schedule_lab.php';
                                     if(labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvar))
                                         {
                                             noarray.push(labs_variable[index].innerText);
-                                            tcount++;
+                                            // tcount++;
                                         }
                                 });
 
@@ -245,7 +245,7 @@ include 'schedule_lab.php';
                                     }
                                         if(labs_variable[index].innerText=="no" && element.innerText==eval(clsvarsf))
                                         {
-                                            t2count++;
+                                            // t2count++;
                                         }
                                 });
                                 h2_element.forEach(function(elementxy,index)
@@ -257,7 +257,7 @@ include 'schedule_lab.php';
                                     }
                                     if(labs_variable[index].innerText=="no" && elementxy.innerText==eval(clsvarsf))
                                         {
-                                            t2count++;
+                                            // t2count++;
                                         }
                                 });
 
@@ -549,19 +549,19 @@ include 'schedule_lab.php';
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab`);
+                                element.setAttribute('title', `${eval(clsvarsf)} has ${h2checkarray.filter(element => element === eval(clsvarsf)).length-tcount}-Lab`);
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has ${h2checkarray.filter(element => element === eval(clsvarsf)).length-tcount}-Lab with a class on left side`);
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has ${h2checkarray.filter(element => element === eval(clsvarsf)).length-tcount}-Lab with a class on right side`);
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has ${hcheckarray.filter(element => element === eval(clsvar)).length-tcount}-Lab with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has ${h2checkarray.filter(element => element === eval(clsvarsf)).length-tcount}-Lab with a class on both side`);
                                 }
                                 left=null;
                                 right=null;
@@ -646,27 +646,27 @@ include 'schedule_lab.php';
                                 tcount=0;
                             }
                             else if (h2checkarray.filter(element => element === eval(clsvarsf)).length >= 1 && eval(stvar) != 'Nil') {
-                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'red';
+                                document.getElementById(i.toString() + j.toString() + k.toString()).style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
                                 element.setAttribute('data-toggle', 'tooltip');
                                 element.setAttribute('data-placement', 'bottom');
                                 if(left==null && right==null)
                                 { // You can change the placement as needed
-                                element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
+                                element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count}`);
                                 element.setAttribute('data-hidden', 'not red');
                                 }
                                 else if(left==true && right==null)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on left side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on left side`);
                                     element.setAttribute('data-hidden', 'not red');
                                 }
                                 else if(left==null && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on right side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on right side`);
                                     element.setAttribute('data-hidden', 'not red');
                                 }
                                 else if(left==true && right==true)
                                 {
-                                    element.setAttribute('title', `${eval(clsvarsf)} has Theory-${t2count} Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on both side`);
+                                    element.setAttribute('title', `${eval(clsvarsf)} has Lab-${h2checkarray.filter(element => element === eval(clsvarsf)).length-t2count} with a class on both side`);
                                     element.setAttribute('data-hidden', 'not red');
                                 }
                                 left=null;
