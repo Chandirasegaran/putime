@@ -16,6 +16,18 @@ include 'move-to-top.php';
 </head>
 
 <body>
+<style>
+    table {
+        page-break-inside: avoid;
+    }
+    .nodiv {
+        page-break-inside: avoid;
+    }
+    .new-page {
+        page-break-before: always;
+    }
+</style>
+
     <div class="container mt-5">
         <!-- Check the value of the 'whichsem' cookie -->
         <?php
@@ -142,7 +154,7 @@ include 'move-to-top.php';
                 $tableName = $tableRow['tableName'];
 
                 // Display the table name
-                echo "<h4 class='hidecourse" . $coursehidecount . "'>Course: " . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . "</h4>";
+                echo "<div class='nodiv'><h4 class='hidecourse" . $coursehidecount . "'><br><br>Course: " . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . "</h4>";
                 echo '<input type="checkbox" class="hidehidecheckbox" id="hideCheckcourse' . $coursehidecount . '" onchange="hidelab(\'hidecourse' . $coursehidecount . '\')">
                 <label class="hidehidecheckbox" for="hideCheckcourse">Hide Course ' . str_replace(['odd', 'even', '_subjects'], '', trim($tableName)) . '</label>';
                 // Fetch and display data for each table
@@ -150,14 +162,10 @@ include 'move-to-top.php';
                 $resultData = $conn->query($sqlGetData);
 
                 if ($resultData && $resultData->num_rows > 0) {
-                    echo "<table class='table table-bordered hidecourse" . $coursehidecount . "'><thead><tr>";
+                    echo "<table class='table table-bordered hidecourse" . $coursehidecount . "'><thead>";
 
-                    // Fetching column names for headers
-                    $columns = array_keys($resultData->fetch_assoc());
-                    foreach ($columns as $column) {
-                        echo "<th>" . $column . "</th>";
-                    }
-                    echo "</tr></thead><tbody>";
+                    echo "<tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr>";
+                    echo "</thead><tbody>";
 
                     // Reset pointer to the first row
                     $resultData->data_seek(0);
@@ -195,7 +203,7 @@ include 'move-to-top.php';
                             }
                             echo "</tr>";
                         }
-                        echo "</tbody></table> <br class='hidecourse" . $coursehidecount++ . "'>";
+                        echo "</tbody></table></div> <br class='hidecourse" . $coursehidecount++ . "'>";
                     } else {
                         // echo "<pre class='hidecourse" . $coursehidecount++ . "'>No data available for table " . $tableName . "<br>";
                     }
@@ -407,13 +415,13 @@ include 'move-to-top.php';
             // Fetch all staff names
             $sqlGetStaff = "SELECT DISTINCT name FROM staff";
             $resultStaff = $conn->query($sqlGetStaff);
-            echo '<br><br><h1>Faculty Time Table</h1><hr>';
+            echo '<h1 class="new-page">Faculty Time Table</h1><hr>';
             $facultyhidecount = 1;
             if ($resultStaff->num_rows > 0) {
                 while ($staffRow = $resultStaff->fetch_assoc()) {
                     $staffName = $staffRow['name'];
 
-                    echo "<h4 class='hidefaculty" . $facultyhidecount . "'>Timetable for $staffName</h4>";
+                    echo "<div class='nodiv'><h4 class='hidefaculty" . $facultyhidecount . "'><br>Timetable for $staffName</h4>";
                     echo '<input type="checkbox" class="hidehidecheckbox" id="hidecheckfaculty' . $facultyhidecount . '" onchange="hidelab(\'hidefaculty' . $facultyhidecount . '\')">
                 <label class="hidehidecheckbox" for="hidecheckfaculty">Hide Faculty ' . $staffName . '</label>';
                     echo "<table class='table table-bordered hidefaculty" . $facultyhidecount . "'>";
@@ -529,9 +537,10 @@ include 'move-to-top.php';
                         }
                         echo "</tbody>";
 
-                        echo "</table><br class='hidefaculty" . $facultyhidecount . "'>";
+                        echo "</table></div><br class='hidefaculty" . $facultyhidecount . "'>";
                     } else {
                         // echo "No courses found for $staffName.<br>";
+                        echo "</div>";
                     }
                     // dfggfgdgdf
                     echo "<hr class='hidefaculty" . $facultyhidecount . "'>";
@@ -642,7 +651,7 @@ include 'move-to-top.php';
                     }
                 }
                 for ($lab = 1; $lab <= 4; $lab++) {
-                    echo "<h4 class='hidelab" . $lab . "'>Lab $lab Timetable</h4>";
+                    echo "<div class='nodiv'><br><h4 class='hidelab" . $lab . "'>Lab $lab Timetable</h4>";
                     echo '<input type="checkbox" class="hidehidecheckbox" id="hideChecklab' . $lab . '" onchange="hidelab(\'hidelab' . $lab . '\')">
                     <label class="hidehidecheckbox" for="hideChecklab">Hide lab ' . $lab . '</label>';
                     echo "<table class='table table-bordered hidelab" . $lab . "'>";
@@ -706,7 +715,7 @@ include 'move-to-top.php';
                     }
 
                     echo "</tbody>";
-                    echo "</table><br class='hidelab" . $lab . "'><hr class='hidelab" . $lab . "'><br>";
+                    echo "</table><br class='hidelab" . $lab . "'><div class='nodiv'>";
                 }
                 ?>
                 <script>

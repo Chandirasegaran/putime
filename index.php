@@ -115,7 +115,7 @@ include 'move-to-top.php';
                             </div>
 
                             <!-- Table -->
-                            <!-- <table class="table">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Subject Code</th>
@@ -126,7 +126,7 @@ include 'move-to-top.php';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <!-- <tr>
                                         <td><input type="text" class="form-control" name="subjectCode1" maxlength="15" oninput="processInput(this)" Required></td>
                                         <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
@@ -149,13 +149,13 @@ include 'move-to-top.php';
                                             </div>
                                         </td>
                                         <td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
-                            </table> -->
+                            </table>
 
                             <!-- Add Row Button -->
-                            <!-- <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowhc()">Add
-                                Row</button> -->
+                            <button id="c_add_row_btn" class="btn btn-success float-right " onclick="addRowhc()">Add
+                                Row</button>
 
                     </div>
                     <div class="modal-footer">
@@ -753,34 +753,54 @@ include 'move-to-top.php';
         let hoursRequiredcount = 2;
         // Function to add a new row to the table
         function addRowhc() {
-            var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + subcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + subname_count + '" maxlength="50" Required></td>' +
-                '<td><input type="number" class="form-control" name="hoursRequired' + hoursRequiredcount + '" Required></td>' +
+            var newRow = 
+                '<tr>' +
+                '<td><input list="hardcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchhardSubjectDetails(this)" required>' +
+                '<datalist id="hardcoreCodes">';
+
+
+
+            // Add options for each softcore code
+            <?php foreach ($hardcoreCodes as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+            newRow += '</datalist></td>' +
+
+
+
+                '<td><input list="hardcoreNames" class="form-control" name="subjectName' + editcount + '" onchange="fetchhardSubjectDetails1(this)" required>' +
+                '<datalist id="hardcoreNames">';
+
+            <?php foreach ($hardcoreNames as $code) { ?>
+                newRow += '<option value="<?= $code ?>">';
+            <?php } ?>
+            newRow += '</datalist></td>' +
+
+
+                '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="no" checked> No' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="1"> 1' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1"> 1' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="2"> 2' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="3"> 3' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3"> 3' +
                 '</div>' +
                 '<div class="form-check form-check-inline">' +
-                '<input type="radio" class="form-check-input" name="lab' + lab_count + '" value="4"> 4' +
+                '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4"> 4' +
                 '</div>' +
                 '</td>' +
+                '<td><input type="text" class="form-control" value="hc" name="type' + editcount + '" ></td>' +
 
-                // '<td><input type="text" class="form-control" value="hc" name="type' + subname_count + '" ></td>' +
-
-
-                '<td><button  id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
+                '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
                 '</tr>';
             document.querySelector('#exampleModal table tbody').insertAdjacentHTML('beforeend', newRow);
+            editcount++;
             lab_count++;
             subname_count++;
             subcode_count++;
@@ -1308,6 +1328,38 @@ inputField.value = inputField.value.toUpperCase();
             });
         }
 
+        function fetchhardSubjectDetails1(input)
+        {
+            var subjectName = input.value;
+            var row = input.closest('tr'); // Getting the parent <tr> instead of <td>
+            console.log("fa" + row);
+            // Make an AJAX request to fetch subject details
+            jQuery.ajax({
+                url: 'get_hard_details_name_edit.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'subjectName': subjectName
+                },
+                success: function(response) {
+                    if (response.error) {
+                        console.error(response.error);
+                        return;
+                    }
+                    console.log(response);
+                    // Update the corresponding fields in the row
+                    row.querySelector('[name^="subjectCode"]').value = response.subjectCode;
+                    row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
+                    // Update radio button based on the lab value
+                    row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
+
+                    row.querySelector('[name^="type"]').value = "hc";
+                },
+                error: function(xhr, status, error) {
+                    console.error('An error occurred while fetching subject details by name.');
+                }
+            });
+        }
         
         function fetchScSubjectDetails1(input) {
             var subjectName = input.value;

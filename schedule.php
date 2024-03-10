@@ -211,6 +211,7 @@ include 'move-to-top.php';
                             // Disable the select option
                             // console.log("Dropdown ${selectBoxId} disabled");
                             dropdown.disabled = true;
+                            dropdown.parentElement.style.backgroundColor = 'dee2e6';
                         }
 
                         // Log the selected value of the current dropdown to the console
