@@ -650,6 +650,7 @@ include 'move-to-top.php';
                         }
                     }
                 }
+                // echo "<h4 class='new-page'>LAB TIMETABLE</h4>";
                 for ($lab = 1; $lab <= 4; $lab++) {
                     echo "<div class='nodiv'><br><h4 class='hidelab" . $lab . "'>Lab $lab Timetable</h4>";
                     echo '<input type="checkbox" class="hidehidecheckbox" id="hideChecklab' . $lab . '" onchange="hidelab(\'hidelab' . $lab . '\')">

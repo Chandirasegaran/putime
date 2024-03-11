@@ -448,8 +448,8 @@ include 'move-to-top.php';
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="15" oninput="processInput(this)" Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="25" oninput="processInput(this)" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="100" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
                                         <td>
@@ -550,8 +550,8 @@ include 'move-to-top.php';
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="15" oninput="processInput(this)" Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="25" oninput="processInput(this)" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="100" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
                                         <td>
@@ -671,8 +671,8 @@ include 'move-to-top.php';
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" oninput="processInput(this)" maxlength="15" Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectCode1" oninput="processInput(this)" maxlength="25" Required></td>
+                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="100" Required></td>
                                         <td><input type="number" class="form-control" name="hoursRequired1" Required>
                                         </td>
                                         <td>
@@ -815,8 +815,8 @@ include 'move-to-top.php';
     // Function to add a new row to the "hardcoreModal" table
     function addRowhard() {
         var newRow = '<tr>' +
-            '<td><input type="text" class="form-control" name="subjectCode' + hcsubcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
-            '<td><input type="text" class="form-control" name="subjectName' + hcsubname_count + '" maxlength="50" Required></td>' +
+            '<td><input type="text" class="form-control" name="subjectCode' + hcsubcode_count + '" maxlength="25" oninput="processInput(this)" Required></td>' +
+            '<td><input type="text" class="form-control" name="subjectName' + hcsubname_count + '" maxlength="100" Required></td>' +
             '<td><input type="number" class="form-control" name="hoursRequired' + hchoursRequiredcount + '" Required></td>' +
             '<td>' +
             '<div class="form-check form-check-inline">' +
@@ -854,8 +854,8 @@ include 'move-to-top.php';
         // Function to add a new row to the table
         function addRowsc() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + scsubname_count + '" maxlength="50" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + scsubcode_count + '" maxlength="25" oninput="processInput(this)" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + scsubname_count + '" maxlength="100" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + schoursRequiredcount + '" Required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
@@ -895,8 +895,8 @@ include 'move-to-top.php';
         // Function to add a new row to the table
         function addRowse() {
             var newRow = '<tr>' +
-                '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="15" oninput="processInput(this)" Required></td>' +
-                '<td><input type="text" class="form-control" name="subjectName' + sesubname_count + '" maxlength="50" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectCode' + sesubcode_count + '" maxlength="25" oninput="processInput(this)" Required></td>' +
+                '<td><input type="text" class="form-control" name="subjectName' + sesubname_count + '" maxlength="100" Required></td>' +
                 '<td><input type="number" class="form-control" name="hoursRequired' + sehoursRequiredcount + '" Required></td>' +
                 '<td>' +
                 '<div class="form-check form-check-inline">' +
