@@ -176,6 +176,7 @@ include 'move-to-top.php';
             <script>
                 function prt() {
                     document.getElementById('btnhid').style.display = 'none';
+                    document.getElementById('btnhid1').style.display = 'none';
                     document.getElementById('moveToTopBtn').style.display = 'none';
                     window.print();
                     location.reload();

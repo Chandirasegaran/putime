@@ -415,12 +415,11 @@ include 'move-to-top.php';
             // Fetch all staff names
             $sqlGetStaff = "SELECT DISTINCT name FROM staff";
             $resultStaff = $conn->query($sqlGetStaff);
-            echo '<h1 class="new-page">Faculty Time Table</h1><hr>';
+            echo '<h1>Faculty Time Table</h1><hr>';
             $facultyhidecount = 1;
             if ($resultStaff->num_rows > 0) {
                 while ($staffRow = $resultStaff->fetch_assoc()) {
                     $staffName = $staffRow['name'];
-
                     echo "<div class='nodiv'><h4 class='hidefaculty" . $facultyhidecount . "'><br>Timetable for $staffName</h4>";
                     echo '<input type="checkbox" class="hidehidecheckbox" id="hidecheckfaculty' . $facultyhidecount . '" onchange="hidelab(\'hidefaculty' . $facultyhidecount . '\')">
                 <label class="hidehidecheckbox" for="hidecheckfaculty">Hide Faculty ' . $staffName . '</label>';
