@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     }
 
     // Redirect to the page where the form was submitted
-    // header("Location:index.php");
+ header("Location:index.php");
     exit();
 }
 $conn->close();
