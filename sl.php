@@ -1174,12 +1174,53 @@ include 'schedule_lab.php';
                         let updatedTitle = existingTitle ? existingTitle + newTextToAppend : newTextToAppend;
                         dropdown.options[i].setAttribute('title', updatedTitle);
                     }
+                }
                     else if(!dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') != 'tooltip')
                     {
                     dropdown.options[i].style.backgroundColor="red";
                     dropdown.options[i].setAttribute('data-toggle', 'changed');
                     dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
                     dropdown.options[i].setAttribute('title', `${dropstaffname} vertically assigned more than two on same class`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                    }
+                }
+                else if(staffarray.filter(element => element == dropstaffname2).length >= 2)
+                {
+                    if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip')
+                    {
+                        let existingTitle = dropdown.options[i].getAttribute('title');
+                        dropdown.options[i].setAttribute('data-toggle', 'tooltip-changed');
+                        let newTextToAppend =" and in same class vertically assigned more than two"; // Replace with the text you want to append
+                        if (!existingTitle || existingTitle.indexOf(newTextToAppend) === -1) {
+                        let updatedTitle = existingTitle ? existingTitle + newTextToAppend : newTextToAppend;
+                        dropdown.options[i].setAttribute('title', updatedTitle);
+                    }
+                    }
+                    else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'changed')
+                    {
+                    dropdown.options[i].style.backgroundColor="red";
+                    let existingTitle = dropdown.options[i].getAttribute('title');
+                    let newTextToAppend =" and in same class vertically assigned more than two"; // Replace with the text you want to append
+                    if (!existingTitle || existingTitle.indexOf(newTextToAppend) === -1) {
+                        let updatedTitle = existingTitle ? existingTitle + newTextToAppend : newTextToAppend;
+                        dropdown.options[i].setAttribute('title', updatedTitle);
+                    }
+                    }
+                    else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip-changed')
+                    {
+                    dropdown.options[i].style.backgroundColor="red";
+                    let existingTitle = dropdown.options[i].getAttribute('title');
+                    let newTextToAppend =" and in same class vertically assigned more than two"; // Replace with the text you want to append
+                    if (!existingTitle || existingTitle.indexOf(newTextToAppend) === -1) {
+                        let updatedTitle = existingTitle ? existingTitle + newTextToAppend : newTextToAppend;
+                        dropdown.options[i].setAttribute('title', updatedTitle);
+                    }
+                }
+                    else if(!dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') != 'tooltip')
+                    {
+                    dropdown.options[i].style.backgroundColor="red";
+                    dropdown.options[i].setAttribute('data-toggle', 'changed');
+                    dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                    dropdown.options[i].setAttribute('title', `${dropstaffname2} vertically assigned more than two on same class`);// Replace 'Your Tooltip Content' with your actual tooltip text
                     }
                 }
             }
