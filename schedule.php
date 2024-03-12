@@ -1066,7 +1066,7 @@ include 'move-to-top.php';
                         let existingTitle = dropdown.options[i].getAttribute('title');
                         dropdown.options[i].style.backgroundColor="red";
                         dropdown.options[i].setAttribute('data-toggle', 'tooltip-changed');
-                        let newTextToAppend = "and already having an another course "+dropdown.options[i].value+" on same day"; // Replace with the text you want to append
+                        let newTextToAppend = "and already having an another course on same day"; // Replace with the text you want to append
                         let updatedTitle = existingTitle ? existingTitle + ' ' + newTextToAppend : newTextToAppend;
                         dropdown.options[i].setAttribute('title', updatedTitle)
                     }
@@ -1086,7 +1086,7 @@ include 'move-to-top.php';
                         let existingTitle = dropdown.options[i].getAttribute('title');
                         dropdown.options[i].style.backgroundColor="red";
                         dropdown.options[i].setAttribute('data-toggle', 'tooltip-changed');
-                        let newTextToAppend = "and already having an another course "+dropdown.options[i].value+" on same day"; // Replace with the text you want to append
+                        let newTextToAppend = "and already having an another course on same day"; // Replace with the text you want to append
                         let updatedTitle = existingTitle ? existingTitle + ' ' + newTextToAppend : newTextToAppend;
                         dropdown.options[i].setAttribute('title', updatedTitle)
                     }
@@ -1104,7 +1104,7 @@ include 'move-to-top.php';
                     {
                         let existingTitle = dropdown.options[i].getAttribute('title');
                         dropdown.options[i].setAttribute('data-toggle', 'tooltip-changed');
-                        let newTextToAppend = "and already having an another course "+dropdown.options[i].value+" on same day"; // Replace with the text you want to append
+                        let newTextToAppend = "and already having an another course on same day"; // Replace with the text you want to append
                         let updatedTitle = existingTitle ? existingTitle + ' ' + newTextToAppend : newTextToAppend;
                         dropdown.options[i].setAttribute('title', updatedTitle)
                         dropdown.options[i].style.backgroundColor="red";
@@ -1124,7 +1124,7 @@ include 'move-to-top.php';
                         let existingTitle = dropdown.options[i].getAttribute('title');
                         dropdown.options[i].style.backgroundColor="red";
                         dropdown.options[i].setAttribute('data-toggle', 'tooltip-changed');
-                        let newTextToAppend = "and already having an another course "+dropdown.options[i].value+" on same day"; // Replace with the text you want to append
+                        let newTextToAppend = "and already having an another course on same day"; // Replace with the text you want to append
                         let updatedTitle = existingTitle ? existingTitle + ' ' + newTextToAppend : newTextToAppend;
                         dropdown.options[i].setAttribute('title', updatedTitle)
                     }
@@ -1134,6 +1134,56 @@ include 'move-to-top.php';
                 }
                 
             }
+            //vertical check starts here
+            if(secondPart==1)
+            {
+                let staffarray=[];
+                for(let i_loop=1;i_loop<=5;i_loop++)
+                {
+                    if(i_loop==firstPart)
+                    {
+                        continue;
+                    }
+                    if(document.getElementById("select"+i_loop+""+secondPart).value!=""){
+                //    console.log(eval(document.getElementById("select"+firstPart+""+j_loop).value).staff);
+                    let otherstaff=eval(document.getElementById("select"+i_loop+""+secondPart).value).staff;
+                    let otherstaff2=eval(document.getElementById("select"+i_loop+""+secondPart).value).staff2;
+                    staffarray.push(otherstaff);
+                    staffarray.push(otherstaff2);
+                    }
+                }
+                if(staffarray.filter(element => element == dropstaffname).length >= 2)
+                {
+                    if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip')
+                    {
+                        let existingTitle = dropdown.options[i].getAttribute('title');
+                        dropdown.options[i].setAttribute('data-toggle', 'tooltip-changed');
+                        let newTextToAppend =" and in same class vertically assigned more than two"; // Replace with the text you want to append
+                        if (!existingTitle || existingTitle.indexOf(newTextToAppend) === -1) {
+                        let updatedTitle = existingTitle ? existingTitle + newTextToAppend : newTextToAppend;
+                        dropdown.options[i].setAttribute('title', updatedTitle);
+                    }
+                    }
+                    else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'changed')
+                    {
+                    dropdown.options[i].style.backgroundColor="red";
+                    let existingTitle = dropdown.options[i].getAttribute('title');
+                    let newTextToAppend =" and in same class vertically assigned more than two"; // Replace with the text you want to append
+                    if (!existingTitle || existingTitle.indexOf(newTextToAppend) === -1) {
+                        let updatedTitle = existingTitle ? existingTitle + newTextToAppend : newTextToAppend;
+                        dropdown.options[i].setAttribute('title', updatedTitle);
+                    }
+                    }
+                    else if(!dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') != 'tooltip')
+                    {
+                    dropdown.options[i].style.backgroundColor="red";
+                    dropdown.options[i].setAttribute('data-toggle', 'changed');
+                    dropdown.options[i].setAttribute('data-placement', 'bottom'); // You can change the placement as needed
+                    dropdown.options[i].setAttribute('title', `${dropstaffname} vertically assigned more than two on same class`);// Replace 'Your Tooltip Content' with your actual tooltip text
+                    }
+                }
+            }
+            //vertical check ends here
             }
             // for(let j=0;i<8;i++)
             // {
