@@ -1174,6 +1174,16 @@ include 'move-to-top.php';
                         dropdown.options[i].setAttribute('title', updatedTitle);
                     }
                     }
+                    else if(dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') == 'tooltip-changed')
+                    {
+                    dropdown.options[i].style.backgroundColor="red";
+                    let existingTitle = dropdown.options[i].getAttribute('title');
+                    let newTextToAppend =" and in same class vertically assigned more than two"; // Replace with the text you want to append
+                    if (!existingTitle || existingTitle.indexOf(newTextToAppend) === -1) {
+                        let updatedTitle = existingTitle ? existingTitle + newTextToAppend : newTextToAppend;
+                        dropdown.options[i].setAttribute('title', updatedTitle);
+                    }
+                    }
                     else if(!dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') != 'tooltip')
                     {
                     dropdown.options[i].style.backgroundColor="red";
