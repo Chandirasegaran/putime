@@ -210,7 +210,7 @@ include 'move-to-top.php';
                         if (dropdown.value && eval(dropdown.value + ".lab") !== "no") {
                             // Disable the select option
                             // console.log("Dropdown ${selectBoxId} disabled");
-                            dropdown.disabled = true;
+                            // dropdown.disabled = true;
                             dropdown.parentElement.style.backgroundColor = 'dee2e6';
                         }
 

@@ -24,8 +24,8 @@ for ($order = 1; $order <= 5; $order++) {
                 // Split the value using the last underscore
                 $parts = explode('_', $cellValue);
                 $course = $parts[0];
-                $location = strtolower($parts[1]); // Convert $location to lowercase
-                // echo "UPDATE {$currsem}{$location} SET $timeSlot = '$course' WHERE `ORDER` = $order";
+                $location = strtolower($parts[count($parts) - 1]); // Convert $location to lowercase
+                echo "UPDATE {$currsem}{$location} SET $timeSlot = '' WHERE `ORDER` = $order";
                 // Update the location table using the obtained order value and $currsem
                 $updateSql = "UPDATE {$currsem}{$location} SET $timeSlot = '' WHERE `ORDER` = $order";
                 if($conn->query($updateSql))

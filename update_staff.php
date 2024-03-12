@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             // Truncate the table
             $truncate = "TRUNCATE TABLE " . $course;
             $conn->query($truncate);
-
+            echo "truncated ",$course,"<br>";
             // Insert empty values
             $empty = "INSERT INTO `" . $course . "` (`ORDER`, `DAY`, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`) VALUES
             (1, 'MONDAY', '', '', '', '', '', '', '', ''),
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             (4, 'THURSDAY', '', '', '', '', '', '', '', ''),
             (5, 'FRIDAY', '', '', '', '', '', '', '', '')";
             $conn->query($empty);
-
+            echo $empty;
             // Update the staffName column in the $course table for the specific subjectCode
             $updateQuery = "UPDATE " . $course . "_subjects SET staffName = '$selectedStaffName' WHERE subjectCode = '$subjectCode'";
 
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     }
 
     // Redirect to the page where the form was submitted
-    header("Location:index.php");
+    // header("Location:index.php");
     exit();
 }
 $conn->close();
