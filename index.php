@@ -226,6 +226,7 @@ include 'move-to-top.php';
         <script>
             function updateStaff(courseId) {
     // Make an AJAX request to fetch the table content for the given course
+    $('#updateStaffModalLabel').text(courseId.replace(/^(odd|even)\s*/i, ''));
     $.ajax({
         type: "POST",
         url: "fetch_subject_staff_index.php",
