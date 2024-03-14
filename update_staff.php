@@ -1,6 +1,28 @@
 <?php
 include 'db_connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
+
+    for ($lab = 1; $lab <= 4; $lab++) {
+        // Generate table name dynamically with semester
+        $tableName = $currsem . "lab" . $lab;
+    
+        // Truncate the table
+        $truncateQuery = "TRUNCATE TABLE $tableName";
+        $conn->query($truncateQuery);
+    
+        // Insert values into the table
+        $insertQuery = "INSERT INTO $tableName (`ORDER`, `DAY`, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
+                        VALUES
+                        (1, 'MONDAY', '', '', '', '', '', '', '', ''),
+                        (2, 'TUESDAY', '', '', '', '', '', '', '', ''),
+                        (3, 'WEDNESDAY', '', '', '', '', '', '', '', ''),
+                        (4, 'THURSDAY', '', '', '', '', '', '', '', ''),
+                        (5, 'FRIDAY', '', '', '', '', '', '', '', '')";
+    
+        $conn->query($insertQuery);
+    }
+
+    
     $course = $conn->real_escape_string($_POST['course']);
     // Check if 'staffName' is set and is an array
     if (isset($_POST['staffName']) && is_array($_POST['staffName'])) {
@@ -58,25 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
             // You may want to add error handling here
         }
-    }
-    for ($lab = 1; $lab <= 4; $lab++) {
-        // Generate table name dynamically with semester
-        $tableName = $currsem . "lab" . $lab;
-    
-        // Truncate the table
-        $truncateQuery = "TRUNCATE TABLE $tableName";
-        $conn->query($truncateQuery);
-    
-        // Insert values into the table
-        $insertQuery = "INSERT INTO $tableName (`ORDER`, `DAY`, `9_30`, `10_30`, `11_30`, `12_30`, `1_30`, `2_30`, `3_30`, `4_30`)
-                        VALUES
-                        (1, 'MONDAY', '', '', '', '', '', '', '', ''),
-                        (2, 'TUESDAY', '', '', '', '', '', '', '', ''),
-                        (3, 'WEDNESDAY', '', '', '', '', '', '', '', ''),
-                        (4, 'THURSDAY', '', '', '', '', '', '', '', ''),
-                        (5, 'FRIDAY', '', '', '', '', '', '', '', '')";
-    
-        $conn->query($insertQuery);
     }
 
     // Redirect to the page where the form was submitted
