@@ -1215,7 +1215,7 @@ include 'schedule_lab.php';
                         dropdown.options[i].setAttribute('title', updatedTitle);
                     }
                 }
-                    else if(!dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') != 'tooltip')
+                    else if(dropstaffname2!=null && !dropdown.options[i].hasAttribute('data-toggle') && dropdown.options[i].getAttribute('data-toggle') != 'tooltip')
                     {
                     dropdown.options[i].style.backgroundColor="red";
                     dropdown.options[i].setAttribute('data-toggle', 'changed');
