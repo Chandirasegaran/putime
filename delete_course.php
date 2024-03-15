@@ -7,14 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['coursename'])) {
     // Collect registration number from the query parameters
     $coursename = $_GET['coursename'];
     echo $coursename;
-    // Delete the staff record from the staff table
 
-    // if($currsem=="Odd"){
-    //     $deleteQuery = "DELETE FROM adminodd WHERE `adminodd`.`COURSE` = '".$coursename."'";
-    // }
-    // else if($currsem=="Even"){
-    //     $deleteQuery = "DELETE FROM admineven WHERE `admineven`.`COURSE` = '".$coursename."'";
-    // }
 
     $deleteQuery = "DELETE FROM " . ($currsem == "odd" ? "adminodd" : "admineven") . " WHERE `" . ($currsem == "odd" ? "adminodd" : "admineven") ."`.`COURSE` = '".$coursename."'";
 

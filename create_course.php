@@ -21,22 +21,10 @@ for ($i = 1; $i <= $numberOfSubjects; $i++) {
     ${"lab{$i}"} = isset($_POST["lab{$i}"]) ? $_POST["lab{$i}"] : null;
 }
 
-// for ($i = 1; $i <= $numberOfSubjects; $i++) {
-//     if(${"subjectCode{$i}"}!=null){
-//         echo ${"subjectCode{$i}"} .'  |   '. ${"subjectName{$i}"} .'<br>';
-//     }
-//     else{
-//         break;
-//     }
-// }
+
 
 include 'db_connection.php';
-// if($currsem=="Odd"){
-//     $sql = "INSERT INTO adminodd (COURSE) VALUES ('$courseName')";
-// }
-// else if($currsem=="Even"){
-//     $sql = "INSERT INTO admineven (COURSE) VALUES ('$courseName')";
-// }
+
 
 
 // Batch 1

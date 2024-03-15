@@ -213,70 +213,9 @@ include 'move-to-top.php';
         }
         ?>
         <div class="facultyTimetable">
-            <!-- <h2>PONDICHERRY UNIVERSITY</h2>
-            <h3>COMPUTER SCIENCE DEPARTMENT</h3>
-            <br> -->
+            
 
-            <?php
-            // // Fetch staff names
-            // $sqlGetStaffNames = "SELECT NAME FROM staff";
-            // $resultStaffNames = $conn->query($sqlGetStaffNames);
-            
-            // if ($resultStaffNames->num_rows > 0) {
-            //     while ($staffRow = $resultStaffNames->fetch_assoc()) {
-            //         $staffName = $staffRow['NAME'];
-            //         echo "<h4>Staff: $staffName</h4>";
-            
-            //         // Initialize an array to store the staff timetable
-            //         $staffTimetable = array();
-            
-            //         // Iterate over all tables with the suffix "_subjects" to find staff's courses
-            //         $sqlGetCourses = "SHOW TABLES LIKE '%_subjects'";
-            //         $resultCourses = $conn->query($sqlGetCourses);
-            
-            //         while ($tableRow = $resultCourses->fetch_assoc()) {
-            //             $subjectTableName = $tableRow['Tables_in_putimetbdb (%_subjects)'];
-            
-            //             // Fetch the staff's courses from the subject table using a partial match
-            //             $sqlGetStaffCourses = "SELECT * FROM $subjectTableName WHERE staffName LIKE '%$staffName%'";
-            //             $resultStaffCourses = $conn->query($sqlGetStaffCourses);
-            
-            //             // Merge the timetable data
-            //             while ($timetableRow = $resultStaffCourses->fetch_assoc()) {
-            //                 $staffTimetable[] = $timetableRow;
-            //             }
-            //         }
-            
-            //         // Display the staff timetable in a table
-            //         if (!empty($staffTimetable)) {
-            //             echo "<table class='table table-bordered'>";
-            //             // Add table header
-            //             echo "<thead><tr>";
-            //             foreach (array_keys($staffTimetable[0]) as $columnName) {
-            //                 echo "<th>$columnName</th>";
-            //             }
-            //             echo "</tr></thead>";
-            
-            //             // Add table body
-            //             echo "<tbody>";
-            //             foreach ($staffTimetable as $timetableRow) {
-            //                 echo "<tr>";
-            //                 foreach ($timetableRow as $value) {
-            //                     echo "<td>$value</td>";
-            //                 }
-            //                 echo "</tr>";
-            //             }
-            //             echo "</tbody>";
-            
-            //             echo "</table><br>";
-            //         } else {
-            //             echo "No courses found for $staffName.<br>";
-            //         }
-            //     }
-            // } else {
-            //     echo "No staff found.<br>";
-            // }
-            ?>
+           
             <script>
                 function staffmat(staffname) {
                     for (let i = 0; i <= 5; i++) {
@@ -298,16 +237,7 @@ include 'move-to-top.php';
                             var index1 = staffnamearrsf1.indexOf(staffname);
                             if (indexstaff != -1) {
                                 document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[indexstaff].innerHTML;
-                                // var labElements = document.getElementsByClassName("lab"+ i + j);
-                                // var combinedString = "";
-
-                                // for (var element of labElements) {
-                                //     combinedString += element.innerHTML;
-                                // }
-                                // document.getElementById(staffname + i + j).innerText = combinedString;
-                                // console.log(staffnamearr1);
-
-                                // console.log(document.getElementsByClassName("lab" + i + j)[0]);
+                               
                             }
                             else if (index1 != -1) {
                                 document.getElementById(staffname + i + j).innerText = document.getElementsByClassName("lab" + i + j)[index1].innerHTML;
@@ -324,8 +254,6 @@ include 'move-to-top.php';
             include 'db_connection.php';
             $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
 
-            // echo '<H1 class="mt-5">Final Schedule</H1>
-            //             <h2>Class Schedule</h2>';
             if ($scheduleResult->num_rows > 0) {
                 while ($classRow = $scheduleResult->fetch_assoc()) {
 
@@ -456,16 +384,7 @@ include 'move-to-top.php';
 
 
 
-                            // $staffQuery = "SELECT staffName FROM {$discourse}_subjects WHERE subjectCode = '$columnValue'";
-                            //                         $staffResult = $conn->query($staffQuery);
-                            //                         echo '<td ><div class="table' . $i . $j . '">';
-                            //                         if ($staffResult->num_rows > 0) {
-                            //                             while ($staffRow = $staffResult->fetch_assoc()) {
-                            //                                 echo $staffRow['staffName'];
-                            //                             }
-                            //                         } else {
-                            //                             echo '';
-                            //                         }
+                          
                         }
 
                         echo "</tr>";
@@ -558,8 +477,7 @@ include 'move-to-top.php';
                 <!-- Add empty timetable templates for 4 labs -->
                 <?php
                 $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
-                // echo '<H1 class="mt-5">Final Schedule</H1>
-                // <h2>Class Schedule</h2>';
+               
                 if ($scheduleResult->num_rows > 0) {
                     while ($classRow = $scheduleResult->fetch_assoc()) {
 
@@ -570,10 +488,7 @@ include 'move-to-top.php';
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
-                            // Display the fetched data in a table format without dropdowns
-                
-                            // echo '<h1 id="currentcourse" class="mt-5">' . $discourse . '</h1>';
-                
+                            
 
                             echo '<table class="table table-bordered " style="display:none">';
                             $timeSlots = ["SL.NO.", "DAYS", "9.30-10.30", "10.30-11.30", "11.30-12.30", "12.30-1.30", "1.30-2.30", "2.30-3.30", "3.30-4.30", "4.30-5.30"];

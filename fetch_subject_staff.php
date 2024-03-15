@@ -30,9 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
     $staffQuery = "SELECT DISTINCT name FROM staff";
     $staffResult = $conn->query($staffQuery);
 
-    // Build HTML for the subject details, staff names, hoursRequired, and lab table
-    // $tableHtml = '<form method="post" action="update_staff.php" onmouseover="hourCheck()" >'; // Assuming the update script is named update_staff.php
-    // 
 
 
     $tableHtml = '<table class="table table-bordered" id="stab" onchange="alertstaffupdate()">';

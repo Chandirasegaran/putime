@@ -41,14 +41,7 @@ if ($conn->query($sql) !== TRUE) {
     echo 'Error creating  Subject table: ' . $conn->error;
 }
 
-// $sql = 'CREATE TABLE IF NOT EXISTS SOFTCORETB (
-//     COURSE VARCHAR(50) PRIMARY KEY
-// )';
 
-
-// if ($conn->query($sql) !== TRUE) {
-//     echo 'Error creating EVEN Subject table: ' . $conn->error;
-// }
 $sql = 'CREATE TABLE IF NOT EXISTS HARDCORETB (
     subjectCode VARCHAR(25) PRIMARY KEY,
     subjectName VARCHAR(255),

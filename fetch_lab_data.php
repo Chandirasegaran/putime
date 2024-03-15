@@ -75,8 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
 
     if ($result->num_rows > 0) {
 
-        // Display the fetched data in a table format with dropdowns
-        // echo '<h1 id="currentcourse" onmouseover="hourCheck()">' . $course . '</h1>';
 
 
         echo '<table class="table table-bordered">';
@@ -141,10 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         echo 'No data found for the selected course.';
     }
 
-    // if($currsem=="Odd"){
-    // $scheduleResult = $conn->query("SELECT * FROM adminodd");    }
-    // else if($currsem=="Even"){
-    // $scheduleResult = $conn->query("SELECT * FROM admineven");    }
+ 
     $baseTableName = $currsem == "odd" ? "oddlab" : "evenlab";
 
 // Loop to generate and query tables

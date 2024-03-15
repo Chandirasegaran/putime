@@ -137,10 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
         echo 'No data found for the selected course.';
     }
 
-    // if($currsem=="Odd"){
-    // $scheduleResult = $conn->query("SELECT * FROM adminodd");    }
-    // else if($currsem=="Even"){
-    // $scheduleResult = $conn->query("SELECT * FROM admineven");    }
+
     $scheduleResult = $conn->query("SELECT * FROM " . ($currsem == "odd" ? "adminodd" : "admineven"));
     echo '<H1 class="mt-5">Final Schedule</H1>
     <h2>Class Schedule</h2>';
@@ -151,21 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['course'])) {
             $discourse = $classRow["COURSE"];
             if ($discourse == $course) {
                 continue;
-                // echo '<table class="table table-bordered"><thead><tr><th>SL.NO.</th><th>DAYS</th><th>9.30-10.30</th><th>10.30-11.30</th><th>11.30-12.30</th><th>12.30-1.30</th><th>1.30-2.30</th><th>2.30-3.30</th><th>3.30-4.30</th><th>4.30-5.30</th></tr></thead><tbody>';
-                // for ($rowNumber = 1; $rowNumber <= 5; $rowNumber++) {
-                //     echo '<tr>';
-                //     echo '<td>' . $rowNumber . '</td>'; // SL.NO.
-                //     echo '<td>' . $days[$rowNumber-1] . '</td>'; // DAYS
-                //     for ($j = 1; $j <= 8; $j++) {
-                //         echo '<td>';
-                //         echo '<div class="table' . $rowNumber . $j . '"></div>';
-                //         echo '<div class="labStaffName' . $rowNumber . $j . '"></div>';
-                //         echo '<div class="lab' . $rowNumber . $j . '"></div>';
-                //         echo '</td>';
-                //     }
-                //     echo '</tr>';
-                // }
-                // echo '</tbody></table>';
+
             }
             // Fetch the data for the selected course
             $sql = "SELECT * FROM `$discourse`";

@@ -778,46 +778,7 @@ include 'move-to-top.php';
     </script>
 
     <script>
-        //s11 s21 course code
-        //s14 s24 hourse required
-        //current course
-        // Assuming the id of the h1 element is "currentcourse"
-        // let values = [];
-        // let valuesc = [];
-
-        // function checkHoursReq() {
-        //     var currentCourseElement = document.getElementById("currentcourse");
-        //     var currentCourseText = null;
-
-        //     if (currentCourseElement !== null) {
-        //         currentCourseText = currentCourseElement.innerText;
-        //         // Now you can use currentCourseText safely.
-        //     } else {
-        //         // Handle the case when the element is not found.
-        //         console.error("Element with ID 'currentcourse' not found.");
-        //     }
-        //     // console.log(currentCourseText);
-        //     var counter = 1; // Start counter from 12
-        //     while (true) {
-        //         var id = "s" + counter + "4";
-        //         var idc = "s" + counter + "1";
-
-        //         // console.log(id);
-        //         var element = document.getElementById(id);
-        //         var element1 = document.getElementById(idc);
-
-        //         // console.log(element.innerText);
-        //         if (!element) {
-        //             break; // Exit the loop if no element is found
-        //         }
-
-        //         values.push(element.innerText || element.textContent);
-        //         valuesc.push(element1.innerText || element1.textContent);
-        //         counter++;
-        //     }
-
-
-        // }
+        
 
         function hourCheck() {
             let values = [];
@@ -877,10 +838,7 @@ include 'move-to-top.php';
                     }
                     arr1 = removeEmptyValues(arr1);
 
-                    // You can use the id to do whatever you need here
-                    // For example, uncomment the following lines to retrieve an element by its id
-                    // let element = document.getElementById(id);
-                    // console.log(element.value);
+                    
                 }
             }
 
@@ -931,23 +889,7 @@ include 'move-to-top.php';
                     }
                 }
             }
-            // var newarrN = Array.from(trackIndex.slice(-1));
-            // var oldarrN = Array.from(trackIndex.slice(-2, -1));
-            // var newarr = [];
-            // var newarr = [];
-            // newarr = newarrN[0];
-            // oldarr = oldarrN[0];
-            // console.log(newarr);
-            // console.log("old" + oldarr);
-            // console.log(newarr.length);
-            // oldarr.forEach(element3 => {
-            //     if (!newarr.includes(element3)) {
-            //         console.log("Element present :", element3);
-            //     }
-            // });
-            // const missingNumber = oldarr.filter(number => !newarr.includes(number));
-            // console.log("The missing number from the old array is:", missingNumber[0]);
-            //prompt when all courses are assigned
+            
             var count = 0;
             for (let r = 0; r < len; r++) {
                 let i = r + 1;
@@ -1196,31 +1138,10 @@ include 'move-to-top.php';
             }
             //vertical check ends here
             }
-            // for(let j=0;i<8;i++)
-            // {
-            //     if(j=j_check)
-            //     {
-            //         continue;
-            //     }
-            // }
+            
         }
 
-        // function staffcheck(i_check) {
-        //     //    let selectboxid="select"+i_check;
-        //     //    var dropdown = document.getElementById(selectboxid);
-        //     // //    console.log(dropdown);
-        //     //    for (var i = 1; i < dropdown.options.length; i++) {
-        //     //     let dropstaffname=eval(dropdown.options[i].value+".staff");
-        //     //     console.log(dropstaffname);
-        //     //     }
-        //     // for(let j=0;i<8;i++)
-        //     // {
-        //     //     if(j=j_check)
-        //     //     {
-        //     //         continue;
-        //     //     }
-        //     // }
-        // }
+       
         function callCheck() {
             mycheck();
             hourCheck();

@@ -126,30 +126,7 @@ include 'move-to-top.php';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr>
-                                        <td><input type="text" class="form-control" name="subjectCode1" maxlength="15" oninput="processInput(this)" Required></td>
-                                        <td><input type="text" class="form-control" name="subjectName1" maxlength="50" Required></td>
-                                        <td><input type="number" class="form-control" name="hoursRequired1" Required>
-                                        </td>
-                                        <td>
-                                            <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="no" checked> No
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="1"> 1
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="2"> 2
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="3"> 3
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="radio" class="form-check-input" name="lab1" value="4"> 4
-                                            </div>
-                                        </td>
-                                        <td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
-                                    </tr> -->
+                                    
                                 </tbody>
                             </table>
 
@@ -330,13 +307,7 @@ include 'move-to-top.php';
                             </table>
                             <button type="button" id="ed_add_row_btn" class="btn btn-success float-right" onclick="addSubjectRow()">Add Subject</button>
 
-                            <!-- Button to add a new row -->
-                            <!-- </div> -->
-                            <!-- <div class="modal-footer wt-5">
-                        <button type="button" class="btn btn-secondary" onclick="refreshpage()" ; data-dismiss="modal">
-                            Close</button>
-                        <input class="btn btn-primary" type="submit" value="Save Changes">
-                    </div> -->
+                          
 
 
                             <!-- Softcores Table -->
@@ -1542,25 +1513,14 @@ inputField.value = inputField.value.toUpperCase();
             document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
             editcount++;
         }
-        // function addSkillRow() {
-        //     // Function to add a new row for a subject in the edit modal
-        //     var newRow =
-        //         '<tr>' +
-        //         '<td><input list="softcoreCodes" class="form-control" name="subjectCode' + editcount + '" onchange="fetchseSubjectDetails(this)" required>' +
-        //         '<datalist id="softcoreCodes">';
-
+        
 
 
         //     // Add options for each softcore code
         //     <?php foreach ($softcoreCodes as $code) { ?>
         //         newRow += '<option value="<?= $code ?>">';
         //     <?php } ?>
-        //     newRow += '</datalist></td>' +
-
-
-
-            //     '<td><input list="softcoreNames" class="form-control" name="subjectName' + editcount + '" onchange="fetchScSubjectDetails1(this)" required>' +
-            //     '<datalist id="softcoreNames">';
+        
 
             // <?php foreach ($softcoreNames as $code) { ?>
             //     newRow += '<option value="<?= $code ?>">';
@@ -1568,65 +1528,7 @@ inputField.value = inputField.value.toUpperCase();
             // newRow += '</datalist></td>' +
 
 
-        //         '<td><input type="number" class="form-control" name="hoursRequired' + editcount + '" required></td>' +
-        //         '<td>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="no" checked> No' +
-        //         '</div>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="1"> 1' +
-        //         '</div>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="2"> 2' +
-        //         '</div>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="3"> 3' +
-        //         '</div>' +
-        //         '<div class="form-check form-check-inline">' +
-        //         '<input type="radio" class="form-check-input" name="lab' + editcount + '" value="4"> 4' +
-        //         '</div>' +
-        //         '</td>' +
-        //         '<td><input type="text" class="form-control" value="sc" name="type' + editcount + '" ></td>' +
-
-        //         '<td><button id="c_delete_row_btn" class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>' +
-        //         '</tr>';
-        //     document.querySelector('#addSkillTableId tbody').insertAdjacentHTML('beforeend', newRow);
-        //     editcount++;
-        // }
-
-
-        // function fetchseSubjectDetails1(input) {
-        //     console.log(input.value);
-        //     var subjectCode = input.value;
-        //     var row = input.closest('tr');
-
-        //     // Make an AJAX request to fetch subject details
-        //     jQuery.ajax({
-        //         url: 'get_se_details_edit.php',
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         data: {
-        //             'subjectCode': subjectCode
-        //         },
-        //         success: function(response) {
-        //             if (response.error) {
-        //                 console.error(response.error);
-        //                 return;
-        //             }
-
-        //             // Update the corresponding fields in the row
-        //             row.querySelector('[name^="subjectName"]').value = response.subjectName;
-        //             row.querySelector('[name^="hoursRequired"]').value = response.hoursRequired;
-        //             // Update radio button based on the lab value
-        //             row.querySelector('[name^="lab"][value="' + response.lab + '"]').checked = true;
-        //             row.querySelector('[name^="type"]').value = "se";
-
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.error('An error occurred while fetching subject details.');
-        //         }
-        //     });
-        // }
+        
 
         function fetchseSubjectDetails(input) {
             console.log(input.value);
@@ -1692,28 +1594,7 @@ inputField.value = inputField.value.toUpperCase();
 
 
 
-        // function resetScCourse(courseName) {
-        //     // Use AJAX to reset softcore values
-        //     jQuery.ajax({
-        //         url: 'reset_softcore.php',
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         data: {
-        //             'courseName': courseName
-        //         },
-        //         success: function(response) {
-        //             if (response.status === 'success') {
-        //                 alert(response.message);
-        //                 // Perform any additional actions on success
-        //             } else {
-        //                 alert('Error: ' + response.message);
-        //             }
-        //         },
-        //         error: function(xhr, status, error) {
-        //             alert('An error occurred while resetting softcore values.');
-        //         }
-        //     });
-        // }
+        
     </script>
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
