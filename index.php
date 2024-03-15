@@ -211,7 +211,7 @@ include 'move-to-top.php';
                                         echo '<td>
                     <button class="btn btn-warning" onclick="editCourse(\'' . addslashes($classRow['COURSE']) . '\')">Edit</button>
                     <button class="btn btn-success" onclick="updateStaff(\'' . addslashes($classRow['COURSE']) . '\')">Allocate Staff</button>
-                    <!--<button class="btn btn-info" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset courses</button>-->
+                    <button class="btn btn-info" onclick="resetScCourse(\'' . addslashes($classRow['COURSE']) . '\')">Reset Staff</button>
                     <button class="btn btn-danger" onclick="deleteCourse(\'' . addslashes($classRow["COURSE"]) . '\')">Delete</button>
                     </td>';
 
@@ -1674,27 +1674,43 @@ inputField.value = inputField.value.toUpperCase();
         }
 
         function resetScCourse(courseName) {
-            // Use AJAX to reset softcore values
-            jQuery.ajax({
-                url: 'reset_softcore.php',
+            $.ajax({
+                url: 'reset_course.php',
                 type: 'POST',
-                dataType: 'json',
-                data: {
-                    'courseName': courseName
-                },
+                data: { courseName: courseName },
                 success: function(response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-                        // Perform any additional actions on success
-                    } else {
-                        alert('Error: ' + response.message);
-                    }
+                    alert(response);
+                    window.location.href = 'truncate_table.php'; // Show success message or handle response accordingly
                 },
                 error: function(xhr, status, error) {
-                    alert('An error occurred while resetting softcore values.');
+                    console.error(xhr.responseText); // Log error message to console
                 }
             });
         }
+
+
+        // function resetScCourse(courseName) {
+        //     // Use AJAX to reset softcore values
+        //     jQuery.ajax({
+        //         url: 'reset_softcore.php',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         data: {
+        //             'courseName': courseName
+        //         },
+        //         success: function(response) {
+        //             if (response.status === 'success') {
+        //                 alert(response.message);
+        //                 // Perform any additional actions on success
+        //             } else {
+        //                 alert('Error: ' + response.message);
+        //             }
+        //         },
+        //         error: function(xhr, status, error) {
+        //             alert('An error occurred while resetting softcore values.');
+        //         }
+        //     });
+        // }
     </script>
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
