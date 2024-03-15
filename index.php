@@ -1674,19 +1674,22 @@ inputField.value = inputField.value.toUpperCase();
         }
 
         function resetScCourse(courseName) {
-            $.ajax({
-                url: 'reset_course.php',
-                type: 'POST',
-                data: { courseName: courseName },
-                success: function(response) {
-                    alert(response);
-                    window.location.href = 'truncate_table.php'; // Show success message or handle response accordingly
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText); // Log error message to console
-                }
-            });
+            if (confirm("Are you sure you want to reset the staff?")) {
+                $.ajax({
+                    url: 'reset_course.php',
+                    type: 'POST',
+                    data: { courseName: courseName },
+                    success: function(response) {
+                        alert(response);
+                        window.location.href = 'truncate_table.php'; // Redirect to truncate_table.php after successful reset
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText); // Log error message to console
+                    }
+                });
+            }
         }
+
 
 
         // function resetScCourse(courseName) {
