@@ -24,12 +24,12 @@
     }
 
     #moveToTopBtn {
-      bottom: 20px;
+      bottom: 70px;
       right: 20px;
     }
 
     #moveToBottomBtn {
-      bottom: 70px;
+      bottom: 20px;
       right: 20px;
     }
   </style>

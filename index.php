@@ -167,6 +167,20 @@ include 'move-to-top.php';
             </div>
         </div>
         <br>
+        <script>
+            function truncatetable()
+            {
+                if (confirm("Are you sure you want to truncate all tables?")) {
+                window.location.href = "truncate_table.php";
+            }
+            }
+            function resetallstaff()
+            {
+                if (confirm("Are you sure you want to reset all staff and truncate all tables?")) {
+                window.location.href = "reset_staff.php";
+            }
+            }
+        </script>
         <div>
             <?php
             include 'db_connection.php';
@@ -180,7 +194,13 @@ include 'move-to-top.php';
                 die("Error executing the query: " . $conn->error);
             }
             if ($classResult->num_rows > 0) {
-                echo '<h2>Course Details</h2>';
+                echo '<div style="display: flex; align-items: center;">'; 
+                echo '<h2 style="margin-right: auto;">Course Details</h2>'; 
+                echo '<div style="text-align: right;">'; 
+                echo '<button id="truncateBtn" class="btn btn-warning" style="margin-right: 10px;" onclick="truncatetable()">Truncate All Tables</button>';
+                echo '<button class="btn btn-danger" onclick="resetallstaff()">Reset All Staffs</button>';
+                echo '</div>'; 
+                echo '</div>'; 
                 echo '<table class="table">';
                 echo '<thead><tr><th>Course Name</th><th>Action</th></tr></thead>';
                 echo '<tbody>';
