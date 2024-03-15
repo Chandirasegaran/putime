@@ -415,7 +415,9 @@ include 'move-to-top.php';
             // Fetch all staff names
             $sqlGetStaff = "SELECT DISTINCT name FROM staff";
             $resultStaff = $conn->query($sqlGetStaff);
-            echo '<h1>Faculty Time Table</h1><hr>';
+            echo '<input type="checkbox" class="hidehidecheckbox" id="hideextra" onchange="hidelab(\'hideextra\')">
+                <label class="hidehidecheckbox" for="hideextra">Hide Faculty Timetable text</label>';
+            echo '<h1 class="hideextra">Faculty Time Table</h1><hr class="hideextra">';
             $facultyhidecount = 1;
             if ($resultStaff->num_rows > 0) {
                 while ($staffRow = $resultStaff->fetch_assoc()) {
